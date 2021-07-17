@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/16 01:49:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/07/17 14:25:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,30 @@
 # include <mlx.h>
 # include <X11/X.h>
 
-# define WINDOW_WIDTH	600
-# define WINDOW_HEIGHT	300
+/*
+** screen
+*/
+# define WINDOW_WIDTH	1200
+# define WINDOW_HEIGHT	600
+
+/*
+** colors
+*/
+# define GREEN_PIXEL	0x00FF00
 
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 }			t_data;
+
+typedef struct s_rect
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
+	int	color;
+}		t_rect;
 
 #endif
