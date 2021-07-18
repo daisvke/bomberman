@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/17 14:26:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/07/18 01:55:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,27 @@ int	render_rect(t_data *data, t_rect rect)
 	return (0);
 }
 
+void	render_background(t_data *data, int color)
+{
+	int	i;
+	int	j;
+
+	if (!data->win_ptr)
+		return ;
+	while (i < WINDOW_HEIGHT)
+	{
+		j = 0;
+		while (j < WINDOW_WIDTH)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, j++, i, color);
+		++i;
+	}
+}
+
 int	render(t_data *data)
 {
 	t_rect	rect;
 
+	render_background(data, WHITE_PIXEL);
 	rect.x = WINDOW_WIDTH - 100;
 	rect.y = WINDOW_HEIGHT - 100;
 	rect.width = 100;
