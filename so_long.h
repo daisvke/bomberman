@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/18 02:02:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/07/21 16:58:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@
 # define GREEN_PIXEL	0x00FF00
 # define WHITE_PIXEL	0xFFFFFF
 
-typedef struct s_data
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-}			t_data;
-
 typedef struct s_img
 {
 	void	*mlx_img;
@@ -44,6 +38,16 @@ typedef struct s_img
 	int		line_len;
 	int		endian;
 }			t_img;
+
+typedef struct s_data
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	img;
+	t_img	player;
+	int		width;
+	int		height;
+}			t_data;
 
 typedef struct s_rect
 {
