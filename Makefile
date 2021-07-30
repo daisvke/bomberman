@@ -1,5 +1,5 @@
 NAME		=	so_long
-CC			=	clang -g
+CC			=	clang -g# $(FLAGS)
 FLAGS		=	-Wall -Wextra -Werror $(MEM)
 MEM			=	-fsanitize=address
 

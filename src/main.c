@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/29 14:16:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/07/30 13:27:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,24 @@ int	sl_handle_keypress(int keycode, t_data *data)
 	return (0);
 }
 
+void	check_map(t_data *data)
+{
+	int i, j;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			printf("%c", data->map[i][j]);
+			++j;
+		}
+		printf("\n");
+		++i;
+	}
+}
+
 int	main(void)
 {
 	t_data	data;
@@ -51,33 +69,25 @@ int	main(void)
 	int	w;
 	int	h;
 
+	sl_parse_map(&data, "map");
+//	check_map(data);
+
+
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		exit(EXIT_FAILURE);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, \
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.width, data.height, \
 		"My first window");
 	if (!data.win_ptr)
 	{
 		free(data.mlx_ptr);
 		exit(EXIT_FAILURE);
 	}
-	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data.img.mlx_img = mlx_new_image(data.mlx_ptr, data.width, data.height);
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
 
-	sl_parse_map(&data, "map");
-	int i, j;
-	i = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			printf("%c", data.map[i][j]);
-			++j;
-		}
-		++i;
-	}
-	sl_render_background(&data.img, GREEN_PIXEL);
+
+	sl_render_background(&data, &data.img, GREEN_PIXEL);
 
 	data.player.mlx_img = mlx_xpm_file_to_image(data.mlx_ptr, path, &w, &h);
 	if (!data.player.mlx_img)

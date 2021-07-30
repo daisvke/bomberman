@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/29 13:46:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/07/30 15:08:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,17 @@ int		sl_render_colored_bloc(t_img *img, int color, int x, int y)
 	int	i;
 	int	j;
 
-	j = 0;
-	while (j < BLOC_PXL_LEN)
+	i = 0;
+	while ((y + i) < BLOC_PXL_LEN)
 	{
-		i = 0;
-		while (i < BLOC_PXL_LEN)
-			sl_img_pixel_put(img, i++, j, color);
-		++j;
+		j = 0;
+		while ((x + j) < BLOC_PXL_LEN)
+		{
+		printf("y: %d, i: %d, j: %d, x: %d, x + j: %d\n", y, i, j, x, x + j);
+		//	sl_img_pixel_put(img, j, i, color);
+			++j;
+		}
+		++i;
 	}
 	return (0);
 }
@@ -56,32 +60,38 @@ void	sl_render_bloc_with_xpm(t_data *data, t_img *img, int x, int y)
 	int	i;
 	int	j;
 
-	j = 0;
-	while (j < BLOC_PXL_LEN)
+	i = 0;
+	while (i + y  < BLOC_PXL_LEN)
 	{
-		i = 0;
-		while (i < BLOC_PXL_LEN)
+		j = 0;
+		while (j + x < BLOC_PXL_LEN)
 		{
-			color = sl_get_color_from_img(img, i, j);
-			sl_img_pixel_put(img, i, j, color);
+			color = sl_get_color_from_img(img, j, i);
+			sl_img_pixel_put(img, j, i, color);
 			++j;
 		}
 		++i;
 	}
 }
 
-void	sl_render_background(t_img *img, int color)
+void	sl_render_background(t_data *data, t_img *img, int color)
 {
 	int	i;
 	int	j;
 
-	j = 0;
-	while (j < WINDOW_HEIGHT)
+	i = 0;
+	while (i < (data->height / BLOC_PXL_LEN))
 	{
-		i = 0;
-		while (i < WINDOW_WIDTH)
-			sl_img_pixel_put(img, i++, j, color);
-		++j;
+		j = 0;
+		while (j < (data->width / BLOC_PXL_LEN))
+		{
+		//	if (data->map[i][j] == '1')
+//		printf("mult i: %d j: %d\n",BLOC_PXL_LEN * i, BLOC_PXL_LEN * j);
+				sl_render_colored_bloc(img, color, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
+//		printf(" i: %d, j: %d,\n", i,  j);
+			++j;
+		}
+		++i;
 	}
 }
 
