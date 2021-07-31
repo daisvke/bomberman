@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/30 13:27:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/07/31 05:02:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	sl_handle_keypress(int keysym, t_data *data)
 
 int	sl_handle_keypress(int keycode, t_data *data)
 {
-	if (keycode == XK_w)
+	if (keycode == XK_w && data->map[(data->player.y + 1) / BLOC_PXL_LEN][data->player.x / BLOC_PXL_LEN] != '1')
 		--data->player.y;
 	if (keycode == XK_s)
 		++data->player.y;
@@ -85,15 +85,18 @@ int	main(void)
 	}
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, data.width, data.height);
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
+	
+	data.wall.mlx_img = mlx_xpm_file_to_image(data.mlx_ptr, "./img/bomberman-grey-tile-24x24.xpm", &w, &h);
+	if (!data.wall.mlx_img)
+		exit(EXIT_FAILURE);
 
-
-	sl_render_background(&data, &data.img, GREEN_PIXEL);
+	sl_render_background(&data);
 
 	data.player.mlx_img = mlx_xpm_file_to_image(data.mlx_ptr, path, &w, &h);
 	if (!data.player.mlx_img)
 		exit(EXIT_FAILURE);
-	data.player.x = 100;
-	data.player.y = 100;
+//	data.player.x = 100;
+//	data.player.y = 100;
 
 	mlx_loop_hook(data.mlx_ptr, &sl_render, &data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, sl_handle_keypress, &data);

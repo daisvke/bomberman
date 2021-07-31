@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/30 15:08:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/07/31 13:23:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	sl_get_color_from_img(t_img *img, int x, int y)
 {
-	return ((int)img->addr + (y * img->line_len + x * (img->bpp / 8)));
+	return ((int)(img->addr + (y * img->line_len + x * (img->bpp / 8))));
 }
 
 void	sl_img_pixel_put(t_img *img, int x, int y, int color)
@@ -40,13 +40,13 @@ int		sl_render_colored_bloc(t_img *img, int color, int x, int y)
 	int	j;
 
 	i = 0;
-	while ((y + i) < BLOC_PXL_LEN)
+	while (i < BLOC_PXL_LEN)
 	{
 		j = 0;
-		while ((x + j) < BLOC_PXL_LEN)
+		while (j < BLOC_PXL_LEN)
 		{
-		printf("y: %d, i: %d, j: %d, x: %d, x + j: %d\n", y, i, j, x, x + j);
-		//	sl_img_pixel_put(img, j, i, color);
+//		printf("y: %d, i: %d, j: %d, x: %d, x + j: %d\n", y, i, j, x, x + j);
+			sl_img_pixel_put(img, j + x, i + y, color);
 			++j;
 		}
 		++i;
@@ -54,27 +54,28 @@ int		sl_render_colored_bloc(t_img *img, int color, int x, int y)
 	return (0);
 }
 
-void	sl_render_bloc_with_xpm(t_data *data, t_img *img, int x, int y)
+void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 {
-	int	color;
+	unsigned int	color;
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i + y  < BLOC_PXL_LEN)
+	while (i < BLOC_PXL_LEN)
 	{
 		j = 0;
-		while (j + x < BLOC_PXL_LEN)
+		while (j < BLOC_PXL_LEN)
 		{
-			color = sl_get_color_from_img(img, j, i);
-			sl_img_pixel_put(img, j, i, color);
+			color = sl_get_color_from_img(xpm_img, j, i);
+			printf("clr: %d\n", color);
+			sl_img_pixel_put(img, j + x, i + y, 0xFFFFFF);
 			++j;
 		}
 		++i;
 	}
 }
 
-void	sl_render_background(t_data *data, t_img *img, int color)
+void	sl_render_background(t_data *data)
 {
 	int	i;
 	int	j;
@@ -85,10 +86,15 @@ void	sl_render_background(t_data *data, t_img *img, int color)
 		j = 0;
 		while (j < (data->width / BLOC_PXL_LEN))
 		{
-		//	if (data->map[i][j] == '1')
-//		printf("mult i: %d j: %d\n",BLOC_PXL_LEN * i, BLOC_PXL_LEN * j);
-				sl_render_colored_bloc(img, color, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
-//		printf(" i: %d, j: %d,\n", i,  j);
+			if (data->map[i][j] != '1')
+				sl_render_colored_bloc(&data->img, GREEN_PIXEL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
+			else
+				sl_render_bloc_with_xpm(&data->img, &data->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+			if (data->map[i][j] == '4')
+			{
+				data->player.x = BLOC_PXL_LEN * j;
+				data->player.y = BLOC_PXL_LEN * i;
+			}
 			++j;
 		}
 		++i;
@@ -98,6 +104,6 @@ void	sl_render_background(t_data *data, t_img *img, int color)
 int	sl_render(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.mlx_img,data->player.x, data->player.y);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.mlx_img, data->player.x, data->player.y);
 	return (0);
 }
