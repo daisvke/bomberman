@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/01 05:13:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/01 14:37:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	main(void)
 	sl_parse_map(&data, "map");
 //	check_map(data);
 
-
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		exit(EXIT_FAILURE);
@@ -96,8 +95,6 @@ int	main(void)
 	data.player.mlx_img = mlx_xpm_file_to_image(data.mlx_ptr, path, &w, &h);
 	if (!data.player.mlx_img)
 		exit(EXIT_FAILURE);
-//	data.player.x = 100;
-//	data.player.y = 100;
 
 	mlx_loop_hook(data.mlx_ptr, &sl_render, &data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, sl_handle_keypress, &data);
