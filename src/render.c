@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/31 13:23:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/01 12:55:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	sl_get_color_from_img(t_img *img, int x, int y)
 {
-	return ((int)(img->addr + (y * img->line_len + x * (img->bpp / 8))));
+	return (*(int *)(img->addr + (y * img->line_len + x * (img->bpp / 8))));
 }
 
-void	sl_img_pixel_put(t_img *img, int x, int y, int color)
+void	sl_img_pixel_put(t_img *img, int x , int y, int color)
 {
 	char	*pixel;
 	int		i;
@@ -67,8 +67,8 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 		while (j < BLOC_PXL_LEN)
 		{
 			color = sl_get_color_from_img(xpm_img, j, i);
-			printf("clr: %d\n", color);
-			sl_img_pixel_put(img, j + x, i + y, 0xFFFFFF);
+//			printf("clr: %d\n", color);
+			sl_img_pixel_put(img, j + x, i + y, color);
 			++j;
 		}
 		++i;
