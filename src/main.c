@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/02 03:15:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 13:27:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,11 @@ int	sl_handle_keypress(int keycode, t_data *data)
 		sl_render_colored_bloc(&data->img, GREEN_PIXEL, BLOC_PXL_LEN * data->player.x, BLOC_PXL_LEN * data->player.y);
 		map[data->player.y][data->player.x] = '0';
 		++data->collected_bombs;
-		printf("collected: %d, to %d\n", data->collected_bombs, data->bombs_to_collect);
 		if (data->collected_bombs == data->bombs_to_collect)
 		{
+			/*
+			sl_render_bloc_with_xpm(&data->img, &data->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+			if (data->map[i][j] == '4')*/
 			printf("ALL COLLECTED !\n");
 			//exit appears
 		}
@@ -108,7 +110,7 @@ int	main(void)
 	if (!data.mlx_ptr)
 		exit(EXIT_FAILURE);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.width, data.height, \
-		"My first window");
+		"BOMBERMAN");
 	if (!data.win_ptr)
 	{
 		free(data.mlx_ptr);
