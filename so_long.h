@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/02 03:11:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 14:09:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,22 @@
 # include <mlx.h>
 # include <X11/X.h>
 
-# define BLOC_PXL_LEN		24
-# define MAP_ELEMS			"01CEP"
+# define BLOC_PXL_LEN	24
+# define MAP_ELEMS		"01CEP"
 
-# define WALL				'1'
-# define ITEM_BOMB			'2'
+# define WALL			'1'
+# define ITEM_BOMB		'2'
+
+/*
+** parsing
+*/
+# define BOMB			2
+# define PLAYER			4
 
 /*
 ** colors
 */
-# define GREEN_PIXEL		0x107830
+# define GREEN_PIXEL	0x107830
 
 typedef struct s_img
 {
@@ -42,6 +48,12 @@ typedef struct s_img
 	int		y;
 }			t_img;
 
+typedef struct s_exit
+{
+	bool	appear;
+	t_img	img;
+}			t_exit;
+
 typedef struct s_data
 {
 	void	*mlx_ptr;
@@ -50,6 +62,7 @@ typedef struct s_data
 	t_img	player;
 	t_img	wall;
 	t_img	item_bomb;
+	t_exit	exit;
 	int		bombs_to_collect;
 	int		collected_bombs;
 	int		width;

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/02 13:24:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 14:10:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,25 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 
 void	sl_render_background(t_data *data)
 {
-	int	i;
-	int	j;
+	char	**map;
+	int		i;
+	int		j;
 
+	map = data->map;
 	i = 0;
 	while (i < (data->height / BLOC_PXL_LEN))
 	{
 		j = 0;
 		while (j < (data->width / BLOC_PXL_LEN))
 		{
-			if (data->map[i][j] != '1')
+			if (map[i][j] != '1')
 				sl_render_colored_bloc(&data->img, GREEN_PIXEL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
 			else
 				sl_render_bloc_with_xpm(&data->img, &data->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
-			if (data->map[i][j] == '2' && data->map[data->player.y][data->player.x] != ITEM_BOMB)
+			if (map[i][j] == '2' && map[data->player.y][data->player.x] != ITEM_BOMB)
 				sl_render_bloc_with_xpm(&data->img, &data->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+			if (map[i][j] == '3' && data->exit.appear == true)
+				sl_render_bloc_with_xpm(&data->img, &data->exit.img,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
 			++j;
 		}
 		++i;

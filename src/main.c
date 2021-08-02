@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/02 13:27:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 14:12:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	sl_handle_keypress(int keycode, t_data *data)
 	if (x != data->player.x || y != data->player.y)
 	{
 		moves++;
+		//on window
 		printf("%d\n", moves);
 	}
 	if (map[data->player.y][data->player.x] == ITEM_BOMB)
@@ -59,12 +60,11 @@ int	sl_handle_keypress(int keycode, t_data *data)
 		sl_render_colored_bloc(&data->img, GREEN_PIXEL, BLOC_PXL_LEN * data->player.x, BLOC_PXL_LEN * data->player.y);
 		map[data->player.y][data->player.x] = '0';
 		++data->collected_bombs;
+//		printf("collected: %d, to: %d\n", data->collected_bombs, data->bombs_to_collect);
 		if (data->collected_bombs == data->bombs_to_collect)
 		{
-			/*
-			sl_render_bloc_with_xpm(&data->img, &data->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
-			if (data->map[i][j] == '4')*/
 			printf("ALL COLLECTED !\n");
+			data->exit.appear = true;
 			//exit appears
 		}
 	}
@@ -93,6 +93,18 @@ void	sl_init_data(t_data *data)
 {
 	data->bombs_to_collect = 0;
 	data->collected_bombs = 0;
+	data->exit.appear = false;
+}
+
+void	sl_load_texture(t_data *data, t_img *img, char *path_to_file)
+{
+	int	width;
+	int	height;
+
+	img->mlx_img = mlx_xpm_file_to_image(data->mlx_ptr, path_to_file, &width, &height);
+	if (!img->mlx_img)
+		exit(EXIT_FAILURE);
+	img->addr = mlx_get_data_addr(img->mlx_img, &img->bpp, &img->line_len, &img->endian);
 }
 
 int	main(void)
@@ -118,12 +130,14 @@ int	main(void)
 	}
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, data.width, data.height);
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
-	
+
+	sl_load_texture(&data, &data.wall, "./img/bomberman-grey-tile-24x24.xpm");
+/*
 	data.wall.mlx_img = mlx_xpm_file_to_image(data.mlx_ptr, "./img/bomberman-grey-tile-24x24.xpm", &w, &h);
 	if (!data.wall.mlx_img)
 		exit(EXIT_FAILURE);
 	data.wall.addr = mlx_get_data_addr(data.wall.mlx_img, &data.wall.bpp, &data.wall.line_len, &data.wall.endian);
-
+*/
 	data.item_bomb.mlx_img = mlx_xpm_file_to_image(data.mlx_ptr, "./img/bomberman-item-bomb-24x24.xpm", &w, &h);
 	if (!data.item_bomb.mlx_img)
 		exit(EXIT_FAILURE);
