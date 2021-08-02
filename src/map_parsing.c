@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/30 13:20:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 03:11:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	sl_populate_map_with_elem(t_data *data, char char_to_check, int x, int y)
 		if (char_to_check == MAP_ELEMS[i])
 		{
 			data->map[y][x] = i + '0';
+			if (i == 2)
+				++data->bombs_to_collect;
 			return ;
 		}
 		++i;

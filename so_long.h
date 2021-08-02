@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/07/31 02:25:25 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 03:11:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 
 # define BLOC_PXL_LEN		24
 # define MAP_ELEMS			"01CEP"
+
+# define WALL				'1'
+# define ITEM_BOMB			'2'
 
 /*
 ** colors
@@ -46,6 +49,9 @@ typedef struct s_data
 	t_img	img;
 	t_img	player;
 	t_img	wall;
+	t_img	item_bomb;
+	int		bombs_to_collect;
+	int		collected_bombs;
 	int		width;
 	int		height;
 	char	**map;

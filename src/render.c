@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/01 14:37:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 02:43:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,12 @@ void	sl_render_background(t_data *data)
 				sl_render_colored_bloc(&data->img, GREEN_PIXEL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
 			else
 				sl_render_bloc_with_xpm(&data->img, &data->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+			if (data->map[i][j] == '2' && data->map[data->player.y][data->player.x] != ITEM_BOMB)
+				sl_render_bloc_with_xpm(&data->img, &data->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
 			if (data->map[i][j] == '4')
 			{
-				data->player.x = BLOC_PXL_LEN * j;
-				data->player.y = BLOC_PXL_LEN * i;
+				data->player.x = j;
+				data->player.y = i;
 			}
 			++j;
 		}
@@ -104,6 +106,6 @@ void	sl_render_background(t_data *data)
 int	sl_render(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.mlx_img, data->player.x, data->player.y);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.mlx_img, data->player.x * BLOC_PXL_LEN, data->player.y * BLOC_PXL_LEN);
 	return (0);
 }

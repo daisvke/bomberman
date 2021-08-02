@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/01 14:37:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/02 03:15:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,39 @@ int	sl_handle_keypress(int keysym, t_data *data)
 
 int	sl_handle_keypress(int keycode, t_data *data)
 {
-	if (keycode == XK_w && data->map[(data->player.y + 1) / BLOC_PXL_LEN][data->player.x / BLOC_PXL_LEN] != '1')
+	static int	moves;
+	char		**map;
+	int			x;
+	int			y;
+
+	map = data->map;
+	x = data->player.x;
+	y = data->player.y;
+	if (keycode == XK_w && map[y - 1][x] != WALL)
 		--data->player.y;
-	if (keycode == XK_s)
+	if (keycode == XK_s && map[y + 1][x] != WALL)
 		++data->player.y;
-	if (keycode == XK_a)
+	if (keycode == XK_a && map[y][x - 1] != WALL)
 		--data->player.x;
-	if (keycode == XK_d)
+	if (keycode == XK_d && map[y][x + 1] != WALL)
 		++data->player.x;
+	if (x != data->player.x || y != data->player.y)
+	{
+		moves++;
+		printf("%d\n", moves);
+	}
+	if (map[data->player.y][data->player.x] == ITEM_BOMB)
+	{
+		sl_render_colored_bloc(&data->img, GREEN_PIXEL, BLOC_PXL_LEN * data->player.x, BLOC_PXL_LEN * data->player.y);
+		map[data->player.y][data->player.x] = '0';
+		++data->collected_bombs;
+		printf("collected: %d, to %d\n", data->collected_bombs, data->bombs_to_collect);
+		if (data->collected_bombs == data->bombs_to_collect)
+		{
+			printf("ALL COLLECTED !\n");
+			//exit appears
+		}
+	}
 	return (0);
 }
 
@@ -62,13 +87,20 @@ void	check_map(t_data *data)
 	}
 }
 
+void	sl_init_data(t_data *data)
+{
+	data->bombs_to_collect = 0;
+	data->collected_bombs = 0;
+}
+
 int	main(void)
 {
 	t_data	data;
 	char	*path = "./img/bomberman-white-down-0-24x24.xpm";
 	int	w;
 	int	h;
-
+	
+	sl_init_data(&data);
 	sl_parse_map(&data, "map");
 //	check_map(data);
 
@@ -89,6 +121,11 @@ int	main(void)
 	if (!data.wall.mlx_img)
 		exit(EXIT_FAILURE);
 	data.wall.addr = mlx_get_data_addr(data.wall.mlx_img, &data.wall.bpp, &data.wall.line_len, &data.wall.endian);
+
+	data.item_bomb.mlx_img = mlx_xpm_file_to_image(data.mlx_ptr, "./img/bomberman-item-bomb-24x24.xpm", &w, &h);
+	if (!data.item_bomb.mlx_img)
+		exit(EXIT_FAILURE);
+	data.item_bomb.addr = mlx_get_data_addr(data.item_bomb.mlx_img, &data.item_bomb.bpp, &data.item_bomb.line_len, &data.item_bomb.endian);
 
 	sl_render_background(&data);
 
