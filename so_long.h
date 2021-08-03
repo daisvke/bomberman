@@ -35,7 +35,7 @@
 /*
 ** colors
 */
-# define GREEN_PIXEL	0x107830
+# define GREEN_PXL	0x107830
 
 typedef struct s_img
 {
@@ -44,8 +44,6 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
-	int		x;
-	int		y;
 }			t_img;
 
 typedef struct s_exit
@@ -77,19 +75,19 @@ typedef struct s_coord
 }		t_coord;
 
 // try bitshift
-typedef struct s_dir_patterns
+typedef struct s_dir
 {
 	bool	up;
 	bool	down;
 	bool	left;
 	bool	right;
-}
+}		t_dir;
 
 typedef struct s_player
 {
 	t_img_patterns	img;
-	void			*current_state;
-	t_dir_patterns	current_dir;
+	void			*curr_state;
+	t_dir			curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
 }					t_player;
@@ -112,12 +110,12 @@ typedef struct s_env
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img		img;
-	int			win_width;
-	int			win_height;
+	t_img		background;
+	int			width;
+	int			height;
 	char		**map;
-	t_textures	textures;
-	t_player	player;
+	t_textures	tex;
+	t_player	p1;
 }			t_env;
 
 typedef struct s_square

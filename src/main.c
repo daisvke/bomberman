@@ -39,31 +39,31 @@ int	sl_handle_keypress(int keycode, t_env *env)
 	int			y;
 
 	map = env->map;
-	x = env->player.x;
-	y = env->player.y;
+	x = env->p1.pos.x;
+	y = env->p1.pos.y;
 	if (keycode == XK_w && map[y - 1][x] != WALL)
-		--env->player.y;
+		env->p1.curr_dir.up = true;
 	if (keycode == XK_s && map[y + 1][x] != WALL)
-		env->down = true;
+		env->p1.curr_dir.down = true;
 	if (keycode == XK_a && map[y][x - 1] != WALL)
-		--env->player.x;
+		env->p1.curr_dir.left = true;
 	if (keycode == XK_d && map[y][x + 1] != WALL)
-		++env->player.x;
-	if (x != env->player.x || y != env->player.y)
+		env->p1.curr_dir.right = true;
+	if (x != env->p1.pos.x || y != env->p1.pos.y)
 	{
-		moves++;
+		++moves;
 		//on window
 		printf("%d\n", moves);
 	}
 
 
-	if (map[env->player.y][env->player.x] == ITEM_BOMB)
+	if (map[env->p1.pos.y][env->p1.pos.x] == ITEM_BOMB)
 	{
-		sl_render_colored_bloc(&env->img, GREEN_PIXEL, BLOC_PXL_LEN * env->player.x, BLOC_PXL_LEN * env->player.y);
-		map[env->player.y][env->player.x] = '0';
+		sl_render_colored_bloc(&env.bg, GREEN_PXL, BLOC_PXL_LEN * env->p1.pos.x, BLOC_PXL_LEN * env->p1.pos.y);
+		map[env->p1.pos.y][env->p1.pos.x] = '0';
 		++env->collected_bombs;
 //		printf("collected: %d, to: %d\n", env->collected_bombs, env->bombs_to_collect);
-		if (env->collected_bombs == env->bombs_to_collect)
+		if (env->tex.bomb.collected == env->tex.bomb.to_collect)
 		{
 			printf("ALL COLLECTED !\n");
 			env->exit.appear = true;
@@ -113,16 +113,32 @@ void	sl_load_texture(t_env *env, t_img *img, char *path_to_file)
 	img->addr = mlx_get_env_addr(img->mlx_img, &img->bpp, &img->line_len, &img->endian);
 }
 
+void	sl_load_all_textures(t_env *env)
+{
+	sl_load_texture(&env, env.tex.wall, "./img/bomberman-grey-tile-24x24.xpm");
+	sl_load_texture(&env, env.tex.bomb.item_bomb, "./img/bomberman-item-bomb-24x24.xpm", &w, &h);
+	sl_load_texture(&env, env.p1.img.up, "./img/bomberman-white-up-0-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.up_l, "./img/bomberman-white-up-l-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.up_r, "./img/bomberman-white-up-r-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.down, "./img/bomberman-white-down-0-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.down_l, "./img/bomberman-white-down-l-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.down_r, "./img/bomberman-white-down-r-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.left, "./img/bomberman-white-left-0-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.left_l, "./img/bomberman-white-left-l-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.left_r, "./img/bomberman-white-left-r-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.right, "./img/bomberman-white-right-0-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.right_l, "./img/bomberman-white-right-l-24x24.xpm");
+	sl_load_texture(&env, env.p1.img.right_r, "./img/bomberman-white-right-r-24x24.xpm");
+}
+
 int	main(void)
 {
 	t_env	env;
-	char	*path = "./img/bomberman-white-down-0-24x24.xpm";
 	int	w;
 	int	h;
 	
 	sl_init_env(&env);
 	sl_parse_map(&env, "map");
-//	check_map(env);
 
 	env.mlx_ptr = mlx_init();
 	if (!env.mlx_ptr)
@@ -134,22 +150,11 @@ int	main(void)
 		free(env.mlx_ptr);
 		exit(EXIT_FAILURE);
 	}
-	env.img.mlx_img = mlx_new_image(env.mlx_ptr, env.width, env.height);
-	env.img.addr = mlx_get_env_addr(env.img.mlx_img, &env.img.bpp, &env.img.line_len, &env.img.endian);
-
-	sl_load_texture(&env, &env.wall, "./img/bomberman-grey-tile-24x24.xpm");
-	env.item_bomb.mlx_img = mlx_xpm_file_to_image(env.mlx_ptr, "./img/bomberman-item-bomb-24x24.xpm", &w, &h);
-	if (!env.item_bomb.mlx_img)
-		exit(EXIT_FAILURE);
-	env.item_bomb.addr = mlx_get_env_addr(env.item_bomb.mlx_img, &env.item_bomb.bpp, &env.item_bomb.line_len, &env.item_bomb.endian);
-
-	sl_render_background(&env);
-
-	env.player.mlx_img = mlx_xpm_file_to_image(env.mlx_ptr, path, &w, &h);
-	if (!env.player.mlx_img)
-		exit(EXIT_FAILURE);
-	sl_load_texture(&env, &env.player2, "./img/bomberman-white-down-1-24x24.xpm");
-	sl_load_texture(&env, &env.player3, "./img/bomberman-white-down-2-24x24.xpm");
+	env.bg.mlx_img = mlx_new_image(env.mlx_ptr, env.width, env.height);
+	env.bg.addr = mlx_get_env_addr(env.bg.mlx_img, &env.bg.bpp, &env.bg.line_len, &env.bg.endian);
+	
+	sl_load_all_textures(&env);
+	sl_render_bg(&env);
 
 	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
 	mlx_key_hook(env.win_ptr, &sl_handle_input, &env);

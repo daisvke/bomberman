@@ -38,8 +38,8 @@ void	sl_populate_map_with_elem(t_env *env, char char_to_check, int x, int y)
 				++env->bombs_to_collect;
 			if (i == PLAYER)
 			{
-				env->player.x = x;
-				env->player.y = y;
+				env->p1.pos.x = x;
+				env->p1.pos.y = y;
 				env->curr_x = x * BLOC_PXL_LEN;
 				env->curr_y = y * BLOC_PXL_LEN;
 			}

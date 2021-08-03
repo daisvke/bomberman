@@ -74,7 +74,7 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 	}
 }
 
-void	sl_render_background(t_env *env)
+void	sl_render_bg(t_env *env)
 {
 	char	**map;
 	int		i;
@@ -88,13 +88,13 @@ void	sl_render_background(t_env *env)
 		while (j < (env->width / BLOC_PXL_LEN))
 		{
 			if (map[i][j] != '1')
-				sl_render_colored_bloc(&env->img, GREEN_PIXEL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
+				sl_render_colored_bloc(&env.bg, GREEN_PXL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
 			else
-				sl_render_bloc_with_xpm(&env->img, &env->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
-			if (map[i][j] == '2' && map[env->player.y][env->player.x] != ITEM_BOMB)
-				sl_render_bloc_with_xpm(&env->img, &env->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+				sl_render_bloc_with_xpm(&env.bg, &env->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+			if (map[i][j] == '2' && map[env->p1.pos.y][env->p1.pos.x] != ITEM_BOMB)
+				sl_render_bloc_with_xpm(&env.bg, &env->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
 			if (map[i][j] == '3' && env->exit.appear == true)
-				sl_render_bloc_with_xpm(&env->img, &env->exit.img,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+				sl_render_bloc_with_xpm(&env.bg, &env->exit.img,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
 			++j;
 		}
 		++i;
@@ -108,21 +108,21 @@ int	sl_move(t_env *env)
 	if (i <= 1600)
 	{
 		env->current = &env->player2;
-		env->curr_x = env->player.x * BLOC_PXL_LEN;
-		env->curr_y = (env->player.y * BLOC_PXL_LEN) + (BLOC_PXL_LEN / 3);
+		env->curr_x = env->p1.pos.x * BLOC_PXL_LEN;
+		env->curr_y = (env->p1.pos.y * BLOC_PXL_LEN) + (BLOC_PXL_LEN / 3);
 	}
 	if (i > 1600 && i <= 3200)
 	{
 		env->current = &env->player3;
-		env->curr_x = env->player.x * BLOC_PXL_LEN;
-		env->curr_y = (env->player.y * BLOC_PXL_LEN) + (2 * (BLOC_PXL_LEN / 3));
+		env->curr_x = env->p1.pos.x * BLOC_PXL_LEN;
+		env->curr_y = (env->p1.pos.y * BLOC_PXL_LEN) + (2 * (BLOC_PXL_LEN / 3));
 	}
 	if (i == 4200)
 	{
 		env->current = &env->player;
-		env->curr_x = env->player.x * BLOC_PXL_LEN;
-		env->curr_y = (env->player.y * BLOC_PXL_LEN) + BLOC_PXL_LEN;
-		++env->player.y;
+		env->curr_x = env->p1.pos.x * BLOC_PXL_LEN;
+		env->curr_y = (env->p1.pos.y * BLOC_PXL_LEN) + BLOC_PXL_LEN;
+		++env->p1.pos.y;
 		env->down = false;
 		i = 0;
 	}
@@ -137,7 +137,7 @@ int	sl_move(t_env *env)
 int	sl_render(t_env *env)
 {
 	t_img	*img;
-	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.mlx_img, 0, 0);
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env.bg.mlx_img, 0, 0);
 	if (env->down)
 		sl_move(env);
 	img = env->current;
