@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/02 14:10:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/03 16:03:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 		while (j < BLOC_PXL_LEN)
 		{
 			color = sl_get_color_from_img(xpm_img, j, i);
-//			printf("clr: %d\n", color);
 			sl_img_pixel_put(img, j + x, i + y, color);
 			++j;
 		}
@@ -75,36 +74,74 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 	}
 }
 
-void	sl_render_background(t_data *data)
+void	sl_render_background(t_env *env)
 {
 	char	**map;
 	int		i;
 	int		j;
 
-	map = data->map;
+	map = env->map;
 	i = 0;
-	while (i < (data->height / BLOC_PXL_LEN))
+	while (i < (env->height / BLOC_PXL_LEN))
 	{
 		j = 0;
-		while (j < (data->width / BLOC_PXL_LEN))
+		while (j < (env->width / BLOC_PXL_LEN))
 		{
 			if (map[i][j] != '1')
-				sl_render_colored_bloc(&data->img, GREEN_PIXEL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
+				sl_render_colored_bloc(&env->img, GREEN_PIXEL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
 			else
-				sl_render_bloc_with_xpm(&data->img, &data->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
-			if (map[i][j] == '2' && map[data->player.y][data->player.x] != ITEM_BOMB)
-				sl_render_bloc_with_xpm(&data->img, &data->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
-			if (map[i][j] == '3' && data->exit.appear == true)
-				sl_render_bloc_with_xpm(&data->img, &data->exit.img,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+				sl_render_bloc_with_xpm(&env->img, &env->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+			if (map[i][j] == '2' && map[env->player.y][env->player.x] != ITEM_BOMB)
+				sl_render_bloc_with_xpm(&env->img, &env->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+			if (map[i][j] == '3' && env->exit.appear == true)
+				sl_render_bloc_with_xpm(&env->img, &env->exit.img,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
 			++j;
 		}
 		++i;
 	}
 }
 
-int	sl_render(t_data *data)
+int	sl_move(t_env *env)
 {
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.mlx_img, data->player.x * BLOC_PXL_LEN, data->player.y * BLOC_PXL_LEN);
+	static int	i;
+	
+	if (i <= 1600)
+	{
+		env->current = &env->player2;
+		env->curr_x = env->player.x * BLOC_PXL_LEN;
+		env->curr_y = (env->player.y * BLOC_PXL_LEN) + (BLOC_PXL_LEN / 3);
+	}
+	if (i > 1600 && i <= 3200)
+	{
+		env->current = &env->player3;
+		env->curr_x = env->player.x * BLOC_PXL_LEN;
+		env->curr_y = (env->player.y * BLOC_PXL_LEN) + (2 * (BLOC_PXL_LEN / 3));
+	}
+	if (i == 4200)
+	{
+		env->current = &env->player;
+		env->curr_x = env->player.x * BLOC_PXL_LEN;
+		env->curr_y = (env->player.y * BLOC_PXL_LEN) + BLOC_PXL_LEN;
+		++env->player.y;
+		env->down = false;
+		i = 0;
+	}
+	else
+	{
+
+		++i;
+	}
+	return (0);
+}
+
+int	sl_render(t_env *env)
+{
+	t_img	*img;
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.mlx_img, 0, 0);
+	if (env->down)
+		sl_move(env);
+	img = env->current;
+	if (img->mlx_img)
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->curr_x, env->curr_y);
 	return (0);
 }

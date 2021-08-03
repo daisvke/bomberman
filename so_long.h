@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/02 14:09:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/03 16:42:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,42 +54,92 @@ typedef struct s_exit
 	t_img	img;
 }			t_exit;
 
-typedef struct s_data
+typedef struct s_img_patterns
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img	img;
-	t_img	player;
-	t_img	wall;
-	t_img	item_bomb;
-	t_exit	exit;
-	int		bombs_to_collect;
-	int		collected_bombs;
-	int		width;
-	int		height;
-	char	**map;
-}			t_data;
+	t_img	up;
+	t_img	up_l;
+	t_img	up_r;
+	t_img	down;
+	t_img	down_l;
+	t_img	down_r;
+	t_img	left;
+	t_img	left_l;
+	t_img	left_r;
+	t_img	right;
+	t_img	right_l;
+	t_img	right_r;
+}			t_img_patterns;
 
-typedef struct s_rect
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}		t_coord;
+
+// try bitshift
+typedef struct s_dir_patterns
+{
+	bool	up;
+	bool	down;
+	bool	left;
+	bool	right;
+}
+
+typedef struct s_player
+{
+	t_img_patterns	img;
+	void			*current_state;
+	t_dir_patterns	current_dir;
+	t_coord			pos;
+	t_coord			sub_pos;
+}					t_player;
+
+typedef struct s_bombs
+{
+	t_img	item_bomb;
+	int		to_collect;
+	int		collected;
+}		t_bombs;
+
+typedef struct s_textures
+{
+	t_img	wall;
+	t_bombs	bomb;
+	t_exit	exit;
+}			t_textures;
+
+typedef struct s_env
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_img		img;
+	int			win_width;
+	int			win_height;
+	char		**map;
+	t_textures	textures;
+	t_player	player;
+}			t_env;
+
+typedef struct s_square
 {
 	int	x;
 	int	y;
 	int	width;
 	int	height;
 	int	color;
-}		t_rect;
+}		t_square;
 
 /*
 ** parse
 */
-void	sl_parse_map(t_data *data, char *filename);
+void	sl_parse_map(t_env *data, char *filename);
 
 /*
 ** render
 */
 void	sl_img_pixel_put(t_img *img, int x, int y, int color);
-int		sl_render(t_data *data);
-void	sl_render_background(t_data *data);
+int		sl_render(t_env *data);
+void	sl_render_background(t_env *data);
 int		sl_render_colored_bloc(t_img *img, int color, int x, int y);
 
 #endif

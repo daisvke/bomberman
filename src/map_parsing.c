@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/02 14:12:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/03 08:03:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char    *ft_strchr(const char *s, int c)
         return (0);
 }
 
-void	sl_populate_map_with_elem(t_data *data, char char_to_check, int x, int y)
+void	sl_populate_map_with_elem(t_env *env, char char_to_check, int x, int y)
 {
 	int	i;
 
@@ -33,13 +33,15 @@ void	sl_populate_map_with_elem(t_data *data, char char_to_check, int x, int y)
 	{
 		if (char_to_check == MAP_ELEMS[i])
 		{
-			data->map[y][x] = i + '0';
+			env->map[y][x] = i + '0';
 			if (i == BOMB)
-				++data->bombs_to_collect;
+				++env->bombs_to_collect;
 			if (i == PLAYER)
 			{
-				data->player.x = x;
-				data->player.y = y;
+				env->player.x = x;
+				env->player.y = y;
+				env->curr_x = x * BLOC_PXL_LEN;
+				env->curr_y = y * BLOC_PXL_LEN;
 			}
 			return ;
 		}
@@ -48,7 +50,7 @@ void	sl_populate_map_with_elem(t_data *data, char char_to_check, int x, int y)
 	exit(EXIT_FAILURE);//error message
 }
 
-void	sl_get_window_dimensions(t_data *data, char *filename)
+void	sl_get_window_dimensions(t_env *env, char *filename)
 {
 	char	*line;
 	int		i;
@@ -63,18 +65,18 @@ void	sl_get_window_dimensions(t_data *data, char *filename)
 		while (line[j])
 			++j;
 		if (j > 0)
-			data->width = j * BLOC_PXL_LEN;
+			env->width = j * BLOC_PXL_LEN;
 		free(line);
 		++i;
 	}
-//	printf("width: %d", data->width);
+//	printf("width: %d", env->width);
 	// if error
 	free(line);
 	line = NULL;
-	data->height = i * BLOC_PXL_LEN;	
+	env->height = i * BLOC_PXL_LEN;	
 }
 
-void	sl_parse_map(t_data *data, char *filename)
+void	sl_parse_map(t_env *env, char *filename)
 {
 	char	*line;
 	int		map_fd;
@@ -82,19 +84,19 @@ void	sl_parse_map(t_data *data, char *filename)
 	int		j;
 
 	map_fd = open(filename, O_RDONLY);
-	sl_get_window_dimensions(data, filename);
-//	printf("height: %d", data->height);
-	data->map = malloc(data->height * sizeof(*data->map));
+	sl_get_window_dimensions(env, filename);
+//	printf("height: %d", env->height);
+	env->map = malloc(env->height * sizeof(*env->map));
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{
 //		printf("strlen: %d\n", ft_strlen(line));
-		data->map[i] = malloc(ft_strlen(line) * sizeof(*data->map));
+		env->map[i] = malloc(ft_strlen(line) * sizeof(*env->map));
 		//ft_malloc
 		j = 0;
 		while (line[j])
 		{
-			sl_populate_map_with_elem(data, line[j], j, i);
+			sl_populate_map_with_elem(env, line[j], j, i);
 			++j;
 		}
 		free(line);
