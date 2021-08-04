@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/03 16:42:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/04 06:45:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,16 @@
 # include <mlx.h>
 # include <X11/X.h>
 
-# define BLOC_PXL_LEN	24
+# define BLOC_LEN		24
 # define MAP_ELEMS		"01CEP"
 
 # define WALL			'1'
 # define ITEM_BOMB		'2'
+
+# define UP				-1
+# define DOWN			1
+# define LEFT			-1
+# define RIGHT			1
 
 /*
 ** parsing
@@ -52,20 +57,19 @@ typedef struct s_exit
 	t_img	img;
 }			t_exit;
 
+typedef struct s_dlr
+{
+	t_img	def;
+	t_img	l;
+	t_img	r;
+}			t_dlr;
+
 typedef struct s_img_patterns
 {
-	t_img	up;
-	t_img	up_l;
-	t_img	up_r;
-	t_img	down;
-	t_img	down_l;
-	t_img	down_r;
-	t_img	left;
-	t_img	left_l;
-	t_img	left_r;
-	t_img	right;
-	t_img	right_l;
-	t_img	right_r;
+	t_dlr	up;
+	t_dlr	down;
+	t_dlr	left;
+	t_dlr	right;
 }			t_img_patterns;
 
 typedef struct s_coord
@@ -81,16 +85,16 @@ typedef struct s_dir
 	bool	down;
 	bool	left;
 	bool	right;
-}		t_dir;
+}			t_dir;
 
-typedef struct s_player
+typedef struct s_sprite
 {
 	t_img_patterns	img;
 	void			*curr_state;
 	t_dir			curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
-}					t_player;
+}					t_sprite;
 
 typedef struct s_bombs
 {
@@ -110,12 +114,12 @@ typedef struct s_env
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img		background;
+	t_img		bkgd;
 	int			width;
 	int			height;
 	char		**map;
 	t_textures	tex;
-	t_player	p1;
+	t_sprite	p1;
 }			t_env;
 
 typedef struct s_square

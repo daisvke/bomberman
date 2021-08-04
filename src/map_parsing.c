@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/03 08:03:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/04 05:10:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	sl_populate_map_with_elem(t_env *env, char char_to_check, int x, int y)
 		{
 			env->map[y][x] = i + '0';
 			if (i == BOMB)
-				++env->bombs_to_collect;
+				++env->tex.bomb.to_collect;
 			if (i == PLAYER)
 			{
 				env->p1.pos.x = x;
 				env->p1.pos.y = y;
-				env->curr_x = x * BLOC_PXL_LEN;
-				env->curr_y = y * BLOC_PXL_LEN;
+				env->p1.sub_pos.x = x * BLOC_LEN;
+				env->p1.sub_pos.y = y * BLOC_LEN;
 			}
 			return ;
 		}
@@ -65,15 +65,14 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 		while (line[j])
 			++j;
 		if (j > 0)
-			env->width = j * BLOC_PXL_LEN;
+			env->width = j * BLOC_LEN;
 		free(line);
 		++i;
 	}
-//	printf("width: %d", env->width);
 	// if error
 	free(line);
 	line = NULL;
-	env->height = i * BLOC_PXL_LEN;	
+	env->height = i * BLOC_LEN;	
 }
 
 void	sl_parse_map(t_env *env, char *filename)
@@ -85,12 +84,10 @@ void	sl_parse_map(t_env *env, char *filename)
 
 	map_fd = open(filename, O_RDONLY);
 	sl_get_window_dimensions(env, filename);
-//	printf("height: %d", env->height);
 	env->map = malloc(env->height * sizeof(*env->map));
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{
-//		printf("strlen: %d\n", ft_strlen(line));
 		env->map[i] = malloc(ft_strlen(line) * sizeof(*env->map));
 		//ft_malloc
 		j = 0;

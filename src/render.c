@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/03 16:03:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:00:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ int		sl_render_colored_bloc(t_img *img, int color, int x, int y)
 	int	j;
 
 	i = 0;
-	while (i < BLOC_PXL_LEN)
+	while (i < BLOC_LEN)
 	{
 		j = 0;
-		while (j < BLOC_PXL_LEN)
+		while (j < BLOC_LEN)
 		{
-//		printf("y: %d, i: %d, j: %d, x: %d, x + j: %d\n", y, i, j, x, x + j);
 			sl_img_pixel_put(img, j + x, i + y, color);
 			++j;
 		}
@@ -61,10 +60,10 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 	int	j;
 
 	i = 0;
-	while (i < BLOC_PXL_LEN)
+	while (i < BLOC_LEN)
 	{
 		j = 0;
-		while (j < BLOC_PXL_LEN)
+		while (j < BLOC_LEN)
 		{
 			color = sl_get_color_from_img(xpm_img, j, i);
 			sl_img_pixel_put(img, j + x, i + y, color);
@@ -74,7 +73,7 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 	}
 }
 
-void	sl_render_bg(t_env *env)
+void	sl_render_bkgd(t_env *env)
 {
 	char	**map;
 	int		i;
@@ -82,66 +81,69 @@ void	sl_render_bg(t_env *env)
 
 	map = env->map;
 	i = 0;
-	while (i < (env->height / BLOC_PXL_LEN))
+	while (i < (env->height / BLOC_LEN))
 	{
 		j = 0;
-		while (j < (env->width / BLOC_PXL_LEN))
+		while (j < (env->width / BLOC_LEN))
 		{
 			if (map[i][j] != '1')
-				sl_render_colored_bloc(&env.bg, GREEN_PXL, BLOC_PXL_LEN * j, BLOC_PXL_LEN * i);
+				sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * j, BLOC_LEN * i);
 			else
-				sl_render_bloc_with_xpm(&env.bg, &env->wall,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.wall,  BLOC_LEN * j,  BLOC_LEN * i);
 			if (map[i][j] == '2' && map[env->p1.pos.y][env->p1.pos.x] != ITEM_BOMB)
-				sl_render_bloc_with_xpm(&env.bg, &env->item_bomb,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
-			if (map[i][j] == '3' && env->exit.appear == true)
-				sl_render_bloc_with_xpm(&env.bg, &env->exit.img,  BLOC_PXL_LEN * j,  BLOC_PXL_LEN * i);
+				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.bomb.item_bomb,  BLOC_LEN * j,  BLOC_LEN * i);
+			if (map[i][j] == '3' && env->tex.exit.appear == true)
+				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.exit.img,  BLOC_LEN * j,  BLOC_LEN * i);
 			++j;
 		}
 		++i;
 	}
 }
 
-int	sl_move(t_env *env)
+void	sl_animate_sprite(t_sprite *sprite, t_dlr img, bool *state, int x, int y)
 {
 	static int	i;
-	
+
 	if (i <= 1600)
 	{
-		env->current = &env->player2;
-		env->curr_x = env->p1.pos.x * BLOC_PXL_LEN;
-		env->curr_y = (env->p1.pos.y * BLOC_PXL_LEN) + (BLOC_PXL_LEN / 3);
+		sprite->curr_state = &img.l;
+		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
+		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
 	}
-	if (i > 1600 && i <= 3200)
+	if (i > 1600)
 	{
-		env->current = &env->player3;
-		env->curr_x = env->p1.pos.x * BLOC_PXL_LEN;
-		env->curr_y = (env->p1.pos.y * BLOC_PXL_LEN) + (2 * (BLOC_PXL_LEN / 3));
+		sprite->curr_state = &img.r;
+		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (2 * (BLOC_LEN / 3));
+		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (2 * (BLOC_LEN / 3));
 	}
-	if (i == 4200)
+	if (i == 3200)
 	{
-		env->current = &env->player;
-		env->curr_x = env->p1.pos.x * BLOC_PXL_LEN;
-		env->curr_y = (env->p1.pos.y * BLOC_PXL_LEN) + BLOC_PXL_LEN;
-		++env->p1.pos.y;
-		env->down = false;
+
+		sprite->curr_state = &img.def;
+		sprite->pos.x += x;
+		sprite->pos.y += y;
+		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
+		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN;
+		*state = false;
 		i = 0;
 	}
 	else
-	{
-
 		++i;
-	}
-	return (0);
 }
-
+//put img to window (not render
 int	sl_render(t_env *env)
 {
 	t_img	*img;
-	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env.bg.mlx_img, 0, 0);
-	if (env->down)
-		sl_move(env);
-	img = env->current;
-	if (img->mlx_img)
-		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->curr_x, env->curr_y);
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);
+	if (env->p1.curr_dir.up)
+		sl_animate_sprite(&env->p1, env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
+	if (env->p1.curr_dir.down)
+		sl_animate_sprite(&env->p1, env->p1.img.down, &env->p1.curr_dir.down, 0, DOWN);
+	if (env->p1.curr_dir.left)
+		sl_animate_sprite(&env->p1, env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
+	if (env->p1.curr_dir.right)
+		sl_animate_sprite(&env->p1, env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
+	img = env->p1.curr_state;
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
 	return (0);
 }
