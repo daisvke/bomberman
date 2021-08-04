@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/04 15:00:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 00:41:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,26 +100,26 @@ void	sl_render_bkgd(t_env *env)
 	}
 }
 
-void	sl_animate_sprite(t_sprite *sprite, t_dlr img, bool *state, int x, int y)
+void	sl_animate_sprite(t_sprite *sprite, t_dlr *img, bool *state, int x, int y)
 {
 	static int	i;
 
 	if (i <= 1600)
 	{
-		sprite->curr_state = &img.l;
+		sprite->curr_state = &img->l;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
 	}
 	if (i > 1600)
 	{
-		sprite->curr_state = &img.r;
+		sprite->curr_state = &img->r;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (2 * (BLOC_LEN / 3));
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (2 * (BLOC_LEN / 3));
 	}
 	if (i == 3200)
 	{
 
-		sprite->curr_state = &img.def;
+		sprite->curr_state = &img->def;
 		sprite->pos.x += x;
 		sprite->pos.y += y;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
@@ -136,13 +136,13 @@ int	sl_render(t_env *env)
 	t_img	*img;
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);
 	if (env->p1.curr_dir.up)
-		sl_animate_sprite(&env->p1, env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
+		sl_animate_sprite(&env->p1, &env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
 	if (env->p1.curr_dir.down)
-		sl_animate_sprite(&env->p1, env->p1.img.down, &env->p1.curr_dir.down, 0, DOWN);
+		sl_animate_sprite(&env->p1, &env->p1.img.down, &env->p1.curr_dir.down, 0, DOWN);
 	if (env->p1.curr_dir.left)
-		sl_animate_sprite(&env->p1, env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
+		sl_animate_sprite(&env->p1, &env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
 	if (env->p1.curr_dir.right)
-		sl_animate_sprite(&env->p1, env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
+		sl_animate_sprite(&env->p1, &env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
 	img = env->p1.curr_state;
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
 	return (0);
