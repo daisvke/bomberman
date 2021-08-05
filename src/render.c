@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 03:13:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 06:43:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void	sl_render_bkgd(t_env *env)
 
 	map = env->map;
 	i = 0;
-	while (i < (env->height / BLOC_LEN))
+	while (i < env->height)
 	{
 		j = 0;
-		while (j < (env->width / BLOC_LEN))
+		while (j < env->width)
 		{
 			if (map[i][j] != '1')
 				sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * j, BLOC_LEN * i);

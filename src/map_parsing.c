@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/04 05:10:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 06:49:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,29 @@ char    *ft_strchr(const char *s, int c)
         return (0);
 }
 
-void	sl_populate_map_with_elem(t_env *env, char char_to_check, int x, int y)
+void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int texture)
+{
+	if (x == 0 || y == 0 || x == env->width || y == env->height)
+	{
+		if (texture != WALL - '0')
+		{
+			printf("no walls\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y)
 {
 	int	i;
-
+//count exit and p1
+//p1 > 1 => error
 	i = 0;
 	while (MAP_ELEMS[i])
 	{
 		if (char_to_check == MAP_ELEMS[i])
 		{
+			sl_check_if_map_is_surrounded_by_walls(env, x, y, i);
 			env->map[y][x] = i + '0';
 			if (i == BOMB)
 				++env->tex.bomb.to_collect;
@@ -58,6 +72,8 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	int		map_fd;
 
 	map_fd = open(filename, O_RDONLY);
+	if (map_fd == ERROR)
+		exit(EXIT_FAILURE);
 	i = 0;
 	while (get_next_line(map_fd, &line) && ft_strlen(line) != 0)
 	{
@@ -65,14 +81,14 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 		while (line[j])
 			++j;
 		if (j > 0)
-			env->width = j * BLOC_LEN;
+			env->width = j;
 		free(line);
 		++i;
 	}
 	// if error
 	free(line);
 	line = NULL;
-	env->height = i * BLOC_LEN;	
+	env->height = i;	
 }
 
 void	sl_parse_map(t_env *env, char *filename)
@@ -93,7 +109,7 @@ void	sl_parse_map(t_env *env, char *filename)
 		j = 0;
 		while (line[j])
 		{
-			sl_populate_map_with_elem(env, line[j], j, i);
+			sl_populate_map_with_textures(env, line[j], j, i);
 			++j;
 		}
 		free(line);

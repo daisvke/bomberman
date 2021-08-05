@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 03:12:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 06:33:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,6 @@ int	sl_handle_keypress(int keycode, t_env *env)
 	if (keycode == XK_d)
 		env->p1.curr_dir.right = true;
 	dir = env->p1.curr_dir;
-/*	if (dir.up || dir.down || dir.left || dir.right)
-	{
-		++moves;
-		//on window
-		printf("%d\n", moves);
-	}
-*/	
 	return (0);
 }
 
@@ -136,31 +129,48 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_texture(env, &env->p1.img.right.r, "./img/bomberman-white-right-r-24x24.xpm");
 
 }
-/*
-void	sl_check_input(int argc, char *argv[])
+int	ft_strcmp(char *s1, char *s2)
 {
-	int	i;
+	int		i;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+	{
+		i++;
+	}
+	return ((unsigned)s1[i] - (unsigned)s2[i]);
+}
+
+void	sl_check_input(int argc, char *filename)
+{
+	char	*file_extension;
 
 	if (argc < 2)
 		exit(EXIT_FAILURE);
-	i = FILE_EXTENSION_POS;
-	while (i < FILE_EXTENSION_LEN)
-		
-
-		
-}*/
+	file_extension = ft_strrchr(filename, '.');
+	if (!file_extension)
+		exit(EXIT_FAILURE);
+	if (ft_strcmp(file_extension, FILE_EXTENSION) != 0)
+		exit(EXIT_FAILURE);
+}
 
 int	main(int argc, char *argv[])
 {
 	t_env	env;
+	int		width;
+	int		height;
 
-//	sl_check_input(argc, argv);
+	sl_check_input(argc, argv[1]);
 	sl_init_env(&env);
 	sl_parse_map(&env, argv[1]);
+
+	width = env.width * BLOC_LEN;
+	height = env.height * BLOC_LEN;
+
 	env.mlx_ptr = mlx_init();
 	if (!env.mlx_ptr)
 		exit(EXIT_FAILURE);
-	env.win_ptr = mlx_new_window(env.mlx_ptr, env.width, env.height, \
+	env.win_ptr = mlx_new_window(env.mlx_ptr, width, height, \
 		"BOMBERMAN");
 	if (!env.win_ptr)
 	{
@@ -168,7 +178,7 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	sl_load_all_textures(&env);
-	env.bkgd.mlx_img = mlx_new_image(env.mlx_ptr, env.width, env.height);
+	env.bkgd.mlx_img = mlx_new_image(env.mlx_ptr, width, height);
 	env.bkgd.addr = mlx_get_data_addr(env.bkgd.mlx_img, &env.bkgd.bpp, &env.bkgd.line_len, &env.bkgd.endian);
 	
 	sl_render_bkgd(&env);

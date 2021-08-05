@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/04 06:45:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 06:07:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,28 @@
 # include <mlx.h>
 # include <X11/X.h>
 
-# define BLOC_LEN		24
-# define MAP_ELEMS		"01CEP"
+# include "libft/libft.h"
 
-# define WALL			'1'
-# define ITEM_BOMB		'2'
+# define FILE_EXTENSION		".ber"
+# define FILE_EXTENSION_LEN	3
 
-# define UP				-1
-# define DOWN			1
-# define LEFT			-1
-# define RIGHT			1
+# define BLOC_LEN			24
+# define MAP_ELEMS			"01CEP"
+
+# define WALL				'1'
+# define ITEM_BOMB			'2'
+
+# define UP					-1
+# define DOWN				1
+# define LEFT				-1
+# define RIGHT				1
 
 /*
 ** parsing
 */
-# define BOMB			2
-# define PLAYER			4
+# define ERROR				-1
+# define BOMB				2
+# define PLAYER				4
 
 /*
 ** colors
