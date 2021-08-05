@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 00:41:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 03:13:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,62 @@ void	sl_render_bkgd(t_env *env)
 	}
 }
 
-void	sl_animate_sprite(t_sprite *sprite, t_dlr *img, bool *state, int x, int y)
+void	sl_handle_bombs(t_env *env, int delta_x, int delta_y)
+{
+	int	x;
+	int	y;
+//printf("to: %d, ted: %d\n", env->tex.bomb.to_collect, env->tex.bomb.collected);
+	x = env->p1.pos.x + delta_x;
+	y = env->p1.pos.y + delta_y;
+	if (env->map[y][x] == ITEM_BOMB)
+	{
+		sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y);
+		env->map[y][x] = '0';
+		++env->tex.bomb.collected;
+		if (env->tex.bomb.collected == env->tex.bomb.to_collect)
+		{
+			printf("ALL COLLECTED !\n");
+			env->tex.exit.appear = true;
+			//exit appears
+		}
+	}
+}
+
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, int x, int y)
 {
 	static int	i;
+	static int	moves;
+	int			pos_x;
+	int			pos_y;
 
-	if (i <= 1600)
+	pos_x = sprite->pos.x + x;
+	pos_y = sprite->pos.y + y;
+	if (env->map[pos_y][pos_x] == WALL)
+	{
+		x = 0;
+		y = 0;
+	}
+	if (i <= 800)
 	{
 		sprite->curr_state = &img->l;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
+		sl_handle_bombs(env, x, y);
 	}
-	if (i > 1600)
+	if (i > 800)
 	{
 		sprite->curr_state = &img->r;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (2 * (BLOC_LEN / 3));
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (2 * (BLOC_LEN / 3));
 	}
-	if (i == 3200)
+	if (i == 1600)
 	{
+		if (x != 0 || y != 0)
+		{
+			++moves;
+			//on window
+			printf("%d\n", moves);
+		}
 
 		sprite->curr_state = &img->def;
 		sprite->pos.x += x;
@@ -134,15 +172,16 @@ void	sl_animate_sprite(t_sprite *sprite, t_dlr *img, bool *state, int x, int y)
 int	sl_render(t_env *env)
 {
 	t_img	*img;
+	
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);
 	if (env->p1.curr_dir.up)
-		sl_animate_sprite(&env->p1, &env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
+		sl_animate_sprite(env, &env->p1, &env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
 	if (env->p1.curr_dir.down)
-		sl_animate_sprite(&env->p1, &env->p1.img.down, &env->p1.curr_dir.down, 0, DOWN);
+		sl_animate_sprite(env, &env->p1, &env->p1.img.down, &env->p1.curr_dir.down, 0, DOWN);
 	if (env->p1.curr_dir.left)
-		sl_animate_sprite(&env->p1, &env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
+		sl_animate_sprite(env, &env->p1, &env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
 	if (env->p1.curr_dir.right)
-		sl_animate_sprite(&env->p1, &env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
+		sl_animate_sprite(env, &env->p1, &env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
 	img = env->p1.curr_state;
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
 	return (0);

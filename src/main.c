@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/04 15:07:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 03:12:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	sl_handle_keypress(int keysym, t_env *env)
 
 int	sl_handle_keypress(int keycode, t_env *env)
 {
-	static int	moves;
 	char		**map;
 	int			x;
 	int			y;
@@ -42,34 +41,22 @@ int	sl_handle_keypress(int keycode, t_env *env)
 	map = env->map;
 	x = env->p1.pos.x;
 	y = env->p1.pos.y;
-	if (keycode == XK_w && map[y - 1][x] != WALL)
+	if (keycode == XK_w)
 		env->p1.curr_dir.up = true;
-	if (keycode == XK_s && map[y + 1][x] != WALL)
+	if (keycode == XK_s)
 		env->p1.curr_dir.down = true;
-	if (keycode == XK_a && map[y][x - 1] != WALL)
+	if (keycode == XK_a)
 		env->p1.curr_dir.left = true;
-	if (keycode == XK_d && map[y][x + 1] != WALL)
+	if (keycode == XK_d)
 		env->p1.curr_dir.right = true;
 	dir = env->p1.curr_dir;
-	if (dir.up || dir.down || dir.left || dir.right)
+/*	if (dir.up || dir.down || dir.left || dir.right)
 	{
 		++moves;
 		//on window
 		printf("%d\n", moves);
 	}
-	if (map[env->p1.pos.y][env->p1.pos.x] == ITEM_BOMB)
-	{
-		sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * env->p1.pos.x, BLOC_LEN * env->p1.pos.y);
-		map[env->p1.pos.y][env->p1.pos.x] = '0';
-		++env->tex.bomb.collected;
-//		printf("collected: %d, to: %d\n", env->collected_bombs, env->bombs_to_collect);
-		if (env->tex.bomb.collected == env->tex.bomb.to_collect)
-		{
-			printf("ALL COLLECTED !\n");
-			env->tex.exit.appear = true;
-			//exit appears
-		}
-	}
+*/	
 	return (0);
 }
 
@@ -103,8 +90,8 @@ void	sl_init_env(t_env *env)
 	t_textures	tex;
 	t_player	p1;
 	*/
-//	env->bombs_to_collect = 0;
-//	env->collected_bombs = 0;
+	env->tex.bomb.to_collect = 0;
+	env->tex.bomb.collected = 0;
 	env->tex.exit.appear = false;
 	env->p1.curr_dir.up = false;
 	env->p1.curr_dir.down = false;
@@ -147,15 +134,29 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_texture(env, &env->p1.img.right.def, "./img/bomberman-white-right-0-24x24.xpm");
 	sl_load_texture(env, &env->p1.img.right.l, "./img/bomberman-white-right-l-24x24.xpm");
 	sl_load_texture(env, &env->p1.img.right.r, "./img/bomberman-white-right-r-24x24.xpm");
-}
 
-int	main(void)
+}
+/*
+void	sl_check_input(int argc, char *argv[])
+{
+	int	i;
+
+	if (argc < 2)
+		exit(EXIT_FAILURE);
+	i = FILE_EXTENSION_POS;
+	while (i < FILE_EXTENSION_LEN)
+		
+
+		
+}*/
+
+int	main(int argc, char *argv[])
 {
 	t_env	env;
-	
-	sl_init_env(&env);
-	sl_parse_map(&env, "map");
 
+//	sl_check_input(argc, argv);
+	sl_init_env(&env);
+	sl_parse_map(&env, argv[1]);
 	env.mlx_ptr = mlx_init();
 	if (!env.mlx_ptr)
 		exit(EXIT_FAILURE);
