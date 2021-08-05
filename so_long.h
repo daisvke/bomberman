@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 06:07:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 14:45:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,19 @@
 */
 # define ERROR				-1
 # define BOMB				2
+# define EXIT				3
 # define PLAYER				4
 
 /*
 ** colors
 */
 # define GREEN_PXL	0x107830
+
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}		t_coord;
 
 typedef struct s_img
 {
@@ -61,6 +68,7 @@ typedef struct s_exit
 {
 	bool	appear;
 	t_img	img;
+	t_coord	pos;
 }			t_exit;
 
 typedef struct s_dlr
@@ -77,12 +85,6 @@ typedef struct s_img_patterns
 	t_dlr	left;
 	t_dlr	right;
 }			t_img_patterns;
-
-typedef struct s_coord
-{
-	int	x;
-	int	y;
-}		t_coord;
 
 // try bitshift
 typedef struct s_dir

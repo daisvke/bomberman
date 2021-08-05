@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 06:49:53 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/05 14:50:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y)
 				env->p1.sub_pos.x = x * BLOC_LEN;
 				env->p1.sub_pos.y = y * BLOC_LEN;
 			}
+		//	if (i == EXIT)
+				
 			return ;
 		}
 		++i;
