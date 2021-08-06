@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 06:33:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/06 02:27:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,22 +113,28 @@ void	sl_load_texture(t_env *env, t_img *img, char *path_to_file)
 
 void	sl_load_all_textures(t_env *env)
 {
-	sl_load_texture(env, &env->tex.wall, "./img/bomberman-grey-tile-24x24.xpm");
-	sl_load_texture(env, &env->tex.bomb.item_bomb, "./img/bomberman-item-bomb-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.up.def, "./img/bomberman-white-up-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.up.l, "./img/bomberman-white-up-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.up.r, "./img/bomberman-white-up-r-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.down.def, "./img/bomberman-white-down-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.down.l, "./img/bomberman-white-down-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.down.r, "./img/bomberman-white-down-r-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.left.def, "./img/bomberman-white-left-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.left.l, "./img/bomberman-white-left-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.left.r, "./img/bomberman-white-left-r-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.right.def, "./img/bomberman-white-right-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.right.l, "./img/bomberman-white-right-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.right.r, "./img/bomberman-white-right-r-24x24.xpm");
-
+	sl_load_texture(env, &env->tex.wall, "./img/grey-tile-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.item_bomb, "./img/item-bomb-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.up.def, "./img/white-up-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.up.l, "./img/white-up-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.up.r, "./img/white-up-r-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.down.def, "./img/white-down-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.down.l, "./img/white-down-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.down.r, "./img/white-down-r-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.left.def, "./img/white-left-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.left.l, "./img/white-left-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.left.r, "./img/white-left-r-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.right.def, "./img/white-right-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.right.l, "./img/white-right-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.right.r, "./img/white-right-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit.state0, "./img/exit-0-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit.state1, "./img/exit-1-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit.state2, "./img/exit-2-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit.state3, "./img/exit-3-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit.state4, "./img/exit-4-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit.state5, "./img/exit-5-24x24.xpm");
 }
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int		i;

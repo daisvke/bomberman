@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 14:50:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/06 02:58:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 
 void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y)
 {
-	int	i;
+	int		i;
+	t_exit	*the_exit;
+
+	the_exit = &env->tex.exit;
 //count exit and p1
 //p1 > 1 => error
 	i = 0;
@@ -57,8 +60,11 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y)
 				env->p1.sub_pos.x = x * BLOC_LEN;
 				env->p1.sub_pos.y = y * BLOC_LEN;
 			}
-		//	if (i == EXIT)
-				
+			if (i == EXIT)
+			{
+				the_exit->pos.x = x;
+				the_exit->pos.y = y;
+			}	
 			return ;
 		}
 		++i;

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 15:14:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/06 04:32:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,17 @@ void	sl_render_bkgd(t_env *env)
 				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.wall,  BLOC_LEN * j,  BLOC_LEN * i);
 			if (map[i][j] == '2' && map[env->p1.pos.y][env->p1.pos.x] != ITEM_BOMB)
 				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.bomb.item_bomb,  BLOC_LEN * j,  BLOC_LEN * i);
-			if (map[i][j] == '3' && env->tex.exit.appear == true)
-				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.exit.img,  BLOC_LEN * j,  BLOC_LEN * i);
 			++j;
 		}
 		++i;
 	}
 }
 
-void	sl_handle_bombs(t_env *env, int delta_x, int delta_y)
+void	sl_handle_textures_while_moving(t_env *env, int delta_x, int delta_y)
 {
 	int	x;
 	int	y;
-//printf("to: %d, ted: %d\n", env->tex.bomb.to_collect, env->tex.bomb.collected);
+
 	x = env->p1.pos.x + delta_x;
 	y = env->p1.pos.y + delta_y;
 	if (env->map[y][x] == ITEM_BOMB)
@@ -113,11 +111,13 @@ void	sl_handle_bombs(t_env *env, int delta_x, int delta_y)
 		env->map[y][x] = '0';
 		++env->tex.bomb.collected;
 		if (env->tex.bomb.collected == env->tex.bomb.to_collect)
-		{
-			printf("ALL COLLECTED !\n");
 			env->tex.exit.appear = true;
-			//exit appears
-		}
+	}
+	// not bombs
+	if (env->map[y][x] == MAP_EXIT && env->tex.exit.appear == true)
+	{
+		printf("GAME CLEAR\n");
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -140,7 +140,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, in
 		sprite->curr_state = &img->l;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
-		sl_handle_bombs(env, x, y);
+		sl_handle_textures_while_moving(env, x, y);
 	}
 	if (i > 800)
 	{
@@ -168,6 +168,32 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, in
 	else
 		++i;
 }
+
+void	sl_reveal_exit(t_env *env)
+{
+	t_exit		exit;
+	t_img		*curr_state;
+	static int	i;
+
+	exit = env->tex.exit;
+	curr_state = NULL;
+	if (i <= 800)
+		curr_state = &exit.state0;
+	if (i > 800 && i <= 1600)
+		curr_state = &exit.state1;
+	if (i > 1600 && i <= 2400)
+		curr_state = &exit.state2;
+	if (i > 2400 && i <= 3200)
+		curr_state = &exit.state3;
+	if (i > 3200)
+		curr_state = &exit.state4;
+	if (i == 4000)
+		curr_state = &exit.state5;
+	else
+		++i;
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, curr_state->mlx_img, exit.pos.x * BLOC_LEN, exit.pos.y * BLOC_LEN);
+}
+
 //put img to window (not render
 int	sl_render(t_env *env)
 {
@@ -182,6 +208,8 @@ int	sl_render(t_env *env)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
 	if (env->p1.curr_dir.right)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
+	if (env->tex.exit.appear == true)
+		sl_reveal_exit(env);
 	img = env->p1.curr_state;
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
 	return (0);

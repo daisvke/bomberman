@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/05 14:45:40 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/06 04:30:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 
 # define WALL				'1'
 # define ITEM_BOMB			'2'
+# define MAP_EXIT			'3'
+
+// MAP_***    PARS_***
 
 # define UP					-1
 # define DOWN				1
@@ -67,7 +70,12 @@ typedef struct s_img
 typedef struct s_exit
 {
 	bool	appear;
-	t_img	img;
+	t_img	state0;
+	t_img	state1;
+	t_img	state2;
+	t_img	state3;
+	t_img	state4;
+	t_img	state5;
 	t_coord	pos;
 }			t_exit;
 
