@@ -147,6 +147,11 @@ typedef struct s_square
 	int	color;
 }		t_square;
 
+typedef struct s_count
+{
+    int player;
+    int exit;
+}
 /*
 ** parse
 */

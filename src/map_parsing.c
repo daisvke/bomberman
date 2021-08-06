@@ -36,7 +36,7 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 	}
 }
 
-void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y)
+void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,t_count *counter)
 {
 	int		i;
 	t_exit	*the_exit;
@@ -55,6 +55,7 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y)
 				++env->tex.bomb.to_collect;
 			if (i == PLAYER)
 			{
+                ++counter->player;
 				env->p1.pos.x = x;
 				env->p1.pos.y = y;
 				env->p1.sub_pos.x = x * BLOC_LEN;
@@ -62,6 +63,7 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y)
 			}
 			if (i == EXIT)
 			{
+                ++counter->exit;
 				the_exit->pos.x = x;
 				the_exit->pos.y = y;
 			}	
@@ -99,16 +101,29 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	env->height = i;	
 }
 
+void    sl_check_counter(t_count counter, int bomb_count)
+{
+    if (!bomb_count)
+        exit(EXIT_FAILURE):
+    if (!counter.player || counter.player > 1)
+        exit(EXIT_FAILURE);
+    if (!counter.exit)
+        exit(EXIT_FAILURE);;
+}
+
 void	sl_parse_map(t_env *env, char *filename)
 {
 	char	*line;
 	int		map_fd;
 	int		i;
 	int		j;
+    t_count counter;
 
 	map_fd = open(filename, O_RDONLY);
 	sl_get_window_dimensions(env, filename);
 	env->map = malloc(env->height * sizeof(*env->map));
+    counter.player = 0;
+    counter.exit = 0;
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{
@@ -117,12 +132,13 @@ void	sl_parse_map(t_env *env, char *filename)
 		j = 0;
 		while (line[j])
 		{
-			sl_populate_map_with_textures(env, line[j], j, i);
+			sl_populate_map_with_textures(env, line[j], j, i, &counter);
 			++j;
 		}
 		free(line);
 		++i;
 	}
+    sl_check_counter(counter, env->tex.bomb.to_collect);
 	// if error
 	free(line);
 	line = NULL;
