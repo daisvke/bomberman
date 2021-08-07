@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/06 02:58:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/07 02:55:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 void    sl_check_counter(t_count counter, int bomb_count)
 {
     if (!bomb_count)
-        exit(EXIT_FAILURE):
+        exit(EXIT_FAILURE);
     if (!counter.player || counter.player > 1)
         exit(EXIT_FAILURE);
     if (!counter.exit)

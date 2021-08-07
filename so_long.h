@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/06 04:30:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/07 04:05:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_sprite
 	t_dir			curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
+	int				moves;
 }					t_sprite;
 
 typedef struct s_bombs
@@ -151,7 +152,7 @@ typedef struct s_count
 {
     int player;
     int exit;
-}
+}		t_count;
 /*
 ** parse
 */

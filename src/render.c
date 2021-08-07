@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/06 04:32:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/07 04:27:18 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void	sl_handle_textures_while_moving(t_env *env, int delta_x, int delta_y)
 void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, int x, int y)
 {
 	static int	i;
-	static int	moves;
 	int			pos_x;
 	int			pos_y;
 
@@ -151,12 +150,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, in
 	if (i == 1600)
 	{
 		if (x != 0 || y != 0)
-		{
-			++moves;
-			//on window
-			printf("%d\n", moves);
-		}
-
+			++env->p1.moves;
 		sprite->curr_state = &img->def;
 		sprite->pos.x += x;
 		sprite->pos.y += y;
@@ -194,6 +188,15 @@ void	sl_reveal_exit(t_env *env)
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, curr_state->mlx_img, exit.pos.x * BLOC_LEN, exit.pos.y * BLOC_LEN);
 }
 
+void	sl_put_move_count_to_window(t_env *env)
+{
+	char	*count;
+	char	*str;
+
+	count = ft_itoa(env->p1.moves);
+	mlx_string_put(env->mlx_ptr, env->win_ptr, 15, 15, 0xFFFFFF, count);
+}
+
 //put img to window (not render
 int	sl_render(t_env *env)
 {
@@ -212,5 +215,6 @@ int	sl_render(t_env *env)
 		sl_reveal_exit(env);
 	img = env->p1.curr_state;
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
+	sl_put_move_count_to_window(env);
 	return (0);
 }
