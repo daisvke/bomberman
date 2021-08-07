@@ -161,6 +161,17 @@ void	sl_check_input(int argc, char *filename)
 		exit(EXIT_FAILURE);
 }
 
+void    sl_exit_game(t_env *env, char *err_mess)
+{
+    free(env->map);
+    if (err_mess)
+        ft_printf("error; %s\n", err_mess);
+	mlx_loop(env.mlx_ptr);
+	mlx_destroy_display(env.mlx_ptr);
+	ft_free(env.mlx_ptr);
+    exit(EXIT_FAILURE);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_env	env;
@@ -193,8 +204,6 @@ int	main(int argc, char *argv[])
 	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
 	mlx_key_hook(env.win_ptr, &sl_handle_input, &env);
 	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);
-	mlx_loop(env.mlx_ptr);
-	mlx_destroy_display(env.mlx_ptr);
-	free(env.mlx_ptr);
+    sl_exit_game(&env, NULL);
 	exit(EXIT_SUCCESS);
 }
