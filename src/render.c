@@ -197,12 +197,30 @@ void	sl_put_move_count_to_window(t_env *env)
 	mlx_string_put(env->mlx_ptr, env->win_ptr, 15, 15, 0xFFFFFF, count);
 }
 
+void    sl_set_bomb(t_env *env)
+{
+    static int i;
+    int x;
+    int y;
+
+    x = env->p1.pos.x;
+    y = env->p1.pos.y;
+    while (i < 10000)
+    {
+        j = 0;
+        if (j < 500)
+            mlx_file_to_xpm()
+        ++j;
+    }
+}
+
 //put img to window (not render
 int	sl_render(t_env *env)
 {
 	t_img	*img;
 	
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);
+    sl_set_bomb(t_env *env);;
 	if (env->p1.curr_dir.up)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
 	if (env->p1.curr_dir.down)

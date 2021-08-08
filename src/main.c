@@ -49,7 +49,8 @@ int	sl_handle_keypress(int keycode, t_env *env)
 		env->p1.curr_dir.left = true;
 	if (keycode == XK_d)
 		env->p1.curr_dir.right = true;
-	dir = env->p1.curr_dir;
+    if (keycode == XK_b)
+        env->tex.bomb.set_bomb == true;
 	return (0);
 }
 
