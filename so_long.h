@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/07 04:05:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/08 03:55:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
-typedef struct s_exit
+typedef struct s_pipe
 {
 	bool	appear;
 	t_img	state0;
@@ -77,7 +77,7 @@ typedef struct s_exit
 	t_img	state4;
 	t_img	state5;
 	t_coord	pos;
-}			t_exit;
+}			t_pipe;
 
 typedef struct s_dlr
 {
@@ -124,7 +124,7 @@ typedef struct s_textures
 {
 	t_img	wall;
 	t_bombs	bomb;
-	t_exit	exit;
+	t_pipe	exit_pipe;
 }			t_textures;
 
 typedef struct s_env
@@ -151,7 +151,7 @@ typedef struct s_square
 typedef struct s_count
 {
     int player;
-    int exit;
+    int exit_pipe;
 }		t_count;
 /*
 ** parse

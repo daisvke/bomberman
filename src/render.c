@@ -111,10 +111,10 @@ void	sl_handle_textures_while_moving(t_env *env, int delta_x, int delta_y)
 		env->map[y][x] = '0';
 		++env->tex.bomb.collected;
 		if (env->tex.bomb.collected == env->tex.bomb.to_collect)
-			env->tex.exit.appear = true;
+			env->tex.exit_pipe.appear = true;
 	}
 	// not bombs
-	if (env->map[y][x] == MAP_EXIT && env->tex.exit.appear == true)
+	if (env->map[y][x] == MAP_EXIT && env->tex.exit_pipe.appear == true)
 	{
 		printf("GAME CLEAR\n");
 		exit(EXIT_SUCCESS);
@@ -165,11 +165,11 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, in
 
 void	sl_reveal_exit(t_env *env)
 {
-	t_exit		exit;
+	t_pipe		exit;
 	t_img		*curr_state;
 	static int	i;
 
-	exit = env->tex.exit;
+	exit = env->tex.exit_pipe;
 	curr_state = NULL;
 	if (i <= 800)
 		curr_state = &exit.state0;
@@ -211,7 +211,7 @@ int	sl_render(t_env *env)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
 	if (env->p1.curr_dir.right)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
-	if (env->tex.exit.appear == true)
+	if (env->tex.exit_pipe.appear == true)
 		sl_reveal_exit(env);
 	img = env->p1.curr_state;
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);

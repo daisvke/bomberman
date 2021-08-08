@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/07 11:29:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/08 03:55:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,t_count *counter)
 {
 	int		i;
-	t_exit	*game_exit;
+	t_pipe	*game_exit;
 
-	game_exit = &env->tex.exit;
+	game_exit = &env->tex.exit_pipe;
 	i = 0;
 	while (MAP_ELEMS[i])
 	{
@@ -61,7 +61,7 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
 			}
 			if (i == EXIT)
 			{
-                ++counter->exit;
+                ++counter->exit_pipe;
 				game_exit->pos.x = x;
 				game_exit->pos.y = y;
 			}	
@@ -109,7 +109,7 @@ void    sl_check_counter(t_count counter, int bomb_count)
         exit(EXIT_FAILURE);
     if (!counter.player || counter.player > 1)
         exit(EXIT_FAILURE);
-    if (!counter.exit)
+    if (!counter.exit_pipe)
         exit(EXIT_FAILURE);;
 }
 
@@ -125,7 +125,7 @@ void	sl_parse_map(t_env *env, char *filename)
 	sl_get_window_dimensions(env, filename);
 	env->map = malloc(env->height * sizeof(*env->map));
     counter.player = 0;
-    counter.exit = 0;
+    counter.exit_pipe = 0;
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{

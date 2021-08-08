@@ -1,9 +1,10 @@
 NAME		=	so_long
 CC			=	clang -g# $(FLAGS) $(MEM)
-LAGS		=	-Wall -Wextra -Werror $(MEM)
+C_FLAGS		=	-Wall -Wextra -Werror $(MEM)
 MEM			=	-fsanitize=address
 
-LIB			=	-lX11 -lXext -lm
+LIB_FLAGS	=	-lX11 -lXext -lm -lmlx
+#LIB_FLAGS	=	-Lmlx_linux -L/usr/lib -Iminilibx-linux -lXext -lX11 -lm -lz
 MAKE_LIB	=	make -s -C
 MLX_DIR		=	minilibx-linux/
 MLX			=	minilibx-linux/libmlx_Linux.a
@@ -13,7 +14,8 @@ RM			=	rm -rf
 SRC_DIR		=	src/
 SRC_FILES	=	main.c \
 				map_parsing.c \
-				render.c
+				render.c \
+				system_calls.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 
@@ -30,7 +32,7 @@ mlx:
 				@echo "\033[32m\t\t[OK]\033[0m\n"
 
 $(NAME): mlx $(OBJ)
-				$(CC) $(LIB) $(OBJ) $(MLX) libft/libft.a -o $@
+				$(CC) $(LIB_FLAGS) $(OBJ) $(MLX) libft/libft.a -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p obj/

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/07 04:05:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/08 14:38:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,12 @@ void	check_map(t_env *env)
 
 void	sl_init_env(t_env *env)
 {
-	/*
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_img		bkgd;
-	int			width;
-	int			height;
-	char		**map;
-	t_textures	tex;
-	t_player	p1;
-	*/
+	env->width = 0;
+	env->height = 0;
+	env->map = NULL;
 	env->tex.bomb.to_collect = 0;
 	env->tex.bomb.collected = 0;
-	env->tex.exit.appear = false;
+	env->tex.exit_pipe.appear = false;
 	env->p1.moves = 0;
 	env->p1.curr_dir.up = false;
 	env->p1.curr_dir.down = false;
@@ -128,12 +121,12 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_texture(env, &env->p1.img.right.def, "./img/white-right-0-24x24.xpm");
 	sl_load_texture(env, &env->p1.img.right.l, "./img/white-right-l-24x24.xpm");
 	sl_load_texture(env, &env->p1.img.right.r, "./img/white-right-r-24x24.xpm");
-	sl_load_texture(env, &env->tex.exit.state0, "./img/exit-0-24x24.xpm");
-	sl_load_texture(env, &env->tex.exit.state1, "./img/exit-1-24x24.xpm");
-	sl_load_texture(env, &env->tex.exit.state2, "./img/exit-2-24x24.xpm");
-	sl_load_texture(env, &env->tex.exit.state3, "./img/exit-3-24x24.xpm");
-	sl_load_texture(env, &env->tex.exit.state4, "./img/exit-4-24x24.xpm");
-	sl_load_texture(env, &env->tex.exit.state5, "./img/exit-5-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit_pipe.state0, "./img/exit-0-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit_pipe.state1, "./img/exit-1-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit_pipe.state2, "./img/exit-2-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit_pipe.state3, "./img/exit-3-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit_pipe.state4, "./img/exit-4-24x24.xpm");
+	sl_load_texture(env, &env->tex.exit_pipe.state5, "./img/exit-5-24x24.xpm");
 }
 
 int	ft_strcmp(char *s1, char *s2)
@@ -161,15 +154,24 @@ void	sl_check_input(int argc, char *filename)
 		exit(EXIT_FAILURE);
 }
 
-void    sl_exit_game(t_env *env, char *err_mess)
+int    sl_exit_game(t_env *env, char *err_mess)
 {
-    free(env->map);
+ //   free(env->map);
     if (err_mess)
-        ft_printf("error; %s\n", err_mess);
-	mlx_loop(env.mlx_ptr);
-	mlx_destroy_display(env.mlx_ptr);
-	ft_free(env.mlx_ptr);
-    exit(EXIT_FAILURE);
+        printf("error: %s\n", err_mess);
+	mlx_destroy_image(env->mlx_ptr, env->bkgd.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.wall.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.bomb.item_bomb.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state0.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state1.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state2.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state3.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state4.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state5.mlx_img);
+	mlx_destroy_window(env->mlx_ptr, &env->win_ptr);
+	mlx_destroy_display(env->mlx_ptr);
+	ft_free(env->mlx_ptr);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
@@ -189,7 +191,7 @@ int	main(int argc, char *argv[])
 	if (!env.mlx_ptr)
 		exit(EXIT_FAILURE);
 	env.win_ptr = mlx_new_window(env.mlx_ptr, width, height, \
-		"BOMBERMAN");
+		"Bomberman");
 	if (!env.win_ptr)
 	{
 		free(env.mlx_ptr);
@@ -202,8 +204,10 @@ int	main(int argc, char *argv[])
 	sl_render_bkgd(&env);
 
 	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
+	mlx_hook(env.win_ptr, 33, 1L << 17, sl_exit_game, &env);
 	mlx_key_hook(env.win_ptr, &sl_handle_input, &env);
 	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);
-    sl_exit_game(&env, NULL);
+	mlx_loop(env.mlx_ptr);
+   // sl_exit_game(&env, NULL);
 	exit(EXIT_SUCCESS);
 }
