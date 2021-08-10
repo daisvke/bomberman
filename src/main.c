@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/10 04:19:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/10 18:24:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	check_map(t_env *env)
 	int i, j;
 
 	i = 0;
-	while (i < 4)
+	while (i < env->height)
 	{
 		j = 0;
-		while (j < 4)
+		while (j < env->width)
 		{
 			printf("%c", env->map[i][j]);
 			++j;
@@ -72,6 +72,7 @@ void	check_map(t_env *env)
 		printf("\n");
 		++i;
 	}
+	printf("\n");
 }
 
 void	sl_init_env(t_env *env)

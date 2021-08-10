@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/10 06:03:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/10 16:34:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEP"
 
+# define FLOOR				'0'
 # define WALL				'1'
 # define ITEM_BOMB			'2'
 # define MAP_EXIT			'3'
