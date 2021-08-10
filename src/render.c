@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/10 05:42:26 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/10 06:12:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,43 @@ void	sl_put_move_count_to_window(t_env *env)
 	free(count);
 }
 
+void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
+{
+	int	p1_x;
+	int	p1_y;
+	int	x_start;
+	int	x_end;
+	int	y_start;
+	int	y_end;
+
+	p1_x = env->p1.pos.x;
+	p1_y = env->p1.pos.y;
+	x_start = x - 2;
+	if (x_start < 0)
+		x_start = 0;
+	x_end = x + 2;
+	if (x_start > env->width)
+		x_end = env->width;
+	y_start = y - 2;
+	if (y_start < 0)
+		y_start = 0;
+	y_end = y + 2;
+	if (y_start > env->width)
+		y_end = env->width;
+	while (x_start <= x_end)
+	{
+		if (x_start == p1_x && y == p1_y)
+			sl_exit_game(env, "GAME OVER\n");
+		++x_start;
+	}
+	while (y_start <= y_end)
+	{
+		if (x == p1_x && y_start == p1_y)
+			sl_exit_game(env, "GAME OVER\n");
+		++y_start;
+	}
+}
+
 void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 {
 	static int	k;
@@ -210,6 +247,7 @@ void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 	if (k <= 1600)
 		sl_draw_segments_of_exploding_bomb(env, x, y);
 	++k;
+	sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
 	if (k > 3200)
 	{
 		*i = 0;
@@ -230,7 +268,7 @@ void    sl_set_bomb(t_env *env)
 	set_bomb = env->tex.bomb.set_states;
 	bomb_pos_x = env->tex.bomb.pos.x * BLOC_LEN;
 	bomb_pos_y = env->tex.bomb.pos.y * BLOC_LEN;
-    if (i <= 9600)
+    if (i <= 12800)
     {
         if (i % 3200 == 0)
 			++j;
@@ -248,7 +286,7 @@ void    sl_set_bomb(t_env *env)
 		}
         ++i;
     }
-	if (i > 9600)
+	if (i > 12800)
 		sl_explode_bomb(env, bomb_pos_x, bomb_pos_y, &i, &j);
 }
 /*
