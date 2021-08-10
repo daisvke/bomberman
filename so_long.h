@@ -26,7 +26,7 @@
 # define FILE_EXTENSION_LEN	3
 
 # define BLOC_LEN			24
-# define MAP_ELEMS			"01CEP"
+# define MAP_ELEMS			"01CEPM"
 
 # define FLOOR				'0'
 # define WALL				'1'
@@ -48,6 +48,7 @@
 # define BOMB				2
 # define EXIT				3
 # define PLAYER				4
+# define ENNEMY             5
 
 /*
 ** colors
@@ -134,11 +135,18 @@ typedef struct s_bombs
 	t_explode_states	explode_states;
 }				t_bombs;
 
+typedef struct s_ennemies
+{
+    t_img   img;
+    t_coord pos;
+}
+
 typedef struct s_textures
 {
-	t_img	wall;
-	t_bombs	bomb;
-	t_pipe	exit_pipe;
+	t_img	    wall;
+	t_bombs	    bomb;
+	t_pipe	    exit_pipe;
+    t_ennemies  ennemies;
 }			t_textures;
 
 typedef struct s_env
@@ -146,8 +154,6 @@ typedef struct s_env
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		bkgd;
-	void		*bkgd_cpy;
-	t_img		img;
 	int			width;
 	int			height;
 	char		**map;

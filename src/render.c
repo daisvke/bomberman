@@ -245,20 +245,19 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (x_start < x_end)
 	{
 		check_map(env);
-	printf("xs: %d, y: %d\n", x_start, y);
-		if (x_start == p1_x && y == p1_y)
+		if (map[y][x_start] == MAP_PLAYER)
 			sl_exit_game(env, "GAME OVER\n");
-		if (map[x_start][y] == ITEM_BOMB)
-			map[x_start][y] = FLOOR;
+		if (map[y][x_start] == ITEM_BOMB)
+			map[y][x_start] = FLOOR;
 		++x_start;
 	}
 	while (y_start < y_end)
 	{
 //	printf("ys: %d, x: %d\n", y_start, x);
-		if (x == p1_x && y_start == p1_y)
+		if (map[y_start][x] == MAP_PLAYER;
 			sl_exit_game(env, "GAME OVER\n");
-		if (map[x][y_start] == ITEM_BOMB)
-			map[x][y_start] = FLOOR;
+		if (map[y_start][x] == ITEM_BOMB)
+			map[y_start][x] = FLOOR;
 		++y_start;
 	}
 }

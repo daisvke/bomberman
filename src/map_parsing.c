@@ -64,7 +64,9 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
                 ++counter->exit_pipe;
 				game_exit->pos.x = x;
 				game_exit->pos.y = y;
-			}	
+			}
+            if (i == ENNEMY)
+                ++counter->ennemies;
 			return ;
 		}
 		++i;
@@ -126,6 +128,7 @@ void	sl_parse_map(t_env *env, char *filename)
 	env->map = malloc(env->height * sizeof(*env->map));
     counter.player = 0;
     counter.exit_pipe = 0;
+    counter.ennemies = 0;
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{
