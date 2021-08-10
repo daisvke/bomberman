@@ -1,6 +1,6 @@
 NAME		=	so_long
-CC			=	clang -g# $(FLAGS) $(MEM)
-C_FLAGS		=	-Wall -Wextra -Werror $(MEM)
+CC			=	clang $(CFLAGS) $(MEM)
+C_FLAGS		=	-g -Wall -Wextra -Werror $(MEM)
 MEM			=	-fsanitize=address
 
 LIB_FLAGS	=	-lX11 -lXext -lm -lmlx
@@ -12,7 +12,8 @@ MLX			=	minilibx-linux/libmlx_Linux.a
 RM			=	rm -rf
 
 SRC_DIR		=	src/
-SRC_FILES	=	main.c \
+SRC_FILES	=	draw_exploding_bomb.c \
+				main.c \
 				map_parsing.c \
 				render.c \
 				system_calls.c

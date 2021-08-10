@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/08 14:38:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/10 04:19:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	sl_handle_input(int keysym, t_env *env)
 {
 	if (keysym == XK_Escape)
-	{
-		mlx_loop_end(env->mlx_ptr);
-		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-	}
+		sl_exit_game(&env, NULL);
 	return (0);
 }
 
@@ -36,11 +33,12 @@ int	sl_handle_keypress(int keycode, t_env *env)
 	char		**map;
 	int			x;
 	int			y;
-	t_dir		dir;
 
 	map = env->map;
 	x = env->p1.pos.x;
 	y = env->p1.pos.y;
+	if (keycode == XK_Escape)
+		sl_exit_game(env, NULL);
 	if (keycode == XK_w)
 		env->p1.curr_dir.up = true;
 	if (keycode == XK_s)
@@ -49,8 +47,12 @@ int	sl_handle_keypress(int keycode, t_env *env)
 		env->p1.curr_dir.left = true;
 	if (keycode == XK_d)
 		env->p1.curr_dir.right = true;
-    if (keycode == XK_b)
-        env->tex.bomb.set_bomb == true;
+    if (keycode == XK_b && !env->tex.bomb.set_bomb)
+	{
+        env->tex.bomb.set_bomb = true;
+		env->tex.bomb.pos.x = x;
+		env->tex.bomb.pos.y = y;
+	}
 	return (0);
 }
 
@@ -79,13 +81,14 @@ void	sl_init_env(t_env *env)
 	env->map = NULL;
 	env->tex.bomb.to_collect = 0;
 	env->tex.bomb.collected = 0;
+    env->tex.bomb.set_bomb = false;
 	env->tex.exit_pipe.appear = false;
 	env->p1.moves = 0;
 	env->p1.curr_dir.up = false;
 	env->p1.curr_dir.down = false;
 	env->p1.curr_dir.left = false;
 	env->p1.curr_dir.right = false;
-	env->p1.curr_state = &env->p1.img.down.def;
+	env->p1.curr_state = &env->p1.img.down.one;
 	env->p1.sub_pos.x = 0;
 	env->p1.sub_pos.y = 0;
 	env->p1.pos.x = 0;
@@ -110,18 +113,30 @@ void	sl_load_all_textures(t_env *env)
 {
 	sl_load_texture(env, &env->tex.wall, "./img/grey-tile-24x24.xpm");
 	sl_load_texture(env, &env->tex.bomb.item_bomb, "./img/item-bomb-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.up.def, "./img/white-up-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.up.l, "./img/white-up-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.up.r, "./img/white-up-r-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.down.def, "./img/white-down-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.down.l, "./img/white-down-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.down.r, "./img/white-down-r-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.left.def, "./img/white-left-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.left.l, "./img/white-left-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.left.r, "./img/white-left-r-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.right.def, "./img/white-right-0-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.right.l, "./img/white-right-l-24x24.xpm");
-	sl_load_texture(env, &env->p1.img.right.r, "./img/white-right-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.set_states.one, "./img/set-bomb-0-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.set_states.two, "./img/set-bomb-1-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.set_states.three, "./img/set-bomb-2-24x24.xpm");
+
+	sl_load_texture(env, &env->tex.bomb.explode_states.ctr, "./img/bomb-explode-ctr-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.explode_states.hrz.one, "./img/bomb-explode-hrz-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.explode_states.hrz.two, "./img/bomb-explode-hrz-l-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.explode_states.hrz.three, "./img/bomb-explode-hrz-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.explode_states.vrt.one, "./img/bomb-explode-vrt-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.explode_states.vrt.two, "./img/bomb-explode-vrt-u-24x24.xpm");
+	sl_load_texture(env, &env->tex.bomb.explode_states.vrt.three, "./img/bomb-explode-vrt-d-24x24.xpm");
+
+	sl_load_texture(env, &env->p1.img.up.one, "./img/white-up-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.up.two, "./img/white-up-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.up.three, "./img/white-up-r-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.down.one, "./img/white-down-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.down.two, "./img/white-down-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.down.three, "./img/white-down-r-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.left.one, "./img/white-left-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.left.two, "./img/white-left-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.left.three, "./img/white-left-r-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.right.one, "./img/white-right-0-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.right.two, "./img/white-right-l-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.right.three, "./img/white-right-r-24x24.xpm");
 	sl_load_texture(env, &env->tex.exit_pipe.state0, "./img/exit-0-24x24.xpm");
 	sl_load_texture(env, &env->tex.exit_pipe.state1, "./img/exit-1-24x24.xpm");
 	sl_load_texture(env, &env->tex.exit_pipe.state2, "./img/exit-2-24x24.xpm");
@@ -158,8 +173,7 @@ void	sl_check_input(int argc, char *filename)
 int    sl_exit_game(t_env *env, char *err_mess)
 {
  //   free(env->map);
-    if (err_mess)
-        printf("error: %s\n", err_mess);
+/*
 	mlx_destroy_image(env->mlx_ptr, env->bkgd.mlx_img);
 	mlx_destroy_image(env->mlx_ptr, env->tex.wall.mlx_img);
 	mlx_destroy_image(env->mlx_ptr, env->tex.bomb.item_bomb.mlx_img);
@@ -169,9 +183,17 @@ int    sl_exit_game(t_env *env, char *err_mess)
 	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state3.mlx_img);
 	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state4.mlx_img);
 	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state5.mlx_img);
-	mlx_destroy_window(env->mlx_ptr, &env->win_ptr);
+	mlx_destroy_window(env->mlx_ptr, env->win_ptr);*/
 	mlx_destroy_display(env->mlx_ptr);
+	mlx_loop_end(env->mlx_ptr);
 	ft_free(env->mlx_ptr);
+    if (err_mess)
+	{
+        printf("error: %s\n", err_mess);
+		exit(EXIT_FAILURE);
+	}
+	else
+		exit(EXIT_SUCCESS);
 	return (0);
 }
 
@@ -206,7 +228,7 @@ int	main(int argc, char *argv[])
 
 	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
 	mlx_hook(env.win_ptr, 33, 1L << 17, sl_exit_game, &env);
-	mlx_key_hook(env.win_ptr, &sl_handle_input, &env);
+//	mlx_key_hook(env.win_ptr, &sl_handle_input, &env);
 	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);
 	mlx_loop(env.mlx_ptr);
    // sl_exit_game(&env, NULL);

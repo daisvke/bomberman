@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/07 04:27:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/10 05:42:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@ int	sl_get_color_from_img(t_img *img, int x, int y)
 	return (*(int *)(img->addr + (y * img->line_len + x * (img->bpp / 8))));
 }
 
-void	sl_img_pixel_put(t_img *img, int x , int y, int color)
+void	sl_img_pixel_put(t_img *img, int x , int y, int color, bool mask)
 {
 	char	*pixel;
 	int		i;
 
 	i = img->bpp - 8;
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	while (i >= 0)
+	if ((mask && color != GREEN_PXL) || !mask)
 	{
-		if (img->endian)
-			*pixel++ = (color >> i) & 0xFF;
-		else
-			*pixel++ = (color >> (img->bpp - 8 - i)) & 0xFF;
-		i -= 8;
+		while (i >= 0)
+		{
+			if (img->endian)
+				*pixel++ = (color >> i) & 0xFF;
+			else
+				*pixel++ = (color >> (img->bpp - 8 - i)) & 0xFF;
+			i -= 8;
+		}
 	}
 }
 
@@ -45,7 +48,7 @@ int		sl_render_colored_bloc(t_img *img, int color, int x, int y)
 		j = 0;
 		while (j < BLOC_LEN)
 		{
-			sl_img_pixel_put(img, j + x, i + y, color);
+			sl_img_pixel_put(img, j + x, i + y, color, false);
 			++j;
 		}
 		++i;
@@ -66,7 +69,7 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 		while (j < BLOC_LEN)
 		{
 			color = sl_get_color_from_img(xpm_img, j, i);
-			sl_img_pixel_put(img, j + x, i + y, color);
+			sl_img_pixel_put(img, j + x, i + y, color, true);
 			++j;
 		}
 		++i;
@@ -121,11 +124,12 @@ void	sl_handle_textures_while_moving(t_env *env, int delta_x, int delta_y)
 	}
 }
 
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, int x, int y)
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state, int x, int y)
 {
 	static int	i;
 	int			pos_x;
 	int			pos_y;
+	t_img		*curr_state;
 
 	pos_x = sprite->pos.x + x;
 	pos_y = sprite->pos.y + y;
@@ -136,14 +140,14 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, in
 	}
 	if (i <= 800)
 	{
-		sprite->curr_state = &img->l;
+		sprite->curr_state = &img->two;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
 		sl_handle_textures_while_moving(env, x, y);
 	}
 	if (i > 800)
 	{
-		sprite->curr_state = &img->r;
+		sprite->curr_state = &img->three;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (2 * (BLOC_LEN / 3));
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (2 * (BLOC_LEN / 3));
 	}
@@ -151,7 +155,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, in
 	{
 		if (x != 0 || y != 0)
 			++env->p1.moves;
-		sprite->curr_state = &img->def;
+		sprite->curr_state = &img->one;
 		sprite->pos.x += x;
 		sprite->pos.y += y;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
@@ -161,6 +165,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_dlr *img, bool *state, in
 	}
 	else
 		++i;
+	curr_state = sprite->curr_state;
 }
 
 void	sl_reveal_exit(t_env *env)
@@ -192,35 +197,91 @@ void	sl_put_move_count_to_window(t_env *env)
 {
 	char	*count;
 	char	*str;
-
+//if error
 	count = ft_itoa(env->p1.moves);
 	mlx_string_put(env->mlx_ptr, env->win_ptr, 15, 15, 0xFFFFFF, count);
+	free(count);
+}
+
+void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
+{
+	static int	k;
+
+	if (k <= 1600)
+		sl_draw_segments_of_exploding_bomb(env, x, y);
+	++k;
+	if (k > 3200)
+	{
+		*i = 0;
+		*j = 0;
+		k = 0;
+		env->tex.bomb.set_bomb = false;
+	}
 }
 
 void    sl_set_bomb(t_env *env)
 {
-    static int i;
-    int x;
-    int y;
+    static int	i;
+	static int	j;
+	int			bomb_pos_x;
+	int			bomb_pos_y;
+	t_states	set_bomb;		
 
-    x = env->p1.pos.x;
-    y = env->p1.pos.y;
-    while (i < 10000)
+	set_bomb = env->tex.bomb.set_states;
+	bomb_pos_x = env->tex.bomb.pos.x * BLOC_LEN;
+	bomb_pos_y = env->tex.bomb.pos.y * BLOC_LEN;
+    if (i <= 9600)
     {
-        j = 0;
-        if (j < 500)
-            mlx_file_to_xpm()
-        ++j;
+        if (i % 3200 == 0)
+			++j;
+		if (j % 2 == 0)
+		{
+		//	sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.one, bomb_pos_x, bomb_pos_y);
+			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.one.mlx_img, bomb_pos_x, bomb_pos_y);
+		//	env->tex.bomb.curr_state = &set_bomb.one;
+		}
+		else
+		{
+		//	sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.three, bomb_pos_x, bomb_pos_y);
+			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.three.mlx_img, bomb_pos_x, bomb_pos_y);
+		//	env->tex.bomb.curr_state = &set_bomb.three;
+		}
+        ++i;
     }
+	if (i > 9600)
+		sl_explode_bomb(env, bomb_pos_x, bomb_pos_y, &i, &j);
 }
+/*
+void	sl_overlay_bomb_and_player(t_env *env)
+{
+	t_img	*bomb_curr_state;
+	t_img	*player_curr_state;
+	unsigned int	color;
+	int	i;
+	int	j;
+	int			bomb_pos_x;
+	int			bomb_pos_y;
 
+	bomb_pos_x = env->tex.bomb.pos.x * BLOC_LEN;
+	bomb_pos_y = env->tex.bomb.pos.y * BLOC_LEN;
+
+	bomb_curr_state = env->tex.bomb.curr_state;
+//	bomb_curr_state = &env->tex.bomb.set_states.three;
+	player_curr_state = env->p1.curr_state;
+	if (env->p1.pos.x == env->tex.bomb.pos.x && env->p1.pos.y == env->tex.bomb.pos.y)
+		sl_render_bloc_with_xpm(&env->tex.bomb.set_states.one, player_curr_state, 0, 0);
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, bomb_curr_state->mlx_img, bomb_pos_x, bomb_pos_y);
+}
+*/
 //put img to window (not render
 int	sl_render(t_env *env)
 {
 	t_img	*img;
 	
-	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);
-    sl_set_bomb(t_env *env);;
+	int			bomb_pos_x;
+	int			bomb_pos_y;
+//	sl_render_bkgd(env);
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 	if (env->p1.curr_dir.up)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
 	if (env->p1.curr_dir.down)
@@ -231,8 +292,17 @@ int	sl_render(t_env *env)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
 	if (env->tex.exit_pipe.appear == true)
 		sl_reveal_exit(env);
-	img = env->p1.curr_state;
-	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
+	if (env->tex.bomb.set_bomb == true)
+	{
+		sl_set_bomb(env);
+	//	sl_overlay_bomb_and_player(env);
+	}
+//	if (!(env->p1.pos.x == env->tex.bomb.pos.x && env->p1.pos.y == env->tex.bomb.pos.y))
+//	{
+		img = env->p1.curr_state;
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
+//	}
+//	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 	sl_put_move_count_to_window(env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/08 03:55:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/10 04:02:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,19 @@ typedef struct s_pipe
 	t_coord	pos;
 }			t_pipe;
 
-typedef struct s_dlr
+typedef struct s_states
 {
-	t_img	def;
-	t_img	l;
-	t_img	r;
-}			t_dlr;
+	t_img	one;
+	t_img	two;
+	t_img	three;
+}			t_states;
 
 typedef struct s_img_patterns
 {
-	t_dlr	up;
-	t_dlr	down;
-	t_dlr	left;
-	t_dlr	right;
+	t_states	up;
+	t_states	down;
+	t_states	left;
+	t_states	right;
 }			t_img_patterns;
 
 // try bitshift
@@ -113,12 +113,24 @@ typedef struct s_sprite
 	int				moves;
 }					t_sprite;
 
+typedef struct s_explode_states
+{
+	t_img		ctr;
+	t_states	hrz;
+	t_states	vrt;
+}				t_explode_states;
+
 typedef struct s_bombs
 {
-	t_img	item_bomb;
-	int		to_collect;
-	int		collected;
-}		t_bombs;
+	t_img				item_bomb;
+	int					to_collect;
+	int					collected;
+	bool				set_bomb;
+	t_coord				pos;
+	t_states			set_states;
+	void				*curr_state;
+	t_explode_states	explode_states;
+}				t_bombs;
 
 typedef struct s_textures
 {
@@ -132,6 +144,8 @@ typedef struct s_env
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		bkgd;
+	void		*bkgd_cpy;
+	t_img		img;
 	int			width;
 	int			height;
 	char		**map;
@@ -161,7 +175,7 @@ void	sl_parse_map(t_env *data, char *filename);
 /*
 ** render
 */
-void	sl_img_pixel_put(t_img *img, int x, int y, int color);
+void	sl_img_pixel_put(t_img *img, int x , int y, int color, bool mask);
 int		sl_render(t_env *data);
 void	sl_render_background(t_env *data);
 int		sl_render_colored_bloc(t_img *img, int color, int x, int y);
