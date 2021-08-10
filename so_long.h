@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/10 16:34:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/10 20:21:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ typedef struct s_ennemies
 {
     t_img   img;
     t_coord pos;
-}
+}			t_ennemies;
 
 typedef struct s_textures
 {
@@ -174,6 +174,7 @@ typedef struct s_count
 {
     int player;
     int exit_pipe;
+	int	ennemies;
 }		t_count;
 /*
 ** parse

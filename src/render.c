@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/10 18:31:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 01:49:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,30 +136,35 @@ void	sl_update_player_pos_on_map(t_env *env, int new_x, int new_y)
 	old_x = sprite.pos.x;
 	old_y = sprite.pos.y;
 	map[old_y][old_x] = FLOOR;
-	map[new_y][new_x] = MAP_PLAYER;
 }
 
 void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state, int x, int y)
 {
 	static int	i;
+	char		**map;
 	int			pos_x;
 	int			pos_y;
 	t_img		*curr_state;
+	t_coord		bomb_pos;
 
+	map = env->map;
 	pos_x = sprite->pos.x + x;
 	pos_y = sprite->pos.y + y;
+	bomb_pos.x = env->tex.bomb.pos.x;
+	bomb_pos.y = env->tex.bomb.pos.y;
 	sl_update_player_pos_on_map(env, pos_x, pos_y);
-	if (env->map[pos_y][pos_x] == WALL)
+	if (map[pos_y][pos_x] == WALL || (env->tex.bomb.set_bomb == true && (bomb_pos.x == pos_x && bomb_pos.y == pos_y)))
 	{
 		x = 0;
 		y = 0;
 	}
+	sl_handle_textures_while_moving(env, x, y);
+	map[sprite->pos.y + y][sprite->pos.x + x] = MAP_PLAYER;
 	if (i <= 800)
 	{
 		sprite->curr_state = &img->two;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
-		sl_handle_textures_while_moving(env, x, y);
 	}
 	if (i > 800)
 	{
@@ -244,20 +249,24 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 		y_end = env->width;
 	while (x_start < x_end)
 	{
-		check_map(env);
 		if (map[y][x_start] == MAP_PLAYER)
 			sl_exit_game(env, "GAME OVER\n");
 		if (map[y][x_start] == ITEM_BOMB)
+		{
+			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x_start, BLOC_LEN * y);
 			map[y][x_start] = FLOOR;
+		}
 		++x_start;
 	}
 	while (y_start < y_end)
 	{
-//	printf("ys: %d, x: %d\n", y_start, x);
-		if (map[y_start][x] == MAP_PLAYER;
+		if (map[y_start][x] == MAP_PLAYER)
 			sl_exit_game(env, "GAME OVER\n");
 		if (map[y_start][x] == ITEM_BOMB)
+		{
+			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y_start);
 			map[y_start][x] = FLOOR;
+		}
 		++y_start;
 	}
 }
@@ -340,7 +349,7 @@ int	sl_render(t_env *env)
 	
 	int			bomb_pos_x;
 	int			bomb_pos_y;
-//	sl_render_bkgd(env);
+
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 	if (env->p1.curr_dir.up)
 		sl_animate_sprite(env, &env->p1, &env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
