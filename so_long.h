@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 04:46:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 14:48:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,11 @@
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEPM"
 
-# define FLOOR				'0'
-# define WALL				'1'
-# define ITEM_BOMB			'2'
+# define MAP_FLOOR			'0'
+# define MAP_WALL			'1'
+# define MAP_ITEM_BOMB		'2'
 # define MAP_EXIT			'3'
 # define MAP_PLAYER			'4'
-
-// MAP_***    PARS_***
 
 # define UP					-1
 # define DOWN				1
@@ -55,7 +53,10 @@
 */
 # define GREEN_PXL			0x107830
 
-# define CENTER_MESS_TIME	2700
+/*
+**	write to window 
+*/
+# define CENTER_MESS_TIME	1600
 
 typedef struct s_coord
 {

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 05:09:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 19:22:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,38 +89,15 @@ void	sl_render_bkgd(t_env *env)
 		j = 0;
 		while (j < env->width)
 		{
-			if (map[i][j] != WALL)
+			if (map[i][j] != MAP_WALL)
 				sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * j, BLOC_LEN * i);
 			else
 				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.wall,  BLOC_LEN * j,  BLOC_LEN * i);
-			if (map[i][j] == ITEM_BOMB && map[env->p1.pos.y][env->p1.pos.x] != ITEM_BOMB)
+			if (map[i][j] == MAP_ITEM_BOMB && map[env->p1.pos.y][env->p1.pos.x] != MAP_ITEM_BOMB)
 				sl_render_bloc_with_xpm(&env->bkgd, &env->tex.bomb.item_bomb,  BLOC_LEN * j,  BLOC_LEN * i);
 			++j;
 		}
 		++i;
-	}
-}
-
-void	sl_handle_textures_while_moving(t_env *env, int delta_x, int delta_y)
-{
-	int	x;
-	int	y;
-
-	x = env->p1.pos.x + delta_x;
-	y = env->p1.pos.y + delta_y;
-	if (env->map[y][x] == ITEM_BOMB)
-	{
-		sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y);
-		env->map[y][x] = FLOOR;
-		++env->tex.bomb.collected;
-		if (env->tex.bomb.collected == env->tex.bomb.to_collect)
-			env->tex.exit_pipe.appear = true;
-	}
-	// not bombs
-	if (env->map[y][x] == MAP_EXIT && env->tex.exit_pipe.appear == true)
-	{
-		printf("GAME CLEAR\n");
-		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -135,7 +112,7 @@ void	sl_update_player_pos_on_map(t_env *env, int new_x, int new_y)
 	sprite = env->p1;
 	old_x = sprite.pos.x;
 	old_y = sprite.pos.y;
-	map[old_y][old_x] = FLOOR;
+	map[old_y][old_x] = MAP_FLOOR;
 }
 
 void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state, int x, int y)
@@ -153,7 +130,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state,
 	bomb_pos.x = env->tex.bomb.pos.x;
 	bomb_pos.y = env->tex.bomb.pos.y;
 	sl_update_player_pos_on_map(env, pos_x, pos_y);
-	if (map[pos_y][pos_x] == WALL || (env->tex.bomb.set_bomb == true && (bomb_pos.x == pos_x && bomb_pos.y == pos_y)))
+	if (map[pos_y][pos_x] == MAP_WALL || (env->tex.bomb.set_bomb == true && (bomb_pos.x == pos_x && bomb_pos.y == pos_y)))
 	{
 		x = 0;
 		y = 0;
@@ -214,7 +191,7 @@ void	sl_reveal_exit(t_env *env)
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, curr_state->mlx_img, exit.pos.x * BLOC_LEN, exit.pos.y * BLOC_LEN);
 }
 
-void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
+bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 {
 	int	p1_x;
 	int	p1_y;
@@ -222,7 +199,9 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	int	x_end;
 	int	y_start;
 	int	y_end;
+	bool	is_dead;
 
+	is_dead = false;
 	p1_x = env->p1.pos.x;
 	p1_y = env->p1.pos.y;
 	x_start = x - 2;
@@ -240,36 +219,41 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (x_start < x_end)
 	{
 		if (map[y][x_start] == MAP_PLAYER)
-			sl_exit_game_over(env);
-		if (map[y][x_start] == ITEM_BOMB)
+			is_dead = true;
+		if (map[y][x_start] == MAP_ITEM_BOMB)
 		{
 			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x_start, BLOC_LEN * y);
-			map[y][x_start] = FLOOR;
+			map[y][x_start] = MAP_FLOOR;
 		}
 		++x_start;
 	}
 	while (y_start < y_end)
 	{
 		if (map[y_start][x] == MAP_PLAYER)
-			sl_exit_game_over(env);
-		if (map[y_start][x] == ITEM_BOMB)
+			is_dead = true;
+		if (map[y_start][x] == MAP_ITEM_BOMB)
 		{
 			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y_start);
-			map[y_start][x] = FLOOR;
+			map[y_start][x] = MAP_FLOOR;
 		}
 		++y_start;
 	}
+	return (is_dead);
 }
 
 void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 {
 	static int	k;
+	bool		is_dead;
 
+	is_dead = false;
 	if (k <= CENTER_MESS_TIME)
 		sl_draw_segments_of_exploding_bomb(env, x, y);
-	sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
+	is_dead = sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
+	if (is_dead)
+		sl_exit_game_over(env);
 	++k;
-	if (k > CENTER_MESS_TIME + 50)
+	if (k > CENTER_MESS_TIME * 2 + 50)
 	{
 		*i = 0;
 		*j = 0;

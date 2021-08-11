@@ -28,7 +28,7 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 {
 	if (x == 0 || y == 0 || x == env->width || y == env->height)
 	{
-		if (texture != WALL - '0')
+		if (texture != MAP_WALL - '0')
 		{
 			printf("no walls\n");
 			exit(EXIT_FAILURE);

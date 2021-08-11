@@ -14,10 +14,10 @@
 
 static void	sl_draw_upper_segment(t_env *env, char *map[], t_explode_states states, int x, int y)
 {
-	if ((env->tex.bomb.pos.y - 1 > 0) && map[env->tex.bomb.pos.y - 1][env->tex.bomb.pos.x] != WALL)
+	if ((env->tex.bomb.pos.y - 1 > 0) && map[env->tex.bomb.pos.y - 1][env->tex.bomb.pos.x] != MAP_WALL)
 	{
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.vrt.one.mlx_img, x, y - BLOC_LEN);
-		if ((env->tex.bomb.pos.y - 2 > 0) && map[env->tex.bomb.pos.y - 2][env->tex.bomb.pos.x] != WALL)
+		if ((env->tex.bomb.pos.y - 2 > 0) && map[env->tex.bomb.pos.y - 2][env->tex.bomb.pos.x] != MAP_WALL)
 			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.vrt.two.mlx_img, x, y - 2 * BLOC_LEN);
 	}
 }
@@ -27,20 +27,20 @@ static void	sl_draw_lower_segment(t_env *env, char *map[], t_explode_states stat
 	int	height;
 
 	height = env->height;
-	if ((env->tex.bomb.pos.y + 1 < height) && map[env->tex.bomb.pos.y + 1][env->tex.bomb.pos.x] != WALL)
+	if ((env->tex.bomb.pos.y + 1 < height) && map[env->tex.bomb.pos.y + 1][env->tex.bomb.pos.x] != MAP_WALL)
 	{
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.vrt.one.mlx_img, x, y + BLOC_LEN);
-		if ((env->tex.bomb.pos.y + 2 < height) && map[env->tex.bomb.pos.y + 2][env->tex.bomb.pos.x] != WALL)
+		if ((env->tex.bomb.pos.y + 2 < height) && map[env->tex.bomb.pos.y + 2][env->tex.bomb.pos.x] != MAP_WALL)
 			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.vrt.three.mlx_img, x, y + 2 * BLOC_LEN);
 	}
 }
 
 static void	sl_draw_left_segment(t_env *env, char *map[], t_explode_states states, int x, int y)
 {
-	if ((env->tex.bomb.pos.x - 1 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 1] != WALL)
+	if ((env->tex.bomb.pos.x - 1 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 1] != MAP_WALL)
 	{
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.hrz.one.mlx_img, x - BLOC_LEN, y);
-		if ((env->tex.bomb.pos.x - 2 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 2] != WALL)
+		if ((env->tex.bomb.pos.x - 2 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 2] != MAP_WALL)
 			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.hrz.two.mlx_img, x - 2 * BLOC_LEN, y);
 	}
 }
@@ -50,10 +50,10 @@ static void	sl_draw_right_segment(t_env *env, char *map[], t_explode_states stat
 	int	width;
 
 	width = env->width;
-	if ((env->tex.bomb.pos.x + 1 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 1] != WALL)
+	if ((env->tex.bomb.pos.x + 1 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 1] != MAP_WALL)
 	{
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.hrz.one.mlx_img, x + BLOC_LEN, y);
-		if ((env->tex.bomb.pos.x + 2 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 2] != WALL)
+		if ((env->tex.bomb.pos.x + 2 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 2] != MAP_WALL)
 			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, states.hrz.three.mlx_img, x + 2 * BLOC_LEN, y);
 	}
 }
