@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/10 20:21:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 04:46:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@
 /*
 ** colors
 */
-# define GREEN_PXL	0x107830
+# define GREEN_PXL			0x107830
+
+# define CENTER_MESS_TIME	2700
 
 typedef struct s_coord
 {
@@ -188,5 +190,7 @@ void	sl_img_pixel_put(t_img *img, int x , int y, int color, bool mask);
 int		sl_render(t_env *data);
 void	sl_render_background(t_env *data);
 int		sl_render_colored_bloc(t_img *img, int color, int x, int y);
+
+int    sl_exit_game(t_env *env, char *err_mess);
 
 #endif

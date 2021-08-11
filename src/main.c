@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/10 18:24:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 02:56:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,33 +169,6 @@ void	sl_check_input(int argc, char *filename)
 		exit(EXIT_FAILURE);
 	if (ft_strcmp(file_extension, FILE_EXTENSION) != 0)
 		exit(EXIT_FAILURE);
-}
-
-int    sl_exit_game(t_env *env, char *err_mess)
-{
- //   free(env->map);
-/*
-	mlx_destroy_image(env->mlx_ptr, env->bkgd.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.wall.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.bomb.item_bomb.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state0.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state1.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state2.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state3.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state4.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state5.mlx_img);
-	mlx_destroy_window(env->mlx_ptr, env->win_ptr);*/
-	mlx_destroy_display(env->mlx_ptr);
-	mlx_loop_end(env->mlx_ptr);
-	ft_free(env->mlx_ptr);
-    if (err_mess)
-	{
-        printf("error: %s\n", err_mess);
-		exit(EXIT_FAILURE);
-	}
-	else
-		exit(EXIT_SUCCESS);
-	return (0);
 }
 
 int	main(int argc, char *argv[])

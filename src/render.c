@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 01:49:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 05:09:49 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,16 +214,6 @@ void	sl_reveal_exit(t_env *env)
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, curr_state->mlx_img, exit.pos.x * BLOC_LEN, exit.pos.y * BLOC_LEN);
 }
 
-void	sl_put_move_count_to_window(t_env *env)
-{
-	char	*count;
-	char	*str;
-//if error
-	count = ft_itoa(env->p1.moves);
-	mlx_string_put(env->mlx_ptr, env->win_ptr, 15, 15, 0xFFFFFF, count);
-	free(count);
-}
-
 void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 {
 	int	p1_x;
@@ -250,7 +240,7 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (x_start < x_end)
 	{
 		if (map[y][x_start] == MAP_PLAYER)
-			sl_exit_game(env, "GAME OVER\n");
+			sl_exit_game_over(env);
 		if (map[y][x_start] == ITEM_BOMB)
 		{
 			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x_start, BLOC_LEN * y);
@@ -261,7 +251,7 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (y_start < y_end)
 	{
 		if (map[y_start][x] == MAP_PLAYER)
-			sl_exit_game(env, "GAME OVER\n");
+			sl_exit_game_over(env);
 		if (map[y_start][x] == ITEM_BOMB)
 		{
 			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y_start);
@@ -275,11 +265,11 @@ void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 {
 	static int	k;
 
-	if (k <= 1600)
+	if (k <= CENTER_MESS_TIME)
 		sl_draw_segments_of_exploding_bomb(env, x, y);
-	++k;
 	sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
-	if (k > 3200)
+	++k;
+	if (k > CENTER_MESS_TIME + 50)
 	{
 		*i = 0;
 		*j = 0;
@@ -346,6 +336,7 @@ void	sl_overlay_bomb_and_player(t_env *env)
 int	sl_render(t_env *env)
 {
 	t_img	*img;
+	static int	i;
 	
 	int			bomb_pos_x;
 	int			bomb_pos_y;
@@ -373,5 +364,10 @@ int	sl_render(t_env *env)
 //	}
 //	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 	sl_put_move_count_to_window(env);
+	if (i <= CENTER_MESS_TIME)
+	{
+		sl_put_centered_message_to_window(env, "START !");
+		++i;
+	}
 	return (0);
 }

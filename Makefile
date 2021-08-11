@@ -13,10 +13,12 @@ RM			=	rm -rf
 
 SRC_DIR		=	src/
 SRC_FILES	=	draw_exploding_bomb.c \
+				exit_game.c \
 				main.c \
 				map_parsing.c \
 				render.c \
-				system_calls.c
+				system_calls.c \
+				write_to_window.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 
