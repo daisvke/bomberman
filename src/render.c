@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 19:22:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 21:16:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 	if (is_dead)
 		sl_exit_game_over(env);
 	++k;
-	if (k > CENTER_MESS_TIME * 2 + 50)
+	if (k > CENTER_MESS_TIME * 2 + 200)
 	{
 		*i = 0;
 		*j = 0;

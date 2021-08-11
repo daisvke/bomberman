@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 04:40:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/11 21:55:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	sl_put_centered_message_to_window(t_env *env, char *message)
 	width = env->width * BLOC_LEN;
 	height = env->height * BLOC_LEN;
 	mlx_set_font(env->mlx_ptr, env->win_ptr, "7x14");
-//	if (i <= 3200)
+	if (i <= 3200)
 		mlx_string_put(env->mlx_ptr, env->win_ptr, width / 2, height / 2, 0xFFFFFF, message);
 	++i;
 }
