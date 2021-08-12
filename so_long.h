@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 14:48:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/12 14:34:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_img_patterns
 	t_states	down;
 	t_states	left;
 	t_states	right;
-}			t_img_patterns;
+}				t_img_patterns;
 
 // try bitshift
 typedef struct s_dir
@@ -136,7 +136,7 @@ typedef struct s_bombs
 	t_states			set_states;
 	void				*curr_state;
 	t_explode_states	explode_states;
-}				t_bombs;
+}						t_bombs;
 
 typedef struct s_ennemies
 {
@@ -150,7 +150,7 @@ typedef struct s_textures
 	t_bombs	    bomb;
 	t_pipe	    exit_pipe;
     t_ennemies  ennemies;
-}			t_textures;
+}				t_textures;
 
 typedef struct s_env
 {
@@ -162,7 +162,8 @@ typedef struct s_env
 	char		**map;
 	t_textures	tex;
 	t_sprite	p1;
-}			t_env;
+	t_ennemies	**ennemies;
+}				t_env;
 
 typedef struct s_square
 {
