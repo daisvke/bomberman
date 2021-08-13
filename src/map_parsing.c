@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/12 14:34:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/13 14:30:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,22 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 	}
 }
 
-void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,t_count *counter)
+void	sl_read_ennemies_from_map(t_env *env, t_count *counter, int x, int y)
+{
+	t_coord		*ennemies_pos;
+	int			*ennemies_count;
+	static int	i;
+
+	ennemies_pos = env->tex.ennemies.pos;
+	ennemies_count = &env->tex.ennemies.count;
+	++ennemies_count;
+	if (*ennemies_count > 50)
+		sl_exit_game(env, "Error: too many ennemies on the map");
+	ennemies_pos[i].x = x;
+	ennemies_pos[i].y = y;
+}
+
+void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y, t_count *counter)
 {
 	int		i;
 	t_pipe	*game_exit;
@@ -66,7 +81,7 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
 				game_exit->pos.y = y;
 			}
             if (i == ENNEMY)
-                ++counter->ennemies;
+				sl_read_ennemies_from_map(env, counter, x, y);
 			return ;
 		}
 		++i;
@@ -128,7 +143,6 @@ void	sl_parse_map(t_env *env, char *filename)
 	env->map = malloc(env->height * sizeof(*env->map));
     counter.player = 0;
     counter.exit_pipe = 0;
-    counter.ennemies = 0;
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{

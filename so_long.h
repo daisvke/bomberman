@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/12 14:34:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/13 14:23:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ typedef struct s_bombs
 typedef struct s_ennemies
 {
     t_img   img;
-    t_coord pos;
+	int		count;
+    t_coord pos[50];
 }			t_ennemies;
 
 typedef struct s_textures
@@ -162,7 +163,6 @@ typedef struct s_env
 	char		**map;
 	t_textures	tex;
 	t_sprite	p1;
-	t_ennemies	**ennemies;
 }				t_env;
 
 typedef struct s_square
@@ -178,7 +178,6 @@ typedef struct s_count
 {
     int player;
     int exit_pipe;
-	int	ennemies;
 }		t_count;
 /*
 ** parse

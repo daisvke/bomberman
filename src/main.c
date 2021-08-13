@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 02:56:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/13 14:30:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	sl_handle_input(int keysym, t_env *env)
 {
 	if (keysym == XK_Escape)
-		sl_exit_game(&env, NULL);
+		sl_exit_game(env, NULL);
 	return (0);
 }
 
