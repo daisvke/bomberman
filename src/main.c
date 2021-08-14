@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/13 14:30:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/15 01:16:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	sl_init_env(t_env *env)
 	env->p1.sub_pos.y = 0;
 	env->p1.pos.x = 0;
 	env->p1.pos.y = 0;
+	env->tex.ennemies.count = 0;
 }
 
 void	sl_load_texture(t_env *env, t_img *img, char *path_to_file)

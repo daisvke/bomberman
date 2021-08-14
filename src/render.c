@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 21:16:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/15 01:46:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,6 +316,19 @@ void	sl_overlay_bomb_and_player(t_env *env)
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, bomb_curr_state->mlx_img, bomb_pos_x, bomb_pos_y);
 }
 */
+
+void	sl_animate_p1(t_env *env, t_dir *dir, t_sprite *sprite, t_img_patterns *img)
+{
+	if (dir->up)
+		sl_animate_sprite(env, sprite, &img->up, &dir->up, 0, UP);
+	if (dir->down)
+		sl_animate_sprite(env, sprite, &img->down, &dir->down, 0, DOWN);
+	if (dir->left)
+		sl_animate_sprite(env, sprite, &img->left, &dir->left, LEFT, 0);
+	if (dir->right)
+		sl_animate_sprite(env, sprite, &img->right, &dir->right, RIGHT, 0);
+}
+
 //put img to window (not render
 int	sl_render(t_env *env)
 {
@@ -326,14 +339,7 @@ int	sl_render(t_env *env)
 	int			bomb_pos_y;
 
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
-	if (env->p1.curr_dir.up)
-		sl_animate_sprite(env, &env->p1, &env->p1.img.up, &env->p1.curr_dir.up, 0, UP);
-	if (env->p1.curr_dir.down)
-		sl_animate_sprite(env, &env->p1, &env->p1.img.down, &env->p1.curr_dir.down, 0, DOWN);
-	if (env->p1.curr_dir.left)
-		sl_animate_sprite(env, &env->p1, &env->p1.img.left, &env->p1.curr_dir.left, LEFT, 0);
-	if (env->p1.curr_dir.right)
-		sl_animate_sprite(env, &env->p1, &env->p1.img.right, &env->p1.curr_dir.right, RIGHT, 0);
+	sl_animate_p1(env, &env->p1.curr_dir, &env->p1, &env->p1.img);
 	if (env->tex.exit_pipe.appear == true)
 		sl_reveal_exit(env);
 	if (env->tex.bomb.set_bomb == true)
