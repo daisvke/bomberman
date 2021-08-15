@@ -13,7 +13,9 @@ RM			=	rm -rf
 
 SRC_DIR		=	src/
 SRC_FILES	=	draw_exploding_bomb.c \
+				ennemies_ai.c \
 				exit_game.c \
+				load_textures.c \
 				main.c \
 				map_parsing.c \
 				render.c \

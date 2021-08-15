@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/15 01:38:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/15 13:50:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,18 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 
 void	sl_read_ennemies_from_map(t_env *env, t_count *counter, int x, int y)
 {
-	t_coord		*ennemies_pos;
+	t_sprite	*ennemies;
 	int			*ennemies_count;
 	static int	i;
 
-	ennemies_pos = env->tex.ennemies.pos;
+	ennemies = env->tex.ennemies.sprites;
 	ennemies_count = &env->tex.ennemies.count;
 	*ennemies_count += 1;
 	if (*ennemies_count > 50)
 		sl_exit_game(env, "Error: too many ennemies on the map");
-	ennemies_pos[i].x = x;
-	ennemies_pos[i].y = y;
+	ennemies[i].pos.x = x;
+	ennemies[i].pos.y = y;
+	ennemies[i].img = env->tex.ennemies.img;
 	++i;
 }
 
@@ -158,16 +159,14 @@ void	sl_parse_map(t_env *env, char *filename)
 		free(line);
 		++i;
 	}
-	/*
 	i = 0;
 	t_coord	pos;
 	while (i < 3)
 	{	
-		pos = env->tex.ennemies.pos[i];
+		pos = env->tex.ennemies.sprites[i].pos;
 		printf("this: %d\n", pos.x);
 		i++;
 	}
-	*/
     sl_check_counter(counter, env->tex.bomb.to_collect);
 	// if error
 	free(line);

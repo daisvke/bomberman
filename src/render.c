@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/15 01:46:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/15 14:36:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,21 +101,19 @@ void	sl_render_bkgd(t_env *env)
 	}
 }
 
-void	sl_update_player_pos_on_map(t_env *env, int new_x, int new_y)
+void	sl_update_player_pos_on_map(t_env *env, t_sprite *sprite, int new_x, int new_y)
 {
 	char		**map;
-	t_sprite	sprite;
 	int			old_x;
 	int			old_y;
 
 	map = env->map;
-	sprite = env->p1;
-	old_x = sprite.pos.x;
-	old_y = sprite.pos.y;
+	old_x = sprite->pos.x;
+	old_y = sprite->pos.y;
 	map[old_y][old_x] = MAP_FLOOR;
 }
 
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state, int x, int y)
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state, int x, int y, bool count_moves)
 {
 	static int	i;
 	char		**map;
@@ -129,7 +127,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state,
 	pos_y = sprite->pos.y + y;
 	bomb_pos.x = env->tex.bomb.pos.x;
 	bomb_pos.y = env->tex.bomb.pos.y;
-	sl_update_player_pos_on_map(env, pos_x, pos_y);
+	sl_update_player_pos_on_map(env, sprite, pos_x, pos_y);
 	if (map[pos_y][pos_x] == MAP_WALL || (env->tex.bomb.set_bomb == true && (bomb_pos.x == pos_x && bomb_pos.y == pos_y)))
 	{
 		x = 0;
@@ -151,7 +149,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state,
 	}
 	if (i == 1600)
 	{
-		if (x != 0 || y != 0)
+		if (count_moves == true && (x != 0 || y != 0))
 			++env->p1.moves;
 		sprite->curr_state = &img->one;
 		sprite->pos.x += x;
@@ -317,29 +315,31 @@ void	sl_overlay_bomb_and_player(t_env *env)
 }
 */
 
-void	sl_animate_p1(t_env *env, t_dir *dir, t_sprite *sprite, t_img_patterns *img)
+void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, t_sprite *sprite, t_img_patterns *img, bool count_moves)
 {
 	if (dir->up)
-		sl_animate_sprite(env, sprite, &img->up, &dir->up, 0, UP);
+		sl_animate_sprite(env, sprite, &img->up, &dir->up, 0, UP, count_moves);
 	if (dir->down)
-		sl_animate_sprite(env, sprite, &img->down, &dir->down, 0, DOWN);
+		sl_animate_sprite(env, sprite, &img->down, &dir->down, 0, DOWN, count_moves);
 	if (dir->left)
-		sl_animate_sprite(env, sprite, &img->left, &dir->left, LEFT, 0);
+		sl_animate_sprite(env, sprite, &img->left, &dir->left, LEFT, 0, count_moves);
 	if (dir->right)
-		sl_animate_sprite(env, sprite, &img->right, &dir->right, RIGHT, 0);
+		sl_animate_sprite(env, sprite, &img->right, &dir->right, RIGHT, 0, count_moves);
 }
 
 //put img to window (not render
 int	sl_render(t_env *env)
 {
 	t_img	*img;
+	t_img	*img2;
 	static int	i;
 	
 	int			bomb_pos_x;
 	int			bomb_pos_y;
 
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
-	sl_animate_p1(env, &env->p1.curr_dir, &env->p1, &env->p1.img);
+	sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, &env->p1.img, true);
+	sl_read_and_animate_ennemies(env);
 	if (env->tex.exit_pipe.appear == true)
 		sl_reveal_exit(env);
 	if (env->tex.bomb.set_bomb == true)
@@ -347,11 +347,18 @@ int	sl_render(t_env *env)
 		sl_set_bomb(env);
 	//	sl_overlay_bomb_and_player(env);
 	}
-//	if (!(env->p1.pos.x == env->tex.bomb.pos.x && env->p1.pos.y == env->tex.bomb.pos.y))
-//	{
-		img = env->p1.curr_state;
-		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
-//	}
+	img = env->p1.curr_state;
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
+	int	j = 0;
+	t_ennemies	ennemies;
+	ennemies = env->tex.ennemies;
+	while (j < ennemies.count) 
+	{
+		img2 = env->tex.ennemies.sprites[j].curr_state;
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, ennemies.sprites[j].sub_pos.x, ennemies.sprites[j].sub_pos.y);
+		++j;
+	}
+
 //	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 	sl_put_move_count_to_window(env);
 	if (i <= CENTER_MESS_TIME)

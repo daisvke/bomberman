@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/13 14:23:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/15 13:16:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@
 **	write to window 
 */
 # define CENTER_MESS_TIME	1600
+
+/*
+** determine ennemy position
+*/
+# define UP_LEN				0
+# define DOWN_LEN			1
+# define LEFT_LEN			2
+# define RIGHT_LEN			3
 
 typedef struct s_coord
 {
@@ -140,10 +148,10 @@ typedef struct s_bombs
 
 typedef struct s_ennemies
 {
-    t_img   img;
-	int		count;
-    t_coord pos[50];
-}			t_ennemies;
+    t_img_patterns 	img;
+	int				count;
+    t_sprite		sprites[50];
+}					t_ennemies;
 
 typedef struct s_textures
 {
