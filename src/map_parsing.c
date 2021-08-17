@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/17 19:53:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/17 22:20:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	sl_read_ennemies_from_map(t_env *env, t_count *counter, int x, int y)
 	ennemies[i].pos.y = y;
 	ennemies[i].sub_pos.x = 0;
 	ennemies[i].sub_pos.y = 0;
-	ennemies[i].img = env->tex.ennemies.img;
 	ennemies[i].curr_dir.up = false;
 	ennemies[i].curr_dir.down = false;
 	ennemies[i].curr_dir.left = false;
@@ -165,14 +164,6 @@ void	sl_parse_map(t_env *env, char *filename)
 		}
 		free(line);
 		++i;
-	}
-	i = 0;
-	t_coord	pos;
-	while (i < 3)
-	{	
-		pos = env->tex.ennemies.sprites[i].pos;
-		printf("this: %d\n", pos.x);
-		i++;
 	}
     sl_check_counter(counter, env->tex.bomb.to_collect);
 	// if error

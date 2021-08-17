@@ -19,9 +19,10 @@ SRC_FILES	=	draw_exploding_bomb.c \
 				main.c \
 				map_parsing.c \
 				render.c \
+				set_bomb.c \
 				system_calls.c \
 				texture_interactions.c \
-				write_to_window.c
+				put_to_window.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 

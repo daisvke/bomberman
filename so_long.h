@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/17 19:53:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/18 00:51:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ typedef struct s_env
 	int			width;
 	int			height;
 	char		**map;
+	int			**buffer;
 	t_textures	tex;
 	t_sprite	p1;
 }				t_env;
@@ -196,6 +197,12 @@ typedef struct s_count
 void	sl_parse_map(t_env *data, char *filename);
 
 /*
+** put to window
+*/
+void	sl_put_move_count_to_window(t_env *env);
+void	sl_put_centered_message_to_window(t_env *env, char *message);
+
+/*
 ** render
 */
 void	sl_img_pixel_put(t_img *img, int x , int y, int color, bool mask);
@@ -204,5 +211,10 @@ void	sl_render_background(t_env *data);
 int		sl_render_colored_bloc(t_img *img, int color, int x, int y);
 
 int    sl_exit_game(t_env *env, char *err_mess);
+
+/*
+** bomb
+*/
+void    sl_set_bomb(t_env *env);
 
 #endif

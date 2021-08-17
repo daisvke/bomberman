@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:23:20 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/17 20:02:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/17 22:37:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 		len_array[i] = 0;
 		++i;
 	}
-	check_map(env);
 	while (pos_y >= 0 && map[pos_y][pos_x] != MAP_WALL)
 	{
 		if (map[pos_y][pos_x] == MAP_PLAYER)
@@ -131,12 +130,6 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 		++len_array[RIGHT_LEN];
 		++pos_x;
 	}
-	 i=0;
-	while (i < 4)
-	{
-		printf("line: %d\n", len_array[i]);
-		++i;
-	}
 	sl_get_max_len(sprite, len_array);
 }
 
@@ -154,7 +147,8 @@ void	sl_read_and_animate_ennemies(t_env *env)
 		if (is_alive == true)
 		{
 			sl_determine_ennemy_direction(env, &env->tex.ennemies.sprites[i]);
-			sl_read_direction_and_animate_sprite(env, &env->tex.ennemies.sprites[i].curr_dir, &env->tex.ennemies.sprites[i], ENNEMY, &env->tex.ennemies.sprites[i].img);
+		//	sl_read_direction_and_animate_sprite(env, &env->tex.ennemies.sprites[i].curr_dir, &env->tex.ennemies.sprites[i], ENNEMY, &env->p1.img);
+			sl_read_direction_and_animate_sprite(env, &env->tex.ennemies.sprites[i].curr_dir, &env->tex.ennemies.sprites[i], ENNEMY, &env->tex.ennemies.img);
 		}
 		++i;
 	}

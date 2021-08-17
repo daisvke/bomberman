@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/15 13:21:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/17 22:00:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,20 @@ void	sl_load_p1(t_env *env)
 	sl_load_texture(env, &env->p1.img.right.three, "./img/white-right-r-24x24.xpm");
 }
 
-void	sl_load_ennemy(t_env *env)
+void	sl_load_ennemies(t_env *env)
 {
-	sl_load_texture(env, &env->tex.ennemies.img.up.one, "./img/white-up-0-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.up.two, "./img/white-up-l-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.up.three, "./img/white-up-r-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.down.one, "./img/white-down-0-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.down.two, "./img/white-down-l-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.down.three, "./img/white-down-r-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.left.one, "./img/white-left-0-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.left.two, "./img/white-left-l-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.left.three, "./img/white-left-r-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.right.one, "./img/white-right-0-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.right.two, "./img/white-right-l-24x24.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.right.three, "./img/white-right-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.up.one, "./img/ennemy-up-0-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.up.two, "./img/ennemy-up-l-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.up.three, "./img/ennemy-up-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.down.one, "./img/ennemy-down-0-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.down.two, "./img/ennemy-down-l-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.down.three, "./img/ennemy-down-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.left.one, "./img/ennemy-left-0-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.left.two, "./img/ennemy-left-l-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.left.three, "./img/ennemy-left-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.right.one, "./img/ennemy-right-0-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.right.two, "./img/ennemy-right-l-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.img.right.three, "./img/ennemy-right-r-24x24.xpm");
 }
 
 void	sl_load_exit(t_env *env)
@@ -93,6 +93,6 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_set_bomb(env);
 	sl_load_bomb_explode(env);
 	sl_load_p1(env);
-	sl_load_ennemy(env);
+	sl_load_ennemies(env);
 	sl_load_exit(env);
 }

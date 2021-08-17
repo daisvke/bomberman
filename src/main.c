@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/17 19:53:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/18 00:54:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,19 @@ void	check_map(t_env *env)
 	printf("\n");
 }
 
+void	sl_init_buffer(t_env *env)
+{
+	int	i;
+
+	env->buffer = malloc(env->height * sizeof(*env->buffer));
+	i = 0;
+	while (i < env->width)
+	{
+		env->buffer[i] = malloc(env->width * sizeof(*env->buffer));
+		++i;
+	}
+}
+
 void	sl_init_env(t_env *env)
 {
 	env->width = 0;
@@ -132,6 +145,7 @@ int	main(int argc, char *argv[])
 	sl_check_input(argc, argv[1]);
 	sl_init_env(&env);
 	sl_parse_map(&env, argv[1]);
+	sl_init_buffer(&env);
 
 	width = env.width * BLOC_LEN;
 	height = env.height * BLOC_LEN;
