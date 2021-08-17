@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/15 14:36:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/17 20:07:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,42 @@ void	sl_render_bkgd(t_env *env)
 	}
 }
 
-void	sl_update_player_pos_on_map(t_env *env, t_sprite *sprite, int new_x, int new_y)
+void	sl_put_back_exit_on_map(t_env *env)
 {
-	char		**map;
-	int			old_x;
-	int			old_y;
+	char	**map;
+	int		x;
+	int		y;
+
+	map = env->map;
+	x = env->tex.exit_pipe.pos.x;
+	y = env->tex.exit_pipe.pos.y;
+	map[y][x] = MAP_EXIT;
+}
+
+void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
+	t_sprite *sprite, int x, int y)
+{
+	char	**map;
+	int		old_x;
+	int		old_y;
+	int		new_x;
+	int		new_y;
 
 	map = env->map;
 	old_x = sprite->pos.x;
 	old_y = sprite->pos.y;
-	map[old_y][old_x] = MAP_FLOOR;
+	new_x = sprite->pos.x + x;
+	new_y = sprite->pos.y + y;
+	if (!(apply_to == ENNEMY && (map[old_y][old_x] == MAP_ITEM_BOMB)))
+		map[old_y][old_x] = MAP_FLOOR;
+	if (apply_to == PLAYER)
+		map[sprite->pos.y + y][sprite->pos.x + x] = MAP_PLAYER;
+	else if (apply_to == ENNEMY && map[new_y][new_x] != MAP_ITEM_BOMB)
+		map[new_y][new_x] = MAP_ENNEMY;
+	sl_put_back_exit_on_map(env);
 }
 
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state, int x, int y, bool count_moves)
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, int x, int y)
 {
 	static int	i;
 	char		**map;
@@ -127,14 +150,12 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state,
 	pos_y = sprite->pos.y + y;
 	bomb_pos.x = env->tex.bomb.pos.x;
 	bomb_pos.y = env->tex.bomb.pos.y;
-	sl_update_player_pos_on_map(env, sprite, pos_x, pos_y);
 	if (map[pos_y][pos_x] == MAP_WALL || (env->tex.bomb.set_bomb == true && (bomb_pos.x == pos_x && bomb_pos.y == pos_y)))
 	{
 		x = 0;
 		y = 0;
 	}
-	sl_handle_textures_while_moving(env, x, y);
-	map[sprite->pos.y + y][sprite->pos.x + x] = MAP_PLAYER;
+	sl_handle_textures_while_moving(env, apply_to, x, y);
 	if (i <= 800)
 	{
 		sprite->curr_state = &img->two;
@@ -149,14 +170,16 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, t_states *img, bool *state,
 	}
 	if (i == 1600)
 	{
-		if (count_moves == true && (x != 0 || y != 0))
+		if (apply_to == PLAYER && (x != 0 || y != 0))
 			++env->p1.moves;
 		sprite->curr_state = &img->one;
+		sl_update_player_pos_on_map(env, apply_to, sprite, x, y);
 		sprite->pos.x += x;
 		sprite->pos.y += y;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN;
-		*state = false;
+		if (apply_to != ENNEMY)
+			*state = false;
 		i = 0;
 	}
 	else
@@ -189,7 +212,23 @@ void	sl_reveal_exit(t_env *env)
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, curr_state->mlx_img, exit.pos.x * BLOC_LEN, exit.pos.y * BLOC_LEN);
 }
 
-bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
+void	sl_find_which_ennemy_is_dead(t_env *env, int x_start, int y)
+{
+	int			ennemies_count;
+	int			i;
+
+	ennemies_count = env->tex.ennemies.count;
+	i = 0;
+	while (i < ennemies_count)
+	{
+		if (env->tex.ennemies.sprites[i].pos.x == x_start && env->tex.ennemies.sprites[i].pos.y == y)
+			env->tex.ennemies.sprites[i].alive = false;
+		++i;
+	}
+	env->map[y][x_start] = MAP_FLOOR;
+}
+
+void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 {
 	int	p1_x;
 	int	p1_y;
@@ -197,11 +236,9 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	int	x_end;
 	int	y_start;
 	int	y_end;
-	bool	is_dead;
 
-	is_dead = false;
 	p1_x = env->p1.pos.x;
-	p1_y = env->p1.pos.y;
+	p1_y = env->p1.pos.y; 
 	x_start = x - 2;
 	if (x_start < 0)
 		x_start = 0;
@@ -217,7 +254,9 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (x_start < x_end)
 	{
 		if (map[y][x_start] == MAP_PLAYER)
-			is_dead = true;
+			env->p1.alive = false;
+		if (map[y][x_start] == MAP_ENNEMY)
+			sl_find_which_ennemy_is_dead(env, x_start, y);
 		if (map[y][x_start] == MAP_ITEM_BOMB)
 		{
 			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x_start, BLOC_LEN * y);
@@ -228,7 +267,7 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (y_start < y_end)
 	{
 		if (map[y_start][x] == MAP_PLAYER)
-			is_dead = true;
+			env->p1.alive = false;
 		if (map[y_start][x] == MAP_ITEM_BOMB)
 		{
 			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y_start);
@@ -236,19 +275,16 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 		}
 		++y_start;
 	}
-	return (is_dead);
 }
 
 void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 {
 	static int	k;
-	bool		is_dead;
 
-	is_dead = false;
 	if (k <= CENTER_MESS_TIME)
 		sl_draw_segments_of_exploding_bomb(env, x, y);
-	is_dead = sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
-	if (is_dead)
+	sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
+	if (env->p1.alive == false)
 		sl_exit_game_over(env);
 	++k;
 	if (k > CENTER_MESS_TIME * 2 + 200)
@@ -315,16 +351,16 @@ void	sl_overlay_bomb_and_player(t_env *env)
 }
 */
 
-void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, t_sprite *sprite, t_img_patterns *img, bool count_moves)
+void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, t_sprite *sprite, int apply_to, t_img_patterns *img)
 {
 	if (dir->up)
-		sl_animate_sprite(env, sprite, &img->up, &dir->up, 0, UP, count_moves);
+		sl_animate_sprite(env, sprite, apply_to, &img->up, &dir->up, 0, UP);
 	if (dir->down)
-		sl_animate_sprite(env, sprite, &img->down, &dir->down, 0, DOWN, count_moves);
+		sl_animate_sprite(env, sprite, apply_to, &img->down, &dir->down, 0, DOWN);
 	if (dir->left)
-		sl_animate_sprite(env, sprite, &img->left, &dir->left, LEFT, 0, count_moves);
+		sl_animate_sprite(env, sprite, apply_to, &img->left, &dir->left, LEFT, 0);
 	if (dir->right)
-		sl_animate_sprite(env, sprite, &img->right, &dir->right, RIGHT, 0, count_moves);
+		sl_animate_sprite(env, sprite, apply_to, &img->right, &dir->right, RIGHT, 0);
 }
 
 //put img to window (not render
@@ -334,11 +370,12 @@ int	sl_render(t_env *env)
 	t_img	*img2;
 	static int	i;
 	
+	int	j;
 	int			bomb_pos_x;
 	int			bomb_pos_y;
 
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
-	sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, &env->p1.img, true);
+	sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
 	sl_read_and_animate_ennemies(env);
 	if (env->tex.exit_pipe.appear == true)
 		sl_reveal_exit(env);
@@ -349,13 +386,16 @@ int	sl_render(t_env *env)
 	}
 	img = env->p1.curr_state;
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, env->p1.sub_pos.x, env->p1.sub_pos.y);
-	int	j = 0;
+	j = 0;
 	t_ennemies	ennemies;
 	ennemies = env->tex.ennemies;
 	while (j < ennemies.count) 
 	{
-		img2 = env->tex.ennemies.sprites[j].curr_state;
-		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, ennemies.sprites[j].sub_pos.x, ennemies.sprites[j].sub_pos.y);
+		if (ennemies.sprites[j].alive == true)
+		{
+			img2 = env->tex.ennemies.sprites[j].curr_state;
+			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, img->mlx_img, ennemies.sprites[j].sub_pos.x, ennemies.sprites[j].sub_pos.y);
+		}
 		++j;
 	}
 

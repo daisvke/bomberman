@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/15 13:16:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/17 19:53:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define MAP_ITEM_BOMB		'2'
 # define MAP_EXIT			'3'
 # define MAP_PLAYER			'4'
+# define MAP_ENNEMY			'5'
 
 # define UP					-1
 # define DOWN				1
@@ -65,6 +66,7 @@
 # define DOWN_LEN			1
 # define LEFT_LEN			2
 # define RIGHT_LEN			3
+# define KEEP				1
 
 typedef struct s_coord
 {
@@ -119,6 +121,7 @@ typedef struct s_dir
 
 typedef struct s_sprite
 {
+	bool			alive;
 	t_img_patterns	img;
 	void			*curr_state;
 	t_dir			curr_dir;

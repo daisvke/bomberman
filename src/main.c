@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/15 13:16:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/17 19:53:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	sl_init_env(t_env *env)
 	env->tex.bomb.collected = 0;
     env->tex.bomb.set_bomb = false;
 	env->tex.exit_pipe.appear = false;
+	env->p1.alive = true;
 	env->p1.moves = 0;
 	env->p1.curr_dir.up = false;
 	env->p1.curr_dir.down = false;
