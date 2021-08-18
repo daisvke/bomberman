@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/18 00:54:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/18 04:58:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,26 @@ void	check_map(t_env *env)
 	printf("\n");
 }
 
-void	sl_init_buffer(t_env *env)
+void	sl_init_buffers(t_env *env)
 {
 	int	i;
 
-	env->buffer = malloc(env->height * sizeof(*env->buffer));
+	env->buffer = malloc(sizeof(int *) * env->height * BLOC_LEN);
+	if (!env->buffer)
+		sl_exit_game(env, "Error: memory allocation for buffer failed");
 	i = 0;
-	while (i < env->width)
+	while (i < env->height * BLOC_LEN)
 	{
-		env->buffer[i] = malloc(env->width * sizeof(*env->buffer));
+		env->buffer[i] = malloc(sizeof(int) * env->width * BLOC_LEN);
+		++i;
+	}
+	env->buffer_bkgd = malloc(sizeof(int *) * env->height * BLOC_LEN);
+	if (!env->buffer_bkgd)
+		sl_exit_game(env, "Error: memory allocation for buffer failed");
+	i = 0;
+	while (i < env->height * BLOC_LEN)
+	{
+		env->buffer_bkgd[i] = malloc(sizeof(int) * env->width * BLOC_LEN);
 		++i;
 	}
 }
@@ -145,8 +156,7 @@ int	main(int argc, char *argv[])
 	sl_check_input(argc, argv[1]);
 	sl_init_env(&env);
 	sl_parse_map(&env, argv[1]);
-	sl_init_buffer(&env);
-
+	sl_init_buffers(&env);
 	width = env.width * BLOC_LEN;
 	height = env.height * BLOC_LEN;
 
@@ -164,7 +174,7 @@ int	main(int argc, char *argv[])
 	env.bkgd.mlx_img = mlx_new_image(env.mlx_ptr, width, height);
 	env.bkgd.addr = mlx_get_data_addr(env.bkgd.mlx_img, &env.bkgd.bpp, &env.bkgd.line_len, &env.bkgd.endian);
 	
-	sl_render_bkgd(&env);
+	sl_render_background(&env);
 
 	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
 	mlx_hook(env.win_ptr, 33, 1L << 17, sl_exit_game, &env);
