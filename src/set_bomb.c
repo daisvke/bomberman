@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/17 23:15:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/19 06:22:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 			sl_find_which_ennemy_is_dead(env, x_start, y);
 		if (map[y][x_start] == MAP_ITEM_BOMB)
 		{
-			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x_start, BLOC_LEN * y);
+			sl_render_buffer_with_colored_bloc(env->buffer_bkgd, 107830, BLOC_LEN * x_start, BLOC_LEN * y);
 			map[y][x_start] = MAP_FLOOR;
 		}
 		++x_start;
@@ -70,7 +70,7 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 			env->p1.alive = false;
 		if (map[y_start][x] == MAP_ITEM_BOMB)
 		{
-			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y_start);
+			sl_render_colored_bloc(&env->bkgd, 107830, BLOC_LEN * x, BLOC_LEN * y_start);
 			map[y_start][x] = MAP_FLOOR;
 		}
 		++y_start;
@@ -87,7 +87,7 @@ void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 	if (env->p1.alive == false)
 		sl_exit_game_over(env);
 	++k;
-	if (k > CENTER_MESS_TIME * 2 + 200)
+	if (k > CENTER_MESS_TIME * 2 + 20)
 	{
 		*i = 0;
 		*j = 0;
@@ -107,24 +107,24 @@ void    sl_set_bomb(t_env *env)
 	set_bomb = env->tex.bomb.set_states;
 	bomb_pos_x = env->tex.bomb.pos.x * BLOC_LEN;
 	bomb_pos_y = env->tex.bomb.pos.y * BLOC_LEN;
-    if (i <= 12800)
+    if (i <= 1280)
     {
-        if (i % 3200 == 0)
+        if (i % 320 == 0)
 			++j;
 		if (j % 2 == 0)
 		{
-		//	sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.one, bomb_pos_x, bomb_pos_y);
-			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.one.mlx_img, bomb_pos_x, bomb_pos_y);
+			sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.one, bomb_pos_x, bomb_pos_y);
+		//	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.one.mlx_img, bomb_pos_x, bomb_pos_y);
 		//	env->tex.bomb.curr_state = &set_bomb.one;
 		}
 		else
 		{
-		//	sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.three, bomb_pos_x, bomb_pos_y);
-			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.three.mlx_img, bomb_pos_x, bomb_pos_y);
+			sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.three, bomb_pos_x, bomb_pos_y);
+		//	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.three.mlx_img, bomb_pos_x, bomb_pos_y);
 		//	env->tex.bomb.curr_state = &set_bomb.three;
 		}
         ++i;
     }
-	if (i > 12800)
+	if (i > 1280)
 		sl_explode_bomb(env, bomb_pos_x, bomb_pos_y, &i, &j);
 }

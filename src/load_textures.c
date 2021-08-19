@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/17 22:00:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/19 05:57:49 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,13 @@ void	sl_load_exit(t_env *env)
 	sl_load_texture(env, &env->tex.exit_pipe.state4, "./img/exit-4-24x24.xpm");
 	sl_load_texture(env, &env->tex.exit_pipe.state5, "./img/exit-5-24x24.xpm");
 }
-
+/*
+void	sl_load_tiles(t_env *env)
+{
+	sl_load_texture(env, &env->tex.tiles.tile, "./img/green-tile-24x24.xpm");
+	sl_load_texture(env, &env->tex.tiles.tile_shadow, "./img/green-tile-with-shadow-24x24.xpm");
+}
+*/
 void	sl_load_all_textures(t_env *env)
 {
 	sl_load_texture(env, &env->tex.wall, "./img/grey-tile-24x24.xpm");

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/19 04:57:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/19 06:01:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	sl_img_pixel_put(t_img *img, int x , int y, int color, bool mask)
 	}
 }
 
-int		sl_render_colored_bloc(int **buffer, int color, int x, int y)
+int		sl_render_buffer_with_colored_bloc(int **buffer, int color, int x, int y)
 {
 	int	i;
 	int	j;
@@ -49,6 +49,25 @@ int		sl_render_colored_bloc(int **buffer, int color, int x, int y)
 		while (j < BLOC_LEN)
 		{
 			buffer[i + y][j + x] = color;
+			++j;
+		}
+		++i;
+	}
+	return (0);
+}
+
+int		sl_render_colored_bloc(t_img *img, int color, int x, int y)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < BLOC_LEN)
+	{
+		j = 0;
+		while (j < BLOC_LEN)
+		{
+			sl_img_pixel_put(img, j + x, i + y, color, false);
 			++j;
 		}
 		++i;
@@ -69,8 +88,7 @@ void	sl_render_buffer_bloc_with_xpm(int **buffer, t_img *xpm_img, int x, int y)
 		while (j < BLOC_LEN)
 		{
 			color = sl_get_color_from_img(xpm_img, j, i);
-			if (color != GREEN_PXL)
-				buffer[i + y][j + x] = color;
+			buffer[i + y][j + x] = color;
 			++j;
 		}
 		++i;
@@ -112,10 +130,10 @@ void	sl_render_background(t_env *env)
 		while (j < env->width)
 		{
 			if (map[i][j] != MAP_WALL)
-				sl_render_colored_bloc(env->buffer_bkgd, 0x00FF00, BLOC_LEN * j, BLOC_LEN * i);
+				sl_render_buffer_with_colored_bloc(env->buffer_bkgd, 107830, BLOC_LEN * j, BLOC_LEN * i);
 			else
 				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, &env->tex.wall, BLOC_LEN * j, BLOC_LEN * i);
-			if (map[i][j] == MAP_ITEM_BOMB && map[env->p1.pos.y][env->p1.pos.x] != MAP_ITEM_BOMB)
+			if (map[i][j] == MAP_ITEM_BOMB)
 				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, &env->tex.bomb.item_bomb, BLOC_LEN * j, BLOC_LEN * i);
 			++j;
 		}
@@ -131,21 +149,21 @@ void	sl_reveal_exit(t_env *env)
 
 	exit = env->tex.exit_pipe;
 	curr_state = NULL;
-	if (i <= 800)
+	if (i <= 80)
 		curr_state = &exit.state0;
-	if (i > 800 && i <= 1600)
+	if (i > 80 && i <= 160)
 		curr_state = &exit.state1;
-	if (i > 1600 && i <= 2400)
+	if (i > 160 && i <= 240)
 		curr_state = &exit.state2;
-	if (i > 2400 && i <= 3200)
+	if (i > 240 && i <= 320)
 		curr_state = &exit.state3;
-	if (i > 3200)
+	if (i > 320)
 		curr_state = &exit.state4;
-	if (i == 4000)
+	if (i == 400)
 		curr_state = &exit.state5;
 	else
 		++i;
-	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, curr_state->mlx_img, exit.pos.x * BLOC_LEN, exit.pos.y * BLOC_LEN);
+	sl_render_bloc_with_xpm(&env->bkgd, curr_state, exit.pos.x * BLOC_LEN,  exit.pos.y * BLOC_LEN);
 }
 
 /*
