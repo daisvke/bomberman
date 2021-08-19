@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/18 04:58:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/19 05:01:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	sl_handle_keypress(int keycode, t_env *env)
 	y = env->p1.pos.y;
 	if (keycode == XK_Escape)
 		sl_exit_game(env, NULL);
-	if (keycode == XK_w)
+	if (keycode == XK_w || keycode == XK_z)
 		env->p1.curr_dir.up = true;
 	if (keycode == XK_s)
 		env->p1.curr_dir.down = true;
-	if (keycode == XK_a)
+	if (keycode == XK_a || keycode == XK_q)
 		env->p1.curr_dir.left = true;
-	if (keycode == XK_d)
+	if (keycode == XK_d || keycode == XK_d)
 		env->p1.curr_dir.right = true;
     if (keycode == XK_b && !env->tex.bomb.set_bomb)
 	{
