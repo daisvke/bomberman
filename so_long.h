@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/19 06:03:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 03:05:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_sprite
 	t_dir			curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
+	int				time;
 	int				moves;
 }					t_sprite;
 
@@ -178,6 +179,7 @@ typedef struct s_env
 	t_img		bkgd;
 	int			width;
 	int			height;
+	bool		keypress;
 	char		**map;
 	int			**buffer_bkgd;
 	int			**buffer;
@@ -199,6 +201,12 @@ typedef struct s_count
     int player;
     int exit_pipe;
 }		t_count;
+
+/*
+** init
+*/
+void	sl_init_sprite(t_sprite *sprite, int x, int y);
+
 /*
 ** parse
 */

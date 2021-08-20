@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/19 05:01:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 03:04:35 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,22 @@ void	sl_init_buffers(t_env *env)
 	}
 }
 
+void	sl_init_sprite(t_sprite *sprite, int x, int y)
+{
+	sprite->alive = true;
+	sprite->moves = 0;
+	sprite->curr_dir.up = false;
+	sprite->curr_dir.down = false;
+	sprite->curr_dir.left = false;
+	sprite->curr_dir.right = false;
+	sprite->curr_state = &sprite->img.down.one;
+	sprite->sub_pos.x = 0;
+	sprite->sub_pos.y = 0;
+	sprite->pos.x = x;
+	sprite->pos.y = y;
+	sprite->time = 0;
+}
+
 void	sl_init_env(t_env *env)
 {
 	env->width = 0;
@@ -108,18 +124,8 @@ void	sl_init_env(t_env *env)
 	env->tex.bomb.collected = 0;
     env->tex.bomb.set_bomb = false;
 	env->tex.exit_pipe.appear = false;
-	env->p1.alive = true;
-	env->p1.moves = 0;
-	env->p1.curr_dir.up = false;
-	env->p1.curr_dir.down = false;
-	env->p1.curr_dir.left = false;
-	env->p1.curr_dir.right = false;
-	env->p1.curr_state = &env->p1.img.down.one;
-	env->p1.sub_pos.x = 0;
-	env->p1.sub_pos.y = 0;
-	env->p1.pos.x = 0;
-	env->p1.pos.y = 0;
 	env->tex.ennemies.count = 0;
+	sl_init_sprite(&env->p1, 0, 0);
 }
 
 int	ft_strcmp(char *s1, char *s2)
@@ -181,6 +187,4 @@ int	main(int argc, char *argv[])
 //	mlx_key_hook(env.win_ptr, &sl_handle_input, &env);
 	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);
 	mlx_loop(env.mlx_ptr);
-   // sl_exit_game(&env, NULL);
-	exit(EXIT_SUCCESS);
 }

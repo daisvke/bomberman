@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/19 06:01:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 02:47:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,29 +166,6 @@ void	sl_reveal_exit(t_env *env)
 	sl_render_bloc_with_xpm(&env->bkgd, curr_state, exit.pos.x * BLOC_LEN,  exit.pos.y * BLOC_LEN);
 }
 
-/*
-void	sl_overlay_bomb_and_player(t_env *env)
-{
-	t_img	*bomb_curr_state;
-	t_img	*player_curr_state;
-	unsigned int	color;
-	int	i;
-	int	j;
-	int			bomb_pos_x;
-	int			bomb_pos_y;
-
-	bomb_pos_x = env->tex.bomb.pos.x * BLOC_LEN;
-	bomb_pos_y = env->tex.bomb.pos.y * BLOC_LEN;
-
-	bomb_curr_state = env->tex.bomb.curr_state;
-//	bomb_curr_state = &env->tex.bomb.set_states.three;
-	player_curr_state = env->p1.curr_state;
-	if (env->p1.pos.x == env->tex.bomb.pos.x && env->p1.pos.y == env->tex.bomb.pos.y)
-		sl_render_bloc_with_xpm(&env->tex.bomb.set_states.one, player_curr_state, 0, 0);
-	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, bomb_curr_state->mlx_img, bomb_pos_x, bomb_pos_y);
-}
-*/
-
 void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, t_sprite *sprite, int apply_to, t_img_patterns *img)
 {
 	if (dir->up)
@@ -288,10 +265,7 @@ int	sl_render(t_env *env)
 	t_img	*img;
 	t_img	*img2;
 	static int	i;
-	
 	int	j;
-	int			bomb_pos_x;
-	int			bomb_pos_y;
 	
 //	sl_init_canvas(env);
 //	sl_copy_bkgd_buffer_to_buffer(env);
