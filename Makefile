@@ -16,6 +16,7 @@ SRC_FILES	=	animate_sprites.c \
 				draw_exploding_bomb.c \
 				ennemies_ai.c \
 				exit_game.c \
+				init.c \
 				load_textures.c \
 				main.c \
 				map_parsing.c \

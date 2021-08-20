@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 03:04:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 14:20:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	sl_read_ennemies_from_map(t_env *env, int x, int y)
 	*ennemies_count += 1;
 	if (*ennemies_count > 50)
 		sl_exit_game(env, "Error: too many ennemies on the map");
-	sl_init_sprite(&ennemies[i], x, y);
+	sl_init_sprite(&ennemies[i], x, y, 80);
 	++i;
 }
 

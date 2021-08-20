@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 03:02:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 14:19:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 		y = 0;
 	}
 	sl_handle_textures_while_moving(env, apply_to, x, y);
-	if (sprite->time <= 60)
+	if (sprite->time <= sprite->speed)
 	{
 		sprite->curr_state = &img->two;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
 	}
-	if (sprite->time > 60)
+	if (sprite->time > sprite->speed)
 	{
 		sprite->curr_state = &img->three;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (2 * (BLOC_LEN / 3));
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (2 * (BLOC_LEN / 3));
 	}
-	if (sprite->time == 120)
+	if (sprite->time == sprite->speed * 2)
 	{
 		if (apply_to == PLAYER && (x != 0 || y != 0))
 			++env->p1.moves;

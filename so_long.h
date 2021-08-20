@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 05:57:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 14:19:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_sprite
 	t_dir			curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
+	int				speed;
 	int				time;
 	int				moves;
 	t_img			icon;
@@ -207,7 +208,9 @@ typedef struct s_count
 /*
 ** init
 */
-void	sl_init_sprite(t_sprite *sprite, int x, int y);
+void	sl_init_buffers(t_env *env);
+void	sl_init_env(t_env *env);
+void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed);
 
 /*
 ** parse
