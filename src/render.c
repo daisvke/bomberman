@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 04:42:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 06:28:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,19 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y)
 	}
 }
 
+void	sl_render_buffer_green_tile(t_env *env, int x, int y)
+{
+	int		**buffer;
+	char	**map;
+
+	buffer = env->buffer_bkgd;
+	map = env->map;
+	if (map[y - 1][x] == MAP_WALL)
+		sl_render_buffer_bloc_with_xpm(buffer, &env->tex.tiles.tile_shadow, BLOC_LEN * x, BLOC_LEN * y);
+	else	
+		sl_render_buffer_with_colored_bloc(buffer, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y);
+}
+
 void	sl_render_background(t_env *env)
 {
 	char	**map;
@@ -130,12 +143,7 @@ void	sl_render_background(t_env *env)
 		while (j < env->width)
 		{
 			if (map[i][j] != MAP_WALL)
-			{
-				if (map[i - 1][j] == MAP_WALL)
-					sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, &env->tex.tiles.tile_shadow, BLOC_LEN * j, BLOC_LEN * i);
-				else	
-					sl_render_buffer_with_colored_bloc(env->buffer_bkgd, GREEN_PXL, BLOC_LEN * j, BLOC_LEN * i);
-			}
+				sl_render_buffer_green_tile(env, j, i);
 			else
 				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, &env->tex.wall, BLOC_LEN * j, BLOC_LEN * i);
 			if (map[i][j] == MAP_ITEM_BOMB)
@@ -271,39 +279,60 @@ int	sl_render(t_env *env)
 	t_img	*img2;
 	static int	i;
 	int	j;
+	static int	k;
+	static int	l;
 	
 //	sl_init_canvas(env);
 //	sl_copy_bkgd_buffer_to_buffer(env);
 //	env->buffer = env->buffer_bkgd;
 	sl_put_buffer_bkgd_to_img(env);
-	sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
-	sl_read_and_animate_ennemies(env);
-	if (env->tex.exit_pipe.appear == true)
-		sl_reveal_exit(env);
-	if (env->tex.bomb.set_bomb == true)
+	if (env->p1.alive == true)
 	{
-		sl_set_bomb(env);
-	//	sl_overlay_bomb_and_player(env);
-	}
-	img = env->p1.curr_state;
-	sl_render_bloc_with_xpm(&env->bkgd, img, env->p1.sub_pos.x, env->p1.sub_pos.y);
-
-	j = 0;
-	t_ennemies	ennemies;
-	ennemies = env->tex.ennemies;
-	while (j < ennemies.count) 
-	{
-		if (ennemies.sprites[j].alive == true)
+		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
+		sl_read_and_animate_ennemies(env);
+		if (env->tex.exit_pipe.appear == true)
+			sl_reveal_exit(env);
+		if (env->tex.bomb.set_bomb == true)
 		{
-			img2 = env->tex.ennemies.sprites[j].curr_state;
-			sl_render_bloc_with_xpm(&env->bkgd, img2, ennemies.sprites[j].sub_pos.x, ennemies.sprites[j].sub_pos.y);
+			sl_set_bomb(env);
+		//	sl_overlay_bomb_and_player(env);
 		}
-		++j;
+		img = env->p1.curr_state;
+		sl_render_bloc_with_xpm(&env->bkgd, img, env->p1.sub_pos.x, env->p1.sub_pos.y);
+
+		j = 0;
+		t_ennemies	ennemies;
+		ennemies = env->tex.ennemies;
+		while (j < ennemies.count) 
+		{
+			if (ennemies.sprites[j].alive == true)
+			{
+				img2 = env->tex.ennemies.sprites[j].curr_state;
+				sl_render_bloc_with_xpm(&env->bkgd, img2, ennemies.sprites[j].sub_pos.x, ennemies.sprites[j].sub_pos.y);
+			}
+			else
+			{
+				if (l <= 1100)
+					sl_render_bloc_with_xpm(&env->bkgd, &ennemies.dead, ennemies.sprites[j].sub_pos.x, ennemies.sprites[j].sub_pos.y);
+				++l;
+			}
+			++j;
+		}
 	}
 
 //	sl_put_buffer_to_img(env);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 
+	if (env->p1.alive == false)
+	{
+		if (k <= CENTER_MESS_TIME)
+		{
+			sl_put_centered_message_to_window(env, "GAME OVER !");
+		}
+		else
+			sl_exit_game_over(env);
+		++k;
+	}
 	sl_put_move_count_to_window(env);
 	if (i <= CENTER_MESS_TIME)
 	{

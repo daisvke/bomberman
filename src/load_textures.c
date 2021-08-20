@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 03:48:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 05:57:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	sl_load_ennemies(t_env *env)
 	sl_load_texture(env, &env->tex.ennemies.img.right.one, "./img/ennemy-right-0-24x24.xpm");
 	sl_load_texture(env, &env->tex.ennemies.img.right.two, "./img/ennemy-right-l-24x24.xpm");
 	sl_load_texture(env, &env->tex.ennemies.img.right.three, "./img/ennemy-right-r-24x24.xpm");
+	sl_load_texture(env, &env->tex.ennemies.dead, "./img/ennemy-dead-24x24.xpm");
 }
 
 void	sl_load_exit(t_env *env)
@@ -100,6 +101,7 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_set_bomb(env);
 	sl_load_bomb_explode(env);
 	sl_load_p1(env);
+	sl_load_texture(env, &env->p1.icon, "./img/display-white-icon-24x24.xpm");
 	sl_load_ennemies(env);
 	sl_load_exit(env);
 }

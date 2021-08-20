@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 05:00:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 06:30:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sl_find_which_ennemy_is_dead(t_env *env, int x_start, int y)
 	env->map[y][x_start] = MAP_FLOOR;
 }
 
-void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
+bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 {
 	int	p1_x;
 	int	p1_y;
@@ -54,12 +54,12 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (x_start < x_end)
 	{
 		if (map[y][x_start] == MAP_PLAYER)
-			env->p1.alive = false;
+			return (true);
 		if (map[y][x_start] == MAP_ENNEMY)
 			sl_find_which_ennemy_is_dead(env, x_start, y);
 		if (map[y][x_start] == MAP_ITEM_BOMB)
 		{
-			sl_render_buffer_with_colored_bloc(env->buffer_bkgd, GREEN_PXL, BLOC_LEN * x_start, BLOC_LEN * y);
+			sl_render_buffer_green_tile(env, x_start, y);
 			map[y][x_start] = MAP_FLOOR;
 		}
 		++x_start;
@@ -67,32 +67,36 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	while (y_start < y_end)
 	{
 		if (map[y_start][x] == MAP_PLAYER)
-			env->p1.alive = false;
+			return (true);
 		if (map[y_start][x] == MAP_ITEM_BOMB)
 		{
-			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y_start);
+			sl_render_buffer_green_tile(env, x, y_start);
 			map[y_start][x] = MAP_FLOOR;
 		}
 		++y_start;
 	}
+	return (false);
 }
 
 void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 {
 	static int	k;
+	bool		is_dead;
 
 	if (k <= CENTER_MESS_TIME)
 		sl_draw_segments_of_exploding_bomb(env, x, y);
-	sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
-	if (env->p1.alive == false)
-		sl_exit_game_over(env);
+	is_dead = sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
 	++k;
 	if (k > CENTER_MESS_TIME * 2 + 20)
 	{
 		*i = 0;
 		*j = 0;
 		k = 0;
+		env->tex.bomb.pos.x = 0;
+		env->tex.bomb.pos.y = 0;
 		env->tex.bomb.set_bomb = false;
+		if (is_dead)
+			env->p1.alive = false;
 	}
 }
 

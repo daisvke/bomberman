@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 03:05:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 05:57:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 /*
 **	write to window 
 */
-# define CENTER_MESS_TIME	160
+# define CENTER_MESS_TIME	300
 
 /*
 ** determine ennemy position
@@ -129,6 +129,7 @@ typedef struct s_sprite
 	t_coord			sub_pos;
 	int				time;
 	int				moves;
+	t_img			icon;
 }					t_sprite;
 
 typedef struct s_explode_states
@@ -153,6 +154,7 @@ typedef struct s_bombs
 typedef struct s_ennemies
 {
     t_img_patterns 	img;
+	t_img			dead;
 	int				count;
     t_sprite		sprites[50];
 }					t_ennemies;

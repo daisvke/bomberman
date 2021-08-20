@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:23:20 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/17 22:37:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 05:52:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ void	sl_get_max_len(t_sprite *sprite, int len_array[])
 	}
 }
 
-int	sl_keep_direction_if_no_wall(char **map, t_dir curr_dir, int pos_x, int pos_y)
+int	sl_keep_direction_if_no_wall(char **map, t_coord bomb, t_dir curr_dir, int pos_x, int pos_y)
 {
-	if (curr_dir.up == true && map[pos_y - 1][pos_x] != MAP_WALL)
+	if (curr_dir.up == true && map[pos_y - 1][pos_x] != MAP_WALL && (pos_y - 1 != bomb.y && pos_x != bomb.x))
 		return (KEEP);
-	if (curr_dir.down == true && map[pos_y + 1][pos_x] != MAP_WALL)
+	if (curr_dir.down == true && map[pos_y + 1][pos_x] != MAP_WALL && (pos_y + 1 != bomb.y && pos_x != bomb.x))
 		return (KEEP);
-	if (curr_dir.left == true && map[pos_y][pos_x - 1] != MAP_WALL)
+	if (curr_dir.left == true && map[pos_y][pos_x - 1] != MAP_WALL && (pos_y != bomb.y && pos_x - 1 != bomb.x))
 		return (KEEP);
-	if (curr_dir.right == true && map[pos_y][pos_x + 1] != MAP_WALL)
+	if (curr_dir.right == true && map[pos_y][pos_x + 1] != MAP_WALL && (pos_y != bomb.y && pos_x + 1 != bomb.x))
 		return (KEEP);
 	return (0);
 }
@@ -71,7 +71,7 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 	pos_x = sprite->pos.x;
 	pos_y = sprite->pos.y;
 
-	keep = sl_keep_direction_if_no_wall(map, sprite->curr_dir, pos_x, pos_y);
+	keep = sl_keep_direction_if_no_wall(map, env->tex.bomb.pos, sprite->curr_dir, pos_x, pos_y);
 	if (keep == true)
 		return ;
 	sprite->curr_dir.up = false;
