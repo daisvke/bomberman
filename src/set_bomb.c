@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 06:30:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 14:12:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 		sl_draw_segments_of_exploding_bomb(env, x, y);
 	is_dead = sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
 	++k;
-	if (k > CENTER_MESS_TIME * 2 + 20)
+	if (k > CENTER_MESS_TIME)
 	{
 		*i = 0;
 		*j = 0;
