@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 14:03:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/19 05:55:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 05:00:18 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sl_collect_bomb(t_env *env, char **map, int x, int y)
 {
 	if (map[y][x] == MAP_ITEM_BOMB)
 	{
-		sl_render_buffer_with_colored_bloc(env->buffer_bkgd, 107830, BLOC_LEN * x, BLOC_LEN * y);
+		sl_render_buffer_with_colored_bloc(env->buffer_bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y);
 		map[y][x] = MAP_FLOOR;
 		++env->tex.bomb.collected;
 		if (env->tex.bomb.collected == env->tex.bomb.to_collect)

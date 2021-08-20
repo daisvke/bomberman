@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/19 06:22:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 05:00:18 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 			sl_find_which_ennemy_is_dead(env, x_start, y);
 		if (map[y][x_start] == MAP_ITEM_BOMB)
 		{
-			sl_render_buffer_with_colored_bloc(env->buffer_bkgd, 107830, BLOC_LEN * x_start, BLOC_LEN * y);
+			sl_render_buffer_with_colored_bloc(env->buffer_bkgd, GREEN_PXL, BLOC_LEN * x_start, BLOC_LEN * y);
 			map[y][x_start] = MAP_FLOOR;
 		}
 		++x_start;
@@ -70,7 +70,7 @@ void	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 			env->p1.alive = false;
 		if (map[y_start][x] == MAP_ITEM_BOMB)
 		{
-			sl_render_colored_bloc(&env->bkgd, 107830, BLOC_LEN * x, BLOC_LEN * y_start);
+			sl_render_colored_bloc(&env->bkgd, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y_start);
 			map[y_start][x] = MAP_FLOOR;
 		}
 		++y_start;

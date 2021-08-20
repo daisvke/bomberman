@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 02:47:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/20 04:42:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,12 @@ void	sl_render_background(t_env *env)
 		while (j < env->width)
 		{
 			if (map[i][j] != MAP_WALL)
-				sl_render_buffer_with_colored_bloc(env->buffer_bkgd, 107830, BLOC_LEN * j, BLOC_LEN * i);
+			{
+				if (map[i - 1][j] == MAP_WALL)
+					sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, &env->tex.tiles.tile_shadow, BLOC_LEN * j, BLOC_LEN * i);
+				else	
+					sl_render_buffer_with_colored_bloc(env->buffer_bkgd, GREEN_PXL, BLOC_LEN * j, BLOC_LEN * i);
+			}
 			else
 				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, &env->tex.wall, BLOC_LEN * j, BLOC_LEN * i);
 			if (map[i][j] == MAP_ITEM_BOMB)
@@ -177,7 +182,7 @@ void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, t_sprite *spri
 	if (dir->right)
 		sl_animate_sprite(env, sprite, apply_to, &img->right, &dir->right, RIGHT, 0);
 }
-
+/*
 void	sl_put_buffer_to_img(t_env *env)
 {
 	int	**buffer;
@@ -200,7 +205,7 @@ void	sl_put_buffer_to_img(t_env *env)
 		++i;
 	}
 }
-
+*/
 void	sl_put_buffer_bkgd_to_img(t_env *env)
 {
 	int	**buffer;
@@ -216,13 +221,13 @@ void	sl_put_buffer_bkgd_to_img(t_env *env)
 		while (j < env->width * BLOC_LEN)
 		{
 			color = buffer[i][j];
-			sl_img_pixel_put(&env->bkgd, j, i, color, true);
+			sl_img_pixel_put(&env->bkgd, j, i, color, false);
 			++j;
 		}
 		++i;
 	}
 }
-
+/*
 void	sl_copy_bkgd_buffer_to_buffer(t_env *env)
 {
 	int	i;
@@ -240,7 +245,7 @@ void	sl_copy_bkgd_buffer_to_buffer(t_env *env)
 		++i;
 	}
 }
-
+*/
 void	sl_init_canvas(t_env *env)
 {
 	int	i;
