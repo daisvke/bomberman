@@ -1,5 +1,5 @@
 /* XPM */
-static char *bomb_explose_0_24x24[] = {
+static char *bomb_explode_ctr_24x24[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 120 2 ",
 "   c #8B0000",
