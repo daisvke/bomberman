@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 05:57:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/21 05:27:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_bomb_explode(env);
 	sl_load_p1(env);
 	sl_load_texture(env, &env->p1.icon, "./img/display-white-icon-24x24.xpm");
+	sl_load_texture(env, &env->icon_bomb, "./img/display-bomb.xpm");
 	sl_load_ennemies(env);
 	sl_load_exit(env);
 }

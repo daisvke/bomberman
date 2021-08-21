@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 14:19:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/21 05:11:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ int	sl_handle_keypress(int keysym, t_env *env)
 
 int	sl_handle_keypress(int keycode, t_env *env)
 {
-	char		**map;
 	int			x;
 	int			y;
 
-	map = env->map;
 	x = env->p1.pos.x;
 	y = env->p1.pos.y;
 	if (keycode == XK_Escape)
@@ -130,6 +128,7 @@ int	main(int argc, char *argv[])
 	sl_render_background(&env);
 
 	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
+//	mlx_hook(env.win_ptr, 3, 1L << 1, sl_handle_keyrelease, &env);
 	mlx_hook(env.win_ptr, 33, 1L << 17, sl_exit_game, &env);
 //	mlx_key_hook(env.win_ptr, &sl_handle_input, &env);
 	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);

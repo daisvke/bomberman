@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 06:28:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/21 05:27:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,7 @@ int	sl_render(t_env *env)
 			sl_exit_game_over(env);
 		++k;
 	}
-	sl_put_move_count_to_window(env);
+	sl_put_counts_to_window(env);
 	if (i <= CENTER_MESS_TIME)
 	{
 		sl_put_centered_message_to_window(env, "START !");
