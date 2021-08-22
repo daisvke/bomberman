@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/21 05:11:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/21 13:39:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	main(int argc, char *argv[])
 	env.bkgd.addr = mlx_get_data_addr(env.bkgd.mlx_img, &env.bkgd.bpp, &env.bkgd.line_len, &env.bkgd.endian);
 	
 	sl_render_background(&env);
+	sl_put_buffer_bkgd_to_img(&env);
 
 	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
 //	mlx_hook(env.win_ptr, 3, 1L << 1, sl_handle_keyrelease, &env);
