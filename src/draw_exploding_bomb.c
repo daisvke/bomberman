@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 05:35:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/19 06:19:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 13:36:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 static void	sl_draw_upper_segment(t_env *env, char *map[], t_explode_states states, int x, int y)
 {
-	if ((env->tex.bomb.pos.y - 1 > 0) && map[env->tex.bomb.pos.y - 1][env->tex.bomb.pos.x] != MAP_WALL)
+	int	i;
+	int	size;
+
+	size = 2;
+	i = 1;
+	while (i <= size && map[env->tex.bomb.pos.y - i][env->tex.bomb.pos.x] != MAP_WALL)
 	{
-		sl_render_bloc_with_xpm(&env->bkgd, &states.vrt.one, x, y - BLOC_LEN);
-		if ((env->tex.bomb.pos.y - 2 > 0) && map[env->tex.bomb.pos.y - 2][env->tex.bomb.pos.x] != MAP_WALL)
-			sl_render_bloc_with_xpm(&env->bkgd, &states.vrt.two, x, y - 2 * BLOC_LEN);
+		if (env->tex.bomb.pos.y - i > 0)
+			sl_render_bloc_with_xpm(&env->bkgd, &states.vrt.one, x, y - i * BLOC_LEN);
+		++i;
 	}
 }
 
