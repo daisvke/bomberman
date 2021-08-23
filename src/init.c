@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/22 14:06:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 05:26:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	sl_init_buffers(t_env *env)
 void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed)
 {
 	sprite->alive = true;
+	sprite->time_death = 0;
 	sprite->moves = 0;
 	sprite->curr_dir.up = false;
 	sprite->curr_dir.down = false;

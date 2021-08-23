@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 02:00:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 05:43:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,9 +341,9 @@ int	sl_render(t_env *env)
 //	sl_init_canvas(env);
 //	sl_copy_bkgd_buffer_to_buffer(env);
 //	env->buffer = env->buffer_bkgd;
+	sl_clear_sprites_last_positions(env);
 	if (env->p1.alive == true)
 	{
-		sl_clear_sprites_last_positions(env);
 		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
 		sl_read_and_animate_ennemies(env);
 		if (env->tex.exit_pipe.appear == true)
@@ -360,38 +360,63 @@ int	sl_render(t_env *env)
 		j = 0;
 		t_ennemies	ennemies;
 		ennemies = env->tex.ennemies;
+		int	*time_death;
 		while (j < ennemies.count) 
 		{
 			if (ennemies.sprites[j].alive == true)
 			{
 				img2 = env->tex.ennemies.sprites[j].curr_state;
-				sl_render_bloc_with_xpm(&env->bkgd, img2,\
+				sl_render_bloc_with_xpm(&env->bkgd, img2, \
 					ennemies.sprites[j].sub_pos.x, \
 					ennemies.sprites[j].sub_pos.y, true);
 			}
 			else
 			{
-				if (l <= 1100)
+				time_death = env->tex.ennemies.sprites[j].time_death;
+				if (time_death <= 1100)
+				{
 					sl_render_bloc_with_xpm(&env->bkgd, &ennemies.dead, \
 						ennemies.sprites[j].sub_pos.x, \
 						ennemies.sprites[j].sub_pos.y, true);
-				++l;
+					++env->tex.ennemies.sprites[j].time_death;
+				}
 			}
 			++j;
 		}
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 	}
-
-//	sl_put_buffer_to_img(env);
-	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
-
+	t_img		*death_state;
+	static int	m = 0;
+	
+	death_state = NULL;
 	if (env->p1.alive == false)
 	{
-		if (k <= CENTER_MESS_TIME)
+		if (k <= CENTER_MESS_TIME * 3 + 200)
 		{
+			if (m <= 1000)
+				death_state = &env->p1.img.dead.one;
+			else if (m <= 2000)
+				death_state = &env->p1.img.dead.two;
+			else if (m <= 2200)
+				death_state = &env->p1.img.dead.three;
+			else if (m <= 2400)
+				death_state = &env->p1.img.dead.four;
+			else if (m <= 2600)
+				death_state = &env->p1.img.dead.five;
+			else if (m <= 2800)
+				death_state = &env->p1.img.dead.six;
+			else if (m <= 3000)
+				death_state = &env->p1.img.dead.seven;
+			else if (m <= 3200)
+				death_state = &env->p1.img.dead.eight;
+			sl_render_bloc_with_xpm(&env->bkgd, death_state, env->p1.sub_pos.x, \
+				env->p1.sub_pos.y, true);
+			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
 			sl_put_centered_message_to_window(env, "GAME OVER !");
 		}
 		else
 			sl_exit_game_over(env);
+		++m;
 		++k;
 	}
 	sl_put_counts_to_window(env);

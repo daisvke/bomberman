@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 02:29:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 03:34:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,11 @@ void    sl_set_bomb(t_env *env)
         if (i % 320 == 0)
 			++j;
 		if (j % 2 == 0)
-		{
 			sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.one, bomb_pos_x, bomb_pos_y);
-		//	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.one.mlx_img, bomb_pos_x, bomb_pos_y);
-		//	env->tex.bomb.curr_state = &set_bomb.one;
-		}
 		else
 		{
+			sl_replace_with_green_tile(env, bomb_pos_x, bomb_pos_y);
 			sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.three, bomb_pos_x, bomb_pos_y);
-		//	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, set_bomb.three.mlx_img, bomb_pos_x, bomb_pos_y);
-		//	env->tex.bomb.curr_state = &set_bomb.three;
 		}
         ++i;
     }

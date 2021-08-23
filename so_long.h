@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/22 14:12:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 05:26:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,25 @@ typedef struct s_states
 	t_img	three;
 }			t_states;
 
+typedef struct s_dead
+{
+	t_img	one;
+	t_img	two;
+	t_img	three;
+	t_img	four;
+	t_img	five;
+	t_img	six;
+	t_img	seven;
+	t_img	eight;
+}			t_dead;
+
 typedef struct s_img_patterns
 {
 	t_states	up;
 	t_states	down;
 	t_states	left;
 	t_states	right;
+	t_dead		dead;
 }				t_img_patterns;
 
 // try bitshift
@@ -122,6 +135,7 @@ typedef struct s_dir
 typedef struct s_sprite
 {
 	bool			alive;
+	int				time_death;
 	t_img_patterns	img;
 	void			*curr_state;
 	t_dir			curr_dir;

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/21 05:27:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 03:51:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	sl_load_bomb_explode(t_env *env)
 	sl_load_texture(env, &env->tex.bomb.explode_states.vrt.three, "./img/bomb-explode-vrt-d-24x24.xpm");
 }
 
-void	sl_load_p1(t_env *env)
+void	sl_load_white_bomber(t_env *env)
 {
 	sl_load_texture(env, &env->p1.img.up.one, "./img/white-up-0-24x24.xpm");
 	sl_load_texture(env, &env->p1.img.up.two, "./img/white-up-l-24x24.xpm");
@@ -58,6 +58,14 @@ void	sl_load_p1(t_env *env)
 	sl_load_texture(env, &env->p1.img.right.one, "./img/white-right-0-24x24.xpm");
 	sl_load_texture(env, &env->p1.img.right.two, "./img/white-right-l-24x24.xpm");
 	sl_load_texture(env, &env->p1.img.right.three, "./img/white-right-r-24x24.xpm");
+	sl_load_texture(env, &env->p1.img.dead.one, "./img/white-dead-0.xpm");
+	sl_load_texture(env, &env->p1.img.dead.two, "./img/white-dead-1.xpm");
+	sl_load_texture(env, &env->p1.img.dead.three, "./img/white-dead-2.xpm");
+	sl_load_texture(env, &env->p1.img.dead.four, "./img/white-dead-3.xpm");
+	sl_load_texture(env, &env->p1.img.dead.five, "./img/white-dead-4.xpm");
+	sl_load_texture(env, &env->p1.img.dead.six, "./img/white-dead-5.xpm");
+	sl_load_texture(env, &env->p1.img.dead.seven, "./img/white-dead-6.xpm");
+	sl_load_texture(env, &env->p1.img.dead.eight, "./img/white-dead-7.xpm");
 }
 
 void	sl_load_ennemies(t_env *env)
@@ -100,7 +108,7 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_tiles(env);
 	sl_load_set_bomb(env);
 	sl_load_bomb_explode(env);
-	sl_load_p1(env);
+	sl_load_white_bomber(env);
 	sl_load_texture(env, &env->p1.icon, "./img/display-white-icon-24x24.xpm");
 	sl_load_texture(env, &env->icon_bomb, "./img/display-bomb.xpm");
 	sl_load_ennemies(env);

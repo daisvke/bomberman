@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 14:03:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 06:29:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 04:36:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,18 @@ void	sl_exit_when_game_clear(char **map, t_pipe *exit_pipe, int x, int y)
 void	sl_handle_textures_while_moving(t_env *env, int apply_to, int delta_x, \
 	int delta_y)
 {
-	int	x;
-	int	y;
+	char	**map;
+	int		x;
+	int		y;
 
+	map = env->map;
+	x = env->p1.pos.x + delta_x;
+	y = env->p1.pos.y + delta_y;
+	if (map[y][x] == MAP_ENNEMY)
+		env->p1.alive = false;
 	if (apply_to == PLAYER)
 	{
-		x = env->p1.pos.x + delta_x;
-		y = env->p1.pos.y + delta_y;
-		sl_collect_bomb(env, env->map, x, y);
-		sl_exit_when_game_clear(env->map, &env->tex.exit_pipe, x, y);
+		sl_collect_bomb(env, map, x, y);
+		sl_exit_when_game_clear(map, &env->tex.exit_pipe, x, y);
 	}
 }
