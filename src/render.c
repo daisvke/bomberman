@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/22 14:02:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 02:00:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,27 @@ void	sl_render_green_tile(t_env *env, t_dir curr_dir, int x, int y, int sub_x, i
 				sub_x, sub_y, false);
 		else	
 			sl_render_colored_bloc(bkgd, GREEN_PXL, sub_x, sub_y);
+	}
+}
+
+void	sl_replace_with_green_tile(t_env *env, int x, int y)
+{
+	t_img	*bkgd;
+	char	**map;
+	int		map_x;
+	int		map_y;
+
+	bkgd = &env->bkgd;
+	map = env->map;
+	map_x = x / BLOC_LEN;
+	map_y = y / BLOC_LEN;
+	if (map[map_y][map_x] != MAP_WALL)
+	{
+		if (map[map_y - 1][map_x] == MAP_WALL)
+			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
+				x, y, false);
+		else	
+			sl_render_colored_bloc(bkgd, GREEN_PXL, x, y);
 	}
 }
 
@@ -304,11 +325,7 @@ void	sl_clear_sprites_last_positions(t_env *env)
 			ennemies.sprites[i].pos.y, ennemy_pos.x, ennemy_pos.y);
 		++i;
 	}
-}
-
-bool	sl_have_something_to_clear(t_env *env)
-{
-	return (env->tex.ennemies.sprites[0].sub_pos.x != 0);
+	//clear bomb explosion
 }
 
 //put img to window (not render
@@ -324,10 +341,9 @@ int	sl_render(t_env *env)
 //	sl_init_canvas(env);
 //	sl_copy_bkgd_buffer_to_buffer(env);
 //	env->buffer = env->buffer_bkgd;
-	if (sl_have_something_to_clear)
-		sl_clear_sprites_last_positions(env);
 	if (env->p1.alive == true)
 	{
+		sl_clear_sprites_last_positions(env);
 		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
 		sl_read_and_animate_ennemies(env);
 		if (env->tex.exit_pipe.appear == true)

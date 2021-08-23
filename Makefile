@@ -13,6 +13,7 @@ RM			=	rm -rf
 
 SRC_DIR		=	src/
 SRC_FILES	=	animate_sprites.c \
+				clear_exploding_bomb.c \
 				draw_exploding_bomb.c \
 				ennemies_ai.c \
 				exit_game.c \

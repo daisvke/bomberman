@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 14:12:39 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/23 02:29:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	sl_explode_bomb(t_env *env, int x, int y, int *i, int *j)
 		*i = 0;
 		*j = 0;
 		k = 0;
+		sl_clear_segments_of_exploding_bomb(env, x, y);
 		env->tex.bomb.pos.x = 0;
 		env->tex.bomb.pos.y = 0;
 		env->tex.bomb.set_bomb = false;

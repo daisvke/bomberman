@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/21 05:27:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/22 14:12:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 /*
 **	write to window 
 */
-# define CENTER_MESS_TIME	300
+# define CENTER_MESS_TIME	1000
 
 /*
 ** determine ennemy position
