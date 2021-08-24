@@ -1,0 +1,37 @@
+/* XPM */
+static char *ennemy_left_0_24x24[] = {
+/* columns rows colors chars-per-pixel */
+"24 24 7 1 ",
+"  c #292829",
+". c #107830",
+"X c #F70000",
+"o c #0081A4",
+"O c #00E3FF",
+"+ c #ADAAAD",
+"@ c #FFFBFF",
+/* pixels */
+".......    .............",
+"...... XXXX ............",
+"..... XXXXX     ........",
+"..... XX@@ O@@Oo .......",
+"..... X   o @@OOo  .....",
+".....  OO o OOOOo O ....",
+"...... OO  OOOOOo O ....",
+"......     OOOOoo O ....",
+"...... XXXX Oooo oO ....",
+"..... XXXXXX    oOO ....",
+"..... XX@@XX OOOOOO ....",
+"..... XX@@XX OOOOOO ....",
+"..... XXXXXX    oo@ ....",
+"...... XXXX o@@o oO ....",
+"......      O@OOo O ....",
+"...... o  + oOOoo O ....",
+".....  o +++     oO ....",
+"....   O +@+ ++ oo@ ....",
+"....     +++ ++     ....",
+"....      ++ + oO   ....",
+"....     @    OOO   ....",
+"....     @@oooooo   ....",
+".....    @ooooooO  .....",
+".......          ......."
+};

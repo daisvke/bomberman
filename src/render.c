@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 03:07:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 04:54:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,8 @@ void	sl_draw_collectibles_by_category(t_env *env, t_items *items, t_img *img, in
 		y = items[i].pos.y * BLOC_LEN;
 		if (items[i].draw == true)
 			sl_render_bloc_with_xpm(&env->bkgd, img, x, y, true);
+		else
+			sl_replace_with_green_tile(env, x, y);
 		++i;
 	}
 }
