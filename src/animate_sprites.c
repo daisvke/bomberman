@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/21 05:06:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 06:54:18 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@ void	sl_put_back_exit_on_map(t_env *env)
 	map[y][x] = MAP_EXIT;
 }
 
+int	sl_is_collectible(char elem_to_check)
+{
+	int	i;
+
+	i = 0;
+	while (MAP_COLLECTIBLES[i])
+	{
+		if (elem_to_check == MAP_COLLECTIBLES[i])
+			return (i + 1);
+		++i;
+	}
+	return (0);
+}
+
 void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
 	t_sprite *sprite, int x, int y)
 {
@@ -38,11 +52,11 @@ void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
 	old_y = sprite->pos.y;
 	new_x = sprite->pos.x + x;
 	new_y = sprite->pos.y + y;
-	if (!(apply_to == ENNEMY && (map[old_y][old_x] == MAP_ITEM_BOMB)))
+	if (!(apply_to == ENNEMY && sl_is_collectible(map[old_y][old_x])))
 		map[old_y][old_x] = MAP_FLOOR;
 	if (apply_to == PLAYER)
 		map[sprite->pos.y + y][sprite->pos.x + x] = MAP_PLAYER;
-	else if (apply_to == ENNEMY && map[new_y][new_x] != MAP_ITEM_BOMB)
+	else if (apply_to == ENNEMY && !sl_is_collectible(map[new_y][new_x]))
 		map[new_y][new_x] = MAP_ENNEMY;
 	sl_put_back_exit_on_map(env);
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 02:38:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 06:18:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEPM"
+# define MAP_COLLECTIBLES	"BFS"
 
 # define MAP_FLOOR			'0'
 # define MAP_WALL			'1'
@@ -265,6 +266,16 @@ void	sl_img_pixel_put(t_img *img, int x , int y, int color, bool mask);
 int		sl_render(t_env *data);
 void	sl_render_background(t_env *data);
 int		sl_render_colored_bloc(t_img *img, int color, int x, int y);
+
+/*
+** texture interactions
+*/
+void	sl_find_and_turn_off_item(t_items *items, int max, int x, int y);
+
+/*
+** animate sprites
+*/
+int	sl_is_collectible(char elem_to_check);
 
 int    sl_exit_game(t_env *env, char *err_mess);
 

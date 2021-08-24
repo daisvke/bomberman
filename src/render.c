@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 04:54:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 06:07:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,7 @@ void	sl_render_green_tile(t_env *env, t_dir curr_dir, int x, int y, int sub_x, i
 	map = env->map;
 	if (sub_x != 0)
 	{
-		if (map[y][x] == MAP_ITEM_BOMB)
-			sl_render_bloc_with_xpm(bkgd, &env->tex.bomb.item_bomb, \
-				x * BLOC_LEN, y * BLOC_LEN, false);
-		else if (map[y - 1][x] == MAP_WALL && curr_dir.down == false)
+		if (map[y - 1][x] == MAP_WALL && curr_dir.down == false)
 			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
 				sub_x, sub_y, false);
 		else if	(map[y - 1][x] == MAP_WALL && curr_dir.down == true && sub_y == y * BLOC_LEN)
@@ -192,9 +189,6 @@ void	sl_render_background(t_env *env)
 			else
 				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, \
 					&env->tex.wall, BLOC_LEN * j, BLOC_LEN * i);
-	/*		if (map[i][j] == MAP_ITEM_BOMB)
-				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd,\
-					&env->tex.bomb.item_bomb, BLOC_LEN * j, BLOC_LEN * i);*/
 			++j;
 		}
 		++i;
@@ -239,30 +233,7 @@ void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, \
 	if (dir->right)
 		sl_animate_sprite(env, sprite, apply_to, &img->right, &dir->right, RIGHT, 0);
 }
-/*
-void	sl_put_buffer_to_img(t_env *env)
-{
-	int	**buffer;
-	int	color;
-	int	i;
-	int	j;
 
-	buffer = env->buffer;
-	i = 0;
-	while (i < env->height * BLOC_LEN)
-	{
-		j = 0;
-		while (j < env->width * BLOC_LEN)
-		{
-			color = buffer[i][j];
-			if (color >= 0)
-				sl_img_pixel_put(&env->bkgd, j, i, color, true);
-			++j;
-		}
-		++i;
-	}
-}
-*/
 void	sl_put_buffer_bkgd_to_img(t_env *env)
 {
 	int	**buffer;
@@ -363,9 +334,6 @@ int	sl_render(t_env *env)
 	int	j;
 	static int	k;
 	
-//	sl_init_canvas(env);
-//	sl_copy_bkgd_buffer_to_buffer(env);
-//	env->buffer = env->buffer_bkgd;
 	sl_clear_sprites_last_positions(env);
 	sl_draw_collectibles(env);
 	if (env->p1.alive == true)
@@ -375,10 +343,7 @@ int	sl_render(t_env *env)
 		if (env->tex.exit_pipe.appear == true)
 			sl_reveal_exit(env);
 		if (env->tex.bomb.set_bomb == true)
-		{
 			sl_set_bomb(env);
-		//	sl_overlay_bomb_and_player(env);
-		}
 		img = env->p1.curr_state;
 		sl_render_bloc_with_xpm(&env->bkgd, img, env->p1.sub_pos.x, \
 			env->p1.sub_pos.y, true);

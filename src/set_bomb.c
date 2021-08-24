@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 04:42:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 06:57:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	int	y_start;
 	int	y_end;
 	int	size;
+	int	collectible;
 
 	size = env->tex.bomb.explode_size;
 	p1_x = env->p1.pos.x;
@@ -45,36 +46,44 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	if (x_start < 0)
 		x_start = 0;
 	x_end = x + size;
-	if (x_start > env->width)
+	if (x_end > env->width)
 		x_end = env->width;
 	y_start = y - size;
 	if (y_start < 0)
 		y_start = 0;
 	y_end = y + size;
-	if (y_start > env->width)
-		y_end = env->width;
+	if (y_end > env->height)
+		y_end = env->height;
 	while (x_start < x_end)
 	{
 		if (map[y][x_start] == MAP_PLAYER)
 			return (true);
 		if (map[y][x_start] == MAP_ENNEMY)
 			sl_find_which_ennemy_is_dead(env, x_start, y);
-		if (map[y][x_start] == MAP_ITEM_BOMB)
-		{
-			sl_render_buffer_green_tile(env, x_start, y);
+		collectible = sl_is_collectible(map[y][x_start]);
+		if (!collectible && map[y_start][x] != MAP_WALL)
 			map[y][x_start] = MAP_FLOOR;
-		}
+		if (collectible == 1)
+			sl_find_and_turn_off_item(env->tex.bomb.item_bombs, env->tex.bomb.to_collect, x_start, y);
+		if (collectible == 2)
+			sl_find_and_turn_off_item(env->tex.fire.items, env->tex.fire.to_collect, x_start, y);
+		if (collectible == 3)
+			sl_find_and_turn_off_item(env->tex.speed.items, env->tex.speed.to_collect, x_start, y);
 		++x_start;
 	}
 	while (y_start < y_end)
 	{
 		if (map[y_start][x] == MAP_PLAYER)
 			return (true);
-		if (map[y_start][x] == MAP_ITEM_BOMB)
-		{
-			sl_render_buffer_green_tile(env, x, y_start);
+		collectible = sl_is_collectible(map[y_start][x]);
+		if (!collectible && map[y_start][x] != MAP_WALL)
 			map[y_start][x] = MAP_FLOOR;
-		}
+		if (collectible == 1)
+			sl_find_and_turn_off_item(env->tex.bomb.item_bombs, env->tex.bomb.to_collect, x, y_start);
+		if (collectible == 2)
+			sl_find_and_turn_off_item(env->tex.fire.items, env->tex.fire.to_collect, x, y_start);
+		if (collectible == 3)
+			sl_find_and_turn_off_item(env->tex.speed.items, env->tex.speed.to_collect, x, y_start);
 		++y_start;
 	}
 	return (false);

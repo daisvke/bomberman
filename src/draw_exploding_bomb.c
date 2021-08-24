@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 05:35:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 04:32:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 05:41:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	sl_draw_left_segment(t_env *env, char *map[], t_explode_states state
 
 	size = env->tex.bomb.explode_size;
 	i = 1;
-	while (i <= (size - 1) && (env->tex.bomb.pos.x - 1 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 1] != MAP_WALL)
+	while (i <= (size - 1) && (env->tex.bomb.pos.x - i > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - i] != MAP_WALL)
 	{
 		sl_render_bloc_with_xpm(&env->bkgd, &states.hrz.one, x - i * BLOC_LEN, y);
 		++i;
@@ -71,7 +71,7 @@ static void	sl_draw_right_segment(t_env *env, char *map[], t_explode_states stat
 	width = env->width;
 	size = env->tex.bomb.explode_size;
 	i = 1;
-	while (i <= (size - 1) && (env->tex.bomb.pos.x + 1 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 1] != MAP_WALL)
+	while (i <= (size - 1) && (env->tex.bomb.pos.x + i < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + i] != MAP_WALL)
 	{
 		sl_render_bloc_with_xpm(&env->bkgd, &states.hrz.one, x + i * BLOC_LEN, y);
 		++i;
