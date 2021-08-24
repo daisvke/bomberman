@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 14:03:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 02:24:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 17:40:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	sl_handle_textures_while_moving(t_env *env, int apply_to, int delta_x, \
 	map = env->map;
 	x = env->p1.pos.x + delta_x;
 	y = env->p1.pos.y + delta_y;
-	if (map[y][x] == MAP_ENNEMY)
-		env->p1.alive = false;
 	if (apply_to == PLAYER)
 	{
 		sl_collect_bomb(env, map, x, y);

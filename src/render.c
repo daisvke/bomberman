@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 06:07:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 17:40:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,6 +336,8 @@ int	sl_render(t_env *env)
 	
 	sl_clear_sprites_last_positions(env);
 	sl_draw_collectibles(env);
+	if (env->map[env->p1.pos.y][env->p1.pos.x] == MAP_ENNEMY)
+		env->p1.alive = false;
 	if (env->p1.alive == true)
 	{
 		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
