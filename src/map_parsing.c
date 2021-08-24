@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 03:10:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 07:30:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	map = env->map;
 	if (x % 2 == 0)
 	{
-		if (l >= 50)
-			sl_exit_game(env, "Error: too many speed items on the map");
-		map[y][x] = 'S';
-		env->tex.speed.items[l].pos.x = x;
-		env->tex.speed.items[l].pos.y = y;
-		env->tex.speed.items[l].draw = true;
-		++env->tex.speed.to_collect;
-		++l;
+		if (j >= 50)
+			sl_exit_game(env, "Error: too many bomb items on the map");
+		map[y][x] = 'B';
+		env->tex.bomb.item_bombs[j].pos.x = x;
+		env->tex.bomb.item_bombs[j].pos.y = y;
+		env->tex.bomb.item_bombs[j].draw = true;
+		++env->tex.bomb.to_collect;
+		++j;
 	}
 	else if (x % 3 == 0)
 	{
@@ -83,14 +83,14 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	}
 	else 
 	{
-		if (j >= 50)
-			sl_exit_game(env, "Error: too many bomb items on the map");
-		map[y][x] = 'B';
-		env->tex.bomb.item_bombs[j].pos.x = x;
-		env->tex.bomb.item_bombs[j].pos.y = y;
-		env->tex.bomb.item_bombs[j].draw = true;
-		++env->tex.bomb.to_collect;
-		++j;
+		if (l >= 50)
+			sl_exit_game(env, "Error: too many speed items on the map");
+		map[y][x] = 'S';
+		env->tex.speed.items[l].pos.x = x;
+		env->tex.speed.items[l].pos.y = y;
+		env->tex.speed.items[l].draw = true;
+		++env->tex.speed.to_collect;
+		++l;
 	}
 }
 

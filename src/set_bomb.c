@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 06:57:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 07:32:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 		if (map[y][x_start] == MAP_ENNEMY)
 			sl_find_which_ennemy_is_dead(env, x_start, y);
 		collectible = sl_is_collectible(map[y][x_start]);
-		if (!collectible && map[y_start][x] != MAP_WALL)
+		if (map[y][x_start] != MAP_WALL)
 			map[y][x_start] = MAP_FLOOR;
 		if (collectible == 1)
 			sl_find_and_turn_off_item(env->tex.bomb.item_bombs, env->tex.bomb.to_collect, x_start, y);
@@ -76,7 +76,7 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 		if (map[y_start][x] == MAP_PLAYER)
 			return (true);
 		collectible = sl_is_collectible(map[y_start][x]);
-		if (!collectible && map[y_start][x] != MAP_WALL)
+		if (map[y_start][x] != MAP_WALL)
 			map[y_start][x] = MAP_FLOOR;
 		if (collectible == 1)
 			sl_find_and_turn_off_item(env->tex.bomb.item_bombs, env->tex.bomb.to_collect, x, y_start);
