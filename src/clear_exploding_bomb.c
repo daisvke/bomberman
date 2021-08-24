@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 00:36:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 02:30:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 04:39:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,61 @@
 
 static void	sl_clear_upper_segment(t_env *env, char *map[], int x, int y)
 {
-	if ((env->tex.bomb.pos.y - 1 > 0) && map[env->tex.bomb.pos.y - 1][env->tex.bomb.pos.x] != MAP_WALL)
+	int	i;
+	int	size;
+
+	size = env->tex.bomb.explode_size;
+	i = 1;
+	while (i <= size && (env->tex.bomb.pos.y - i > 0) && map[env->tex.bomb.pos.y - i][env->tex.bomb.pos.x] != MAP_WALL)
 	{
-		sl_replace_with_green_tile(env, x, y - BLOC_LEN);
-		if ((env->tex.bomb.pos.y - 2 > 0) && map[env->tex.bomb.pos.y - 2][env->tex.bomb.pos.x] != MAP_WALL)
-			sl_replace_with_green_tile(env, x, y - 2 * BLOC_LEN);
+		sl_replace_with_green_tile(env, x, y - i * BLOC_LEN);
+		++i;
 	}
 }
 
 static void	sl_clear_lower_segment(t_env *env, char *map[], int x, int y)
 {
 	int	height;
+	int	size;
+	int	i;
 
 	height = env->height;
-	if ((env->tex.bomb.pos.y + 1 < height) && map[env->tex.bomb.pos.y + 1][env->tex.bomb.pos.x] != MAP_WALL)
+	size = env->tex.bomb.explode_size;
+	i = 1;
+	while (i <= size && (env->tex.bomb.pos.y + i < height) && map[env->tex.bomb.pos.y + i][env->tex.bomb.pos.x] != MAP_WALL)
 	{
-		sl_replace_with_green_tile(env, x, y + BLOC_LEN);
-		if ((env->tex.bomb.pos.y + 2 < height) && map[env->tex.bomb.pos.y + 2][env->tex.bomb.pos.x] != MAP_WALL)
-			sl_replace_with_green_tile(env, x, y + 2 * BLOC_LEN);
+		sl_replace_with_green_tile(env, x, y + i * BLOC_LEN);
+		++i;
 	}
 }
 
 static void	sl_clear_left_segment(t_env *env, char *map[], int x, int y)
 {
-	if ((env->tex.bomb.pos.x - 1 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 1] != MAP_WALL)
+	int	i;
+	int	size;
+
+	size = env->tex.bomb.explode_size;
+	i = 1;
+	while (i <= size && (env->tex.bomb.pos.x - 1 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 1] != MAP_WALL)
 	{
-		sl_replace_with_green_tile(env, x - BLOC_LEN, y);
-		if ((env->tex.bomb.pos.x - 2 > 0) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x - 2] != MAP_WALL)
-			sl_replace_with_green_tile(env, x - 2 * BLOC_LEN, y);
+		sl_replace_with_green_tile(env, x - i * BLOC_LEN, y);
+		++i;
 	}
 }
 
 static void	sl_clear_right_segment(t_env *env, char *map[], int x, int y)
 {
 	int	width;
+	int	size;
+	int	i;
 
 	width = env->width;
-	if ((env->tex.bomb.pos.x + 1 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 1] != MAP_WALL)
+	size = env->tex.bomb.explode_size;
+	i = 1;
+	while (i <= size && (env->tex.bomb.pos.x + 1 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 1] != MAP_WALL)
 	{
-		sl_replace_with_green_tile(env, x + BLOC_LEN, y);
-		if ((env->tex.bomb.pos.x + 2 < width) && map[env->tex.bomb.pos.y][env->tex.bomb.pos.x + 2] != MAP_WALL)
-			sl_replace_with_green_tile(env, x + 2 * BLOC_LEN, y);
+		sl_replace_with_green_tile(env, x + i * BLOC_LEN, y);
+		++i;
 	}
 }
 

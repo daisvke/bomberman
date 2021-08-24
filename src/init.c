@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 05:26:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 01:56:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void	sl_init_env(t_env *env)
 	env->tex.bomb.to_collect = 0;
 	env->tex.bomb.collected = 0;
     env->tex.bomb.set_bomb = false;
+	env->tex.bomb.explode_size = 2;
+	env->tex.fire.to_collect = 0;
+	env->tex.speed.to_collect = 0;
 	env->tex.exit_pipe.appear = false;
 	env->tex.ennemies.count = 0;
 	sl_init_sprite(&env->p1, 0, 0, 90);

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 05:43:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 03:07:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,9 @@ void	sl_render_background(t_env *env)
 			else
 				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd, \
 					&env->tex.wall, BLOC_LEN * j, BLOC_LEN * i);
-			if (map[i][j] == MAP_ITEM_BOMB)
+	/*		if (map[i][j] == MAP_ITEM_BOMB)
 				sl_render_buffer_bloc_with_xpm(env->buffer_bkgd,\
-					&env->tex.bomb.item_bomb, BLOC_LEN * j, BLOC_LEN * i);
+					&env->tex.bomb.item_bomb, BLOC_LEN * j, BLOC_LEN * i);*/
 			++j;
 		}
 		++i;
@@ -328,6 +328,30 @@ void	sl_clear_sprites_last_positions(t_env *env)
 	//clear bomb explosion
 }
 
+void	sl_draw_collectibles_by_category(t_env *env, t_items *items, t_img *img, int max)
+{
+	int	i;
+	int	x;
+	int	y;
+
+	i = 0;
+	while (i < max)
+	{
+		x = items[i].pos.x * BLOC_LEN;
+		y = items[i].pos.y * BLOC_LEN;
+		if (items[i].draw == true)
+			sl_render_bloc_with_xpm(&env->bkgd, img, x, y, true);
+		++i;
+	}
+}
+
+void	sl_draw_collectibles(t_env *env)
+{
+	sl_draw_collectibles_by_category(env, env->tex.bomb.item_bombs, &env->tex.bomb.item_bomb, env->tex.bomb.to_collect);
+	sl_draw_collectibles_by_category(env, env->tex.fire.items, &env->tex.fire.img, env->tex.fire.to_collect);
+	sl_draw_collectibles_by_category(env, env->tex.speed.items, &env->tex.speed.img, env->tex.speed.to_collect);
+}
+
 //put img to window (not render
 int	sl_render(t_env *env)
 {
@@ -336,12 +360,12 @@ int	sl_render(t_env *env)
 	static int	i;
 	int	j;
 	static int	k;
-	static int	l;
 	
 //	sl_init_canvas(env);
 //	sl_copy_bkgd_buffer_to_buffer(env);
 //	env->buffer = env->buffer_bkgd;
 	sl_clear_sprites_last_positions(env);
+	sl_draw_collectibles(env);
 	if (env->p1.alive == true)
 	{
 		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
@@ -372,8 +396,8 @@ int	sl_render(t_env *env)
 			}
 			else
 			{
-				time_death = env->tex.ennemies.sprites[j].time_death;
-				if (time_death <= 1100)
+				time_death = &env->tex.ennemies.sprites[j].time_death;
+				if (*time_death <= 1100)
 				{
 					sl_render_bloc_with_xpm(&env->bkgd, &ennemies.dead, \
 						ennemies.sprites[j].sub_pos.x, \

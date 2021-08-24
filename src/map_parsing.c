@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/22 14:06:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 03:10:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,53 @@ void	sl_read_ennemies_from_map(t_env *env, int x, int y)
 	ennemies = env->tex.ennemies.sprites;
 	ennemies_count = &env->tex.ennemies.count;
 	*ennemies_count += 1;
-	if (*ennemies_count > 50)
+	if (*ennemies_count >= 50)
 		sl_exit_game(env, "Error: too many ennemies on the map");
 	sl_init_sprite(&ennemies[i], x, y, 200);
 	++i;
+}
+
+void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
+{
+	static int	j;
+	static int	k;
+	static int	l;
+	char		**map;
+
+	map = env->map;
+	if (x % 2 == 0)
+	{
+		if (l >= 50)
+			sl_exit_game(env, "Error: too many speed items on the map");
+		map[y][x] = 'S';
+		env->tex.speed.items[l].pos.x = x;
+		env->tex.speed.items[l].pos.y = y;
+		env->tex.speed.items[l].draw = true;
+		++env->tex.speed.to_collect;
+		++l;
+	}
+	else if (x % 3 == 0)
+	{
+		if (k >= 50)
+			sl_exit_game(env, "Error: too many fire items on the map");
+		map[y][x] = 'F';
+		env->tex.fire.items[k].pos.x = x;
+		env->tex.fire.items[k].pos.y = y;
+		env->tex.fire.items[k].draw = true;
+		++env->tex.fire.to_collect;
+		++k;
+	}
+	else 
+	{
+		if (j >= 50)
+			sl_exit_game(env, "Error: too many bomb items on the map");
+		map[y][x] = 'B';
+		env->tex.bomb.item_bombs[j].pos.x = x;
+		env->tex.bomb.item_bombs[j].pos.y = y;
+		env->tex.bomb.item_bombs[j].draw = true;
+		++env->tex.bomb.to_collect;
+		++j;
+	}
 }
 
 void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y, t_count *counter)
@@ -63,9 +106,13 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
 		if (char_to_check == MAP_ELEMS[i])
 		{
 			sl_check_if_map_is_surrounded_by_walls(env, x, y, i);
-			env->map[y][x] = i + '0';
-			if (i == BOMB)
-				++env->tex.bomb.to_collect;
+			if (i != COLLECTIBLE)
+				env->map[y][x] = i + '0';
+			else
+			{
+				++counter->collectible;
+				sl_assign_collectible_type_randomly(env, x, y);
+			}
 			if (i == PLAYER)
 			{
                 ++counter->player;
@@ -87,6 +134,9 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
 		++i;
 	}
 	exit(EXIT_FAILURE);//error message
+		// exut but no mlx destroy
+//		else
+//			sl_exit_game(env, "Error: unknown element on the map file");
 }
 
 void	sl_get_window_dimensions(t_env *env, char *filename)
@@ -116,18 +166,19 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	free(line);
 	line = NULL;
 	env->height = i;
-	if (env->height == env->width)
-		exit(EXIT_FAILURE);
+	//this but without mlx destroy
+//	if (env->height == env->width)
+	//	sl_exit_game(env, "Error: the map is a square but has to be a rectangle");
 }
 
-void    sl_check_counter(t_count counter, int bomb_count)
+void    sl_check_counter(t_env *env, t_count counter)
 {
-    if (!bomb_count)
-        exit(EXIT_FAILURE);
+    if (!counter.collectible)
+		sl_exit_game(env, "Error: the map has to contain at least one collectible");
     if (!counter.player || counter.player > 1)
-        exit(EXIT_FAILURE);
+		sl_exit_game(env, "Error: the map has to contain one player");
     if (!counter.exit_pipe)
-        exit(EXIT_FAILURE);;
+		sl_exit_game(env, "Error: the map has to contain an exit");
 }
 
 void	sl_parse_map(t_env *env, char *filename)
@@ -142,6 +193,7 @@ void	sl_parse_map(t_env *env, char *filename)
 	sl_get_window_dimensions(env, filename);
 	env->map = malloc(env->height * sizeof(*env->map));
     counter.player = 0;
+	counter.collectible = 0;
     counter.exit_pipe = 0;
 	i = 0;
 	while (get_next_line(map_fd, &line))
@@ -157,7 +209,7 @@ void	sl_parse_map(t_env *env, char *filename)
 		free(line);
 		++i;
 	}
-    sl_check_counter(counter, env->tex.bomb.to_collect);
+    sl_check_counter(env, counter);
 	// if error
 	free(line);
 	line = NULL;

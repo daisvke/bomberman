@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 05:26:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 02:38:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@
 
 # define MAP_FLOOR			'0'
 # define MAP_WALL			'1'
-# define MAP_ITEM_BOMB		'2'
+# define MAP_ITEM_BOMB		'B'
+# define MAP_FIRE			'F'
+# define MAP_SPEED			'S'
 # define MAP_EXIT			'3'
 # define MAP_PLAYER			'4'
 # define MAP_ENNEMY			'5'
@@ -44,7 +46,7 @@
 ** parsing
 */
 # define ERROR				-1
-# define BOMB				2
+# define COLLECTIBLE		2
 # define EXIT				3
 # define PLAYER				4
 # define ENNEMY             5
@@ -154,16 +156,24 @@ typedef struct s_explode_states
 	t_states	vrt;
 }				t_explode_states;
 
+typedef struct s_items
+{
+	t_coord	pos;
+	bool	draw;
+}			t_items;
+
 typedef struct s_bombs
 {
 	t_img				item_bomb;
 	int					to_collect;
 	int					collected;
+	t_items				item_bombs[50];
 	bool				set_bomb;
 	t_coord				pos;
 	t_states			set_states;
 	void				*curr_state;
 	t_explode_states	explode_states;
+	int					explode_size;
 }						t_bombs;
 
 typedef struct s_ennemies
@@ -173,6 +183,13 @@ typedef struct s_ennemies
 	int				count;
     t_sprite		sprites[50];
 }					t_ennemies;
+
+typedef struct s_item
+{
+	t_img	img;
+	int		to_collect;
+	t_items	items[50];
+}			t_item;
 
 typedef struct s_tiles
 {
@@ -185,6 +202,8 @@ typedef struct s_textures
 	t_img	    wall;
 	t_tiles		tiles;
 	t_bombs	    bomb;
+	t_item		fire;
+	t_item		speed;
 	t_pipe	    exit_pipe;
     t_ennemies  ennemies;
 }				t_textures;
@@ -217,6 +236,7 @@ typedef struct s_square
 typedef struct s_count
 {
     int player;
+	int	collectible;
     int exit_pipe;
 }		t_count;
 

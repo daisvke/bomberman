@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 03:34:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 04:42:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,21 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	int	x_end;
 	int	y_start;
 	int	y_end;
+	int	size;
 
+	size = env->tex.bomb.explode_size;
 	p1_x = env->p1.pos.x;
 	p1_y = env->p1.pos.y; 
-	x_start = x - 2;
+	x_start = x - size;
 	if (x_start < 0)
 		x_start = 0;
-	x_end = x + 2;
+	x_end = x + size;
 	if (x_start > env->width)
 		x_end = env->width;
-	y_start = y - 2;
+	y_start = y - size;
 	if (y_start < 0)
 		y_start = 0;
-	y_end = y + 2;
+	y_end = y + size;
 	if (y_start > env->width)
 		y_end = env->width;
 	while (x_start < x_end)

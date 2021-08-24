@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/23 03:51:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/24 01:56:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,17 @@ void	sl_load_tiles(t_env *env)
 	sl_load_texture(env, &env->tex.tiles.tile_shadow, "./img/green-tile-with-shadow-24x24.xpm");
 }
 
+void	sl_load_items(t_env *env)
+{
+	sl_load_texture(env, &env->tex.bomb.item_bomb, "./img/item-bomb.xpm");
+	sl_load_texture(env, &env->tex.fire.img, "./img/item-fire.xpm");
+	sl_load_texture(env, &env->tex.speed.img, "./img/item-speed.xpm");
+}
+
 void	sl_load_all_textures(t_env *env)
 {
 	sl_load_texture(env, &env->tex.wall, "./img/grey-tile-24x24.xpm");
-	sl_load_texture(env, &env->tex.bomb.item_bomb, "./img/item-bomb-24x24.xpm");
+	sl_load_items(env);
 	sl_load_tiles(env);
 	sl_load_set_bomb(env);
 	sl_load_bomb_explode(env);
