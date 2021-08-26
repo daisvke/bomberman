@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 06:18:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/26 02:08:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEPM"
 # define MAP_COLLECTIBLES	"BFS"
+
+# define ENNEMY_LIMIT		15
+# define ITEM_LIMIT			30
 
 # define MAP_FLOOR			'0'
 # define MAP_WALL			'1'
@@ -161,6 +164,7 @@ typedef struct s_items
 {
 	t_coord	pos;
 	bool	draw;
+	int		time;
 }			t_items;
 
 typedef struct s_bombs
@@ -168,8 +172,8 @@ typedef struct s_bombs
 	t_img				item_bomb;
 	int					to_collect;
 	int					collected;
-	t_items				item_bombs[50];
-	bool				set_bomb;
+	t_items				item_bombs[ITEM_LIMIT];
+	t_items				set_bomb[ITEM_LIMIT];
 	t_coord				pos;
 	t_states			set_states;
 	void				*curr_state;
@@ -182,14 +186,14 @@ typedef struct s_ennemies
     t_img_patterns 	img;
 	t_img			dead;
 	int				count;
-    t_sprite		sprites[50];
+    t_sprite		sprites[ENNEMY_LIMIT];
 }					t_ennemies;
 
 typedef struct s_item
 {
 	t_img	img;
 	int		to_collect;
-	t_items	items[50];
+	t_items	items[ITEM_LIMIT];
 }			t_item;
 
 typedef struct s_tiles

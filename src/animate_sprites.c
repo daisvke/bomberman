@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 06:54:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/26 01:19:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 	pos_y = sprite->pos.y + y;
 	bomb_pos.x = env->tex.bomb.pos.x;
 	bomb_pos.y = env->tex.bomb.pos.y;
-	if (map[pos_y][pos_x] == MAP_WALL || (env->tex.bomb.set_bomb == true && (bomb_pos.x == pos_x && bomb_pos.y == pos_y)))
+	if (map[pos_y][pos_x] == MAP_WALL || (pos_x == bomb_pos.x && pos_y == bomb_pos.y))
 	{
 		x = 0;
 		y = 0;
@@ -110,7 +110,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 		sprite->pos.y += y;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN;
-		if (apply_to != ENNEMY)
+		if (apply_to != ENNEMY && !(env->tex.bomb.set_bomb == true && sprite->time < sprite->speed * 2))
 			*state = false;
 		sprite->time = 0;
 	}

@@ -6,32 +6,24 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/21 13:39:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/25 23:20:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
+/*
 int	sl_handle_input(int keysym, t_env *env)
 {
 	if (keysym == XK_Escape)
 		sl_exit_game(env, NULL);
 	return (0);
 }
-
-/*
-int	sl_handle_keypress(int keysym, t_env *env)
-{
-	if (keysym == XK_Escape)
-		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-	return (0);
-}
 */
 
 int	sl_handle_keypress(int keycode, t_env *env)
 {
-	int			x;
-	int			y;
+	int	x;
+	int	y;
 
 	x = env->p1.pos.x;
 	y = env->p1.pos.y;
@@ -51,6 +43,24 @@ int	sl_handle_keypress(int keycode, t_env *env)
 		env->tex.bomb.pos.x = x;
 		env->tex.bomb.pos.y = y;
 	}
+	return (0);
+}
+
+int	sl_handle_keyrelease(int keycode, t_env *env)
+{
+	int			x;
+	int			y;
+
+	x = env->p1.pos.x;
+	y = env->p1.pos.y;
+	if (keycode == XK_w || keycode == XK_z)
+		env->p1.curr_dir.up = false;
+	if (keycode == XK_s)
+		env->p1.curr_dir.down = false;
+	if (keycode == XK_a || keycode == XK_q)
+		env->p1.curr_dir.left = false;
+	if (keycode == XK_d || keycode == XK_d)
+		env->p1.curr_dir.right = false;
 	return (0);
 }
 

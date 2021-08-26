@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 17:40:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/26 01:15:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,12 +340,12 @@ int	sl_render(t_env *env)
 		env->p1.alive = false;
 	if (env->p1.alive == true)
 	{
-		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
-		sl_read_and_animate_ennemies(env);
 		if (env->tex.exit_pipe.appear == true)
 			sl_reveal_exit(env);
 		if (env->tex.bomb.set_bomb == true)
 			sl_set_bomb(env);
+		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
+		sl_read_and_animate_ennemies(env);
 		img = env->p1.curr_state;
 		sl_render_bloc_with_xpm(&env->bkgd, img, env->p1.sub_pos.x, \
 			env->p1.sub_pos.y, true);
@@ -384,23 +384,23 @@ int	sl_render(t_env *env)
 	death_state = NULL;
 	if (env->p1.alive == false)
 	{
-		if (k <= CENTER_MESS_TIME * 3 + 200)
+		if (m <= CENTER_MESS_TIME)
 		{
-			if (m <= 1000)
+			if (m <= CENTER_MESS_TIME / 4)
 				death_state = &env->p1.img.dead.one;
-			else if (m <= 2000)
+			else if (m <= CENTER_MESS_TIME / 3.5)
 				death_state = &env->p1.img.dead.two;
-			else if (m <= 2200)
+			else if (m <= CENTER_MESS_TIME / 3.2)
 				death_state = &env->p1.img.dead.three;
-			else if (m <= 2400)
+			else if (m <= CENTER_MESS_TIME / 3)
 				death_state = &env->p1.img.dead.four;
-			else if (m <= 2600)
+			else if (m <= CENTER_MESS_TIME / 2.7)
 				death_state = &env->p1.img.dead.five;
-			else if (m <= 2800)
+			else if (m <= CENTER_MESS_TIME / 2.5)
 				death_state = &env->p1.img.dead.six;
-			else if (m <= 3000)
+			else if (m <= CENTER_MESS_TIME / 2.3)
 				death_state = &env->p1.img.dead.seven;
-			else if (m <= 3200)
+			else if (m <= CENTER_MESS_TIME)
 				death_state = &env->p1.img.dead.eight;
 			sl_render_bloc_with_xpm(&env->bkgd, death_state, env->p1.sub_pos.x, \
 				env->p1.sub_pos.y, true);
@@ -410,7 +410,6 @@ int	sl_render(t_env *env)
 		else
 			sl_exit_game_over(env);
 		++m;
-		++k;
 	}
 	sl_put_counts_to_window(env);
 	if (i <= CENTER_MESS_TIME)

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 07:30:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/26 02:08:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	sl_read_ennemies_from_map(t_env *env, int x, int y)
 	ennemies = env->tex.ennemies.sprites;
 	ennemies_count = &env->tex.ennemies.count;
 	*ennemies_count += 1;
-	if (*ennemies_count >= 50)
+	if (*ennemies_count >= ENNEMY_LIMIT)
 		sl_exit_game(env, "Error: too many ennemies on the map");
 	sl_init_sprite(&ennemies[i], x, y, 200);
 	++i;
@@ -59,9 +59,9 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	char		**map;
 
 	map = env->map;
-	if (x % 2 == 0)
+	if (j == 0 || x % 2 == 0)
 	{
-		if (j >= 50)
+		if (j >= ITEM_LIMIT)
 			sl_exit_game(env, "Error: too many bomb items on the map");
 		map[y][x] = 'B';
 		env->tex.bomb.item_bombs[j].pos.x = x;
@@ -72,7 +72,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	}
 	else if (x % 3 == 0)
 	{
-		if (k >= 50)
+		if (k >= ITEM_LIMIT)
 			sl_exit_game(env, "Error: too many fire items on the map");
 		map[y][x] = 'F';
 		env->tex.fire.items[k].pos.x = x;
@@ -83,7 +83,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	}
 	else 
 	{
-		if (l >= 50)
+		if (l >= ITEM_LIMIT)
 			sl_exit_game(env, "Error: too many speed items on the map");
 		map[y][x] = 'S';
 		env->tex.speed.items[l].pos.x = x;
