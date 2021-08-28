@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:42:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 03:55:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	sl_init_buffers(t_env *env)
 void	sl_init_set_bomb(t_items *bomb)
 {
 	bomb->draw = false;
+	bomb->explode_size = 0;
 	bomb->pos.x = 0;
 	bomb->pos.y = 0;
 	bomb->time1 = 0;

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:37:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 04:07:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sl_find_which_ennemy_is_dead(t_env *env, int x_start, int y)
 	env->map[y][x_start] = MAP_FLOOR;
 }
 
-bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
+bool	sl_check_if_sprite_is_dead(t_env *env, t_items *bomb, char *map[], int  x, int y)
 {
 	int	p1_x;
 	int	p1_y;
@@ -39,7 +39,7 @@ bool	sl_check_if_sprite_is_dead(t_env *env, char *map[], int  x, int y)
 	int	size;
 	int	collectible;
 
-	size = env->tex.bomb.explode_size;
+	size = bomb->explode_size;
 	p1_x = env->p1.pos.x;
 	p1_y = env->p1.pos.y; 
 	x_start = x - size;
@@ -99,19 +99,19 @@ void	sl_explode_bomb(t_env *env, t_items *bomb, int x, int y)
 {
 	bool		is_dead;
 
-	is_dead = sl_check_if_sprite_is_dead(env, env->map, x / BLOC_LEN, y / BLOC_LEN);
+	is_dead = sl_check_if_sprite_is_dead(env, bomb, env->map, x / BLOC_LEN, y / BLOC_LEN);
 	if (bomb->time3 <= CENTER_MESS_TIME)
 	{
-		sl_draw_segments_of_exploding_bomb(env, x, y);
+		sl_draw_segments_of_exploding_bomb(env, bomb, x, y);
+		if (is_dead)
+			env->p1.alive = false;
 		++bomb->time3;
 	}
 	else
 	{
-		sl_clear_segments_of_exploding_bomb(env, x, y);
+		sl_clear_segments_of_exploding_bomb(env, bomb, x, y);
 		sl_init_set_bomb(bomb);
 		--env->tex.bomb.set_bombs_nbr;
-		if (is_dead)
-			env->p1.alive = false;
 	}
 }
 

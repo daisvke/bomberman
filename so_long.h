@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:42:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 03:55:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ typedef struct s_items
 {
 	t_coord	pos;
 	bool	draw;
+	int		explode_size;
 	int		time1;
 	int		time2;
 	int		time3;

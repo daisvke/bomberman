@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:16:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 03:55:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	sl_handle_keypress(int keycode, t_env *env)
 			env->tex.bomb.set_bombs[i].pos.x = x;
 			env->tex.bomb.set_bombs[i].pos.y = y;
 			env->tex.bomb.set_bombs[i].draw = true;
+			env->tex.bomb.set_bombs[i].explode_size = env->tex.bomb.explode_size;
 		}
 	}
 	return (0);
