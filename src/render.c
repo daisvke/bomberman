@@ -135,7 +135,7 @@ void	sl_render_green_tile(t_env *env, t_dir curr_dir, int x, int y, int sub_x, i
 	t_img	*bkgd;
 	char	**map;
 
-	bkgd = &env->bkgd;
+	bkgd = &env->canvas;
 	map = env->map;
 	if (sub_x != 0)
 	{
@@ -157,7 +157,7 @@ void	sl_replace_with_green_tile(t_env *env, int x, int y)
 	int		map_x;
 	int		map_y;
 
-	bkgd = &env->bkgd;
+	bkgd = &env->canvas;
 	map = env->map;
 	map_x = x / BLOC_LEN;
 	map_y = y / BLOC_LEN;
@@ -217,7 +217,7 @@ void	sl_reveal_exit(t_env *env)
 		curr_state = &exit.state5;
 	else
 		++i;
-	sl_render_bloc_with_xpm(&env->bkgd, curr_state, exit.pos.x * BLOC_LEN, \
+	sl_render_bloc_with_xpm(&env->canvas, curr_state, exit.pos.x * BLOC_LEN, \
 		exit.pos.y * BLOC_LEN, true);
 }
 
@@ -249,7 +249,7 @@ void	sl_put_buffer_bkgd_to_img(t_env *env)
 		while (j < env->width * BLOC_LEN)
 		{
 			color = buffer[i][j];
-			sl_img_pixel_put(&env->bkgd, j, i, color, false);
+			sl_img_pixel_put(&env->canvas, j, i, color, false);
 			++j;
 		}
 		++i;
@@ -282,7 +282,7 @@ void	sl_clear_sprites_last_positions(t_env *env)
 	t_coord		ennemy_pos;
 	int			i;
 
-	bkgd = &env->bkgd;
+	bkgd = &env->canvas;
 	p1_pos.x = env->p1.sub_pos.x;
 	p1_pos.y = env->p1.sub_pos.y;
 	sl_render_green_tile(env, env->p1.curr_dir, env->p1.pos.x, env->p1.pos.y, p1_pos.x, p1_pos.y); 
@@ -311,7 +311,7 @@ void	sl_draw_collectibles_by_category(t_env *env, t_items *items, t_img *img, in
 		x = items[i].pos.x * BLOC_LEN;
 		y = items[i].pos.y * BLOC_LEN;
 		if (items[i].draw == true)
-			sl_render_bloc_with_xpm(&env->bkgd, img, x, y, true);
+			sl_render_bloc_with_xpm(&env->canvas, img, x, y, true);
 		else
 			sl_replace_with_green_tile(env, x, y);
 		++i;
@@ -368,7 +368,7 @@ int	sl_render(t_env *env)
 		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
 		sl_read_and_animate_ennemies(env);
 		img = env->p1.curr_state;
-		sl_render_bloc_with_xpm(&env->bkgd, img, env->p1.sub_pos.x, \
+		sl_render_bloc_with_xpm(&env->canvas, img, env->p1.sub_pos.x, \
 			env->p1.sub_pos.y, true);
 
 		j = 0;
@@ -380,7 +380,7 @@ int	sl_render(t_env *env)
 			if (ennemies.sprites[j].alive == true)
 			{
 				img2 = env->tex.ennemies.sprites[j].curr_state;
-				sl_render_bloc_with_xpm(&env->bkgd, img2, \
+				sl_render_bloc_with_xpm(&env->canvas, img2, \
 					ennemies.sprites[j].sub_pos.x, \
 					ennemies.sprites[j].sub_pos.y, true);
 			}
@@ -389,7 +389,7 @@ int	sl_render(t_env *env)
 				time_death = &env->tex.ennemies.sprites[j].time_death;
 				if (*time_death <= 1100)
 				{
-					sl_render_bloc_with_xpm(&env->bkgd, &ennemies.dead, \
+					sl_render_bloc_with_xpm(&env->canvas, &ennemies.dead, \
 						ennemies.sprites[j].sub_pos.x, \
 						ennemies.sprites[j].sub_pos.y, true);
 					++env->tex.ennemies.sprites[j].time_death;
@@ -397,7 +397,7 @@ int	sl_render(t_env *env)
 			}
 			++j;
 		}
-		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
 	}
 	t_img		*death_state;
 	static int	m = 0;
@@ -423,9 +423,9 @@ int	sl_render(t_env *env)
 				death_state = &env->p1.img.dead.seven;
 			else if (m <= CENTER_MESS_TIME)
 				death_state = &env->p1.img.dead.eight;
-			sl_render_bloc_with_xpm(&env->bkgd, death_state, env->p1.sub_pos.x, \
+			sl_render_bloc_with_xpm(&env->canvas, death_state, env->p1.sub_pos.x, \
 				env->p1.sub_pos.y, true);
-			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->bkgd.mlx_img, 0, 0);    
+			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
 			sl_put_centered_message_to_window(env, "GAME OVER !");
 		}
 		else

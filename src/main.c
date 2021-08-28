@@ -155,8 +155,8 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	sl_load_all_textures(&env);
-	env.bkgd.mlx_img = mlx_new_image(env.mlx_ptr, width, height);
-	env.bkgd.addr = mlx_get_data_addr(env.bkgd.mlx_img, &env.bkgd.bpp, &env.bkgd.line_len, &env.bkgd.endian);
+	env.canvas.mlx_img = mlx_new_image(env.mlx_ptr, width, height);
+	env.canvas.addr = mlx_get_data_addr(env.canvas.mlx_img, &env.canvas.bpp, &env.canvas.line_len, &env.canvas.endian);
 	
 	sl_render_background(&env);
 	sl_put_buffer_bkgd_to_img(&env);

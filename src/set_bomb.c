@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 04:07:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 13:24:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ bool	sl_check_if_sprite_is_dead(t_env *env, t_items *bomb, char *map[], int  x, 
 	{
 		if (map[y_start][x] == MAP_PLAYER)
 			return (true);
+		if (map[y_start][x] == MAP_ENNEMY)
+			sl_find_which_ennemy_is_dead(env, x_start, y);
 		collectible = sl_is_collectible(map[y_start][x]);
 		if (map[y_start][x] != MAP_WALL)
 			map[y_start][x] = MAP_FLOOR;
@@ -99,9 +101,9 @@ void	sl_explode_bomb(t_env *env, t_items *bomb, int x, int y)
 {
 	bool		is_dead;
 
-	is_dead = sl_check_if_sprite_is_dead(env, bomb, env->map, x / BLOC_LEN, y / BLOC_LEN);
-	if (bomb->time3 <= CENTER_MESS_TIME)
+	if (bomb->time3 <= BOMB_EXPLODE_TIME)
 	{
+		is_dead = sl_check_if_sprite_is_dead(env, bomb, env->map, x / BLOC_LEN, y / BLOC_LEN);
 		sl_draw_segments_of_exploding_bomb(env, bomb, x, y);
 		if (is_dead)
 			env->p1.alive = false;
@@ -124,16 +126,16 @@ void    sl_set_bomb(t_env *env, t_items *bomb)
 	set_bomb = env->tex.bomb.set_states;
 	bomb_pos_x = bomb->pos.x * BLOC_LEN;
 	bomb_pos_y = bomb->pos.y * BLOC_LEN;
-    if (bomb->time1 <= 1280)
+    if (bomb->time1 <= BOMB_SET_TIME)
     {
         if (bomb->time1 % 320 == 0)
 			++bomb->time2;
 		if (bomb->time2 % 2 == 0)
-			sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.one, bomb_pos_x, bomb_pos_y);
+			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.one, bomb_pos_x, bomb_pos_y);
 		else
 		{
 			sl_replace_with_green_tile(env, bomb_pos_x, bomb_pos_y);
-			sl_render_bloc_with_xpm(&env->bkgd, &set_bomb.three, bomb_pos_x, bomb_pos_y);
+			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.three, bomb_pos_x, bomb_pos_y);
 		}
         ++bomb->time1;
     }

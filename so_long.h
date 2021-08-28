@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 03:55:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 04:40:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@
 */
 # define PLAYER_SPEED		170
 # define ENNEMY_SPEED		340
+# define BOMB_SET_TIME		2280
+# define BOMB_EXPLODE_TIME	1000
 # define REVEAL_EXIT_SPEED	30
 
 /*
@@ -232,7 +234,7 @@ typedef struct s_env
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img		bkgd;
+	t_img		canvas;
 	int			width;
 	int			height;
 	bool		keypress;

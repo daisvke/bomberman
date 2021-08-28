@@ -16,7 +16,7 @@ int    sl_exit_game(t_env *env, char *err_mess)
 {
  //   free(env->map);
 /*
-	mlx_destroy_image(env->mlx_ptr, env->bkgd.mlx_img);
+	mlx_destroy_image(env->mlx_ptr, env->canvas.mlx_img);
 	mlx_destroy_image(env->mlx_ptr, env->tex.wall.mlx_img);
 	mlx_destroy_image(env->mlx_ptr, env->tex.bomb.item_bomb.mlx_img);
 	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state0.mlx_img);

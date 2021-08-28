@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:39:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 04:51:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	free(line);
 	line = NULL;
 	env->height = i;
+	close (map_fd);
 	//this but without mlx destroy
 //	if (env->height == env->width)
 	//	sl_exit_game(env, "Error: the map is a square but has to be a rectangle");
@@ -209,6 +210,7 @@ void	sl_parse_map(t_env *env, char *filename)
 		free(line);
 		++i;
 	}
+	close (map_fd);
     sl_check_counter(env, counter);
 	// if error
 	free(line);
