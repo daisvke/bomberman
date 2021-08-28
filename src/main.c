@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/25 23:20:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 02:16:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,46 @@ int	sl_handle_input(int keysym, t_env *env)
 }
 */
 
+void	check_map(t_env *env)
+{
+	int i, j;
+
+	i = 0;
+	while (i < env->height)
+	{
+		j = 0;
+		while (j < env->width)
+		{
+			printf("%c", env->map[i][j]);
+			++j;
+		}
+		printf("\n");
+		++i;
+	}
+	printf("\n");
+}
+
+int	sl_get_free_slot_in_array(t_env *env, t_items *bombs, int x, int y)
+{
+	int	i;
+
+	i = 0;
+	while (i < env->tex.bomb.collected)
+	{
+		if (bombs[i].pos.x == x && bombs[i].pos.y == y)
+			break ;
+		if (bombs[i].draw == false)
+			return (i);
+		++i;
+	}
+	return (-1);
+}
+
 int	sl_handle_keypress(int keycode, t_env *env)
 {
 	int	x;
 	int	y;
+	int	i;
 
 	x = env->p1.pos.x;
 	y = env->p1.pos.y;
@@ -37,11 +73,16 @@ int	sl_handle_keypress(int keycode, t_env *env)
 		env->p1.curr_dir.left = true;
 	if (keycode == XK_d || keycode == XK_d)
 		env->p1.curr_dir.right = true;
-    if (keycode == XK_b && !env->tex.bomb.set_bomb)
+    if (keycode == XK_b && env->tex.bomb.set_bombs_nbr < env->tex.bomb.collected)
 	{
-        env->tex.bomb.set_bomb = true;
-		env->tex.bomb.pos.x = x;
-		env->tex.bomb.pos.y = y;
+		i = sl_get_free_slot_in_array(env, env->tex.bomb.set_bombs, x, y);
+		if (i != -1)
+		{
+        	++env->tex.bomb.set_bombs_nbr;
+			env->tex.bomb.set_bombs[i].pos.x = x;
+			env->tex.bomb.set_bombs[i].pos.y = y;
+			env->tex.bomb.set_bombs[i].draw = true;
+		}
 	}
 	return (0);
 }
@@ -62,25 +103,6 @@ int	sl_handle_keyrelease(int keycode, t_env *env)
 	if (keycode == XK_d || keycode == XK_d)
 		env->p1.curr_dir.right = false;
 	return (0);
-}
-
-void	check_map(t_env *env)
-{
-	int i, j;
-
-	i = 0;
-	while (i < env->height)
-	{
-		j = 0;
-		while (j < env->width)
-		{
-			printf("%c", env->map[i][j]);
-			++j;
-		}
-		printf("\n");
-		++i;
-	}
-	printf("\n");
 }
 
 int	ft_strcmp(char *s1, char *s2)

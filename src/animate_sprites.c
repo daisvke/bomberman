@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/26 01:19:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/27 05:55:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,28 @@ void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
 	sl_put_back_exit_on_map(env);
 }
 
+bool	sl_check_if_bomb_is_there(t_env *env, t_items *bombs, int x, int y)
+{
+	t_coord	bomb_pos;
+	int		i;	
+
+	i = 0;
+	while (i < env->tex.bomb.set_bombs_nbr)
+	{
+		bomb_pos.x = bombs[i].pos.x;
+		bomb_pos.y = bombs[i].pos.y;
+		if (bombs[i].draw == true && x == bomb_pos.x && y == bomb_pos.y)
+			return (true);
+		++i;
+	}
+	return (false);
+}
+
 void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, int x, int y)
 {
 	char		**map;
 	int			pos_x;
 	int			pos_y;
-	t_coord		bomb_pos;
 	int		old_x;
 	int		old_y;
 	int		new_x;
@@ -80,9 +96,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 	map = env->map;
 	pos_x = sprite->pos.x + x;
 	pos_y = sprite->pos.y + y;
-	bomb_pos.x = env->tex.bomb.pos.x;
-	bomb_pos.y = env->tex.bomb.pos.y;
-	if (map[pos_y][pos_x] == MAP_WALL || (pos_x == bomb_pos.x && pos_y == bomb_pos.y))
+	if (map[pos_y][pos_x] == MAP_WALL || sl_check_if_bomb_is_there(env, env->tex.bomb.set_bombs, pos_x, pos_y))
 	{
 		x = 0;
 		y = 0;
@@ -110,7 +124,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 		sprite->pos.y += y;
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN;
-		if (apply_to != ENNEMY && !(env->tex.bomb.set_bomb == true && sprite->time < sprite->speed * 2))
+		if (apply_to != ENNEMY)
 			*state = false;
 		sprite->time = 0;
 	}

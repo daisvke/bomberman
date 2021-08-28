@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/26 02:08:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 02:42:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@
 # define CENTER_MESS_TIME	1000
 
 /*
+** speeds
+*/
+# define PLAYER_SPEED		170
+# define ENNEMY_SPEED		340
+# define REVEAL_EXIT_SPEED	30
+
+/*
 ** determine ennemy position
 */
 # define UP_LEN				0
@@ -73,6 +80,11 @@
 # define LEFT_LEN			2
 # define RIGHT_LEN			3
 # define KEEP				1
+
+/*
+** bombs
+*/
+# define START_BOMB			1
 
 typedef struct s_coord
 {
@@ -91,7 +103,6 @@ typedef struct s_img
 
 typedef struct s_pipe
 {
-	bool	appear;
 	t_img	state0;
 	t_img	state1;
 	t_img	state2;
@@ -164,7 +175,9 @@ typedef struct s_items
 {
 	t_coord	pos;
 	bool	draw;
-	int		time;
+	int		time1;
+	int		time2;
+	int		time3;
 }			t_items;
 
 typedef struct s_bombs
@@ -173,7 +186,8 @@ typedef struct s_bombs
 	int					to_collect;
 	int					collected;
 	t_items				item_bombs[ITEM_LIMIT];
-	t_items				set_bomb[ITEM_LIMIT];
+	int					set_bombs_nbr;
+	t_items				set_bombs[ITEM_LIMIT];
 	t_coord				pos;
 	t_states			set_states;
 	void				*curr_state;
@@ -286,6 +300,6 @@ int    sl_exit_game(t_env *env, char *err_mess);
 /*
 ** bomb
 */
-void    sl_set_bomb(t_env *env);
+void    sl_set_bomb(t_env *env, t_items *bomb);
 
 #endif

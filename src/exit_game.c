@@ -6,20 +6,12 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/11 05:14:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 02:37:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-/*
-void	sl_display_game_over_screen(t_env *env)
-{
-	static int	i;
 
-	if (i < 3200)
-
-}
-*/
 int    sl_exit_game(t_env *env, char *err_mess)
 {
  //   free(env->map);
@@ -53,7 +45,7 @@ void	sl_exit_game_over(t_env *env)
 	int			collected;
 	int			to_collect;
 
-	collected = env->tex.bomb.collected;
+	collected = env->tex.bomb.collected - 1;
 	to_collect = env->tex.bomb.to_collect;
 	if (i <= CENTER_MESS_TIME)
 		sl_put_centered_message_to_window(env, "GAME OVER !");
@@ -63,6 +55,7 @@ void	sl_exit_game_over(t_env *env)
 		printf("GAME OVER\n");
 		printf("Collected items: %d/%d\n", collected, to_collect);
 		sl_exit_game(env, NULL);
+		printf("\n");
 	}
 	++i;
 }

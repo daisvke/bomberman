@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/22 13:50:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/26 03:38:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	sl_put_counts_to_window(t_env *env)
 	mlx_string_put(env->mlx_ptr, env->win_ptr, 45, 17, 0xFFFFFF, count);
 	free(count);
 	sl_render_bloc_with_xpm(&env->bkgd, &env->icon_bomb, 60, 0, true);
-	collected = ft_itoa(env->tex.bomb.collected);
+	collected = ft_itoa(env->tex.bomb.collected - 1);
 	to_collect = ft_itoa(env->tex.bomb.to_collect);
 	mlx_string_put(env->mlx_ptr, env->win_ptr, 90, 17, 0xFFFFFF, collected);
 	free(collected);

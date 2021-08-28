@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 01:56:39 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 02:42:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ void	sl_init_buffers(t_env *env)
 	}
 }
 
+void	sl_init_set_bomb(t_items *bomb)
+{
+	bomb->draw = false;
+	bomb->pos.x = 0;
+	bomb->pos.y = 0;
+	bomb->time1 = 0;
+	bomb->time2 = 0;
+	bomb->time3 = 0;
+}
+
 void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed)
 {
 	sprite->alive = true;
@@ -60,12 +70,11 @@ void	sl_init_env(t_env *env)
 	env->height = 0;
 	env->map = NULL;
 	env->tex.bomb.to_collect = 0;
-	env->tex.bomb.collected = 0;
-    env->tex.bomb.set_bomb = false;
+	env->tex.bomb.collected = 1;
 	env->tex.bomb.explode_size = 2;
+	sl_init_set_bomb(&env->tex.bomb.set_bombs[0]);
 	env->tex.fire.to_collect = 0;
 	env->tex.speed.to_collect = 0;
-	env->tex.exit_pipe.appear = false;
 	env->tex.ennemies.count = 0;
-	sl_init_sprite(&env->p1, 0, 0, 90);
+	sl_init_sprite(&env->p1, 0, 0, PLAYER_SPEED);
 }

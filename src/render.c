@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/26 01:15:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/28 02:37:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,17 +203,17 @@ void	sl_reveal_exit(t_env *env)
 
 	exit = env->tex.exit_pipe;
 	curr_state = NULL;
-	if (i <= 80)
+	if (i <= REVEAL_EXIT_SPEED)
 		curr_state = &exit.state0;
-	if (i > 80 && i <= 160)
+	else if (i <= REVEAL_EXIT_SPEED * 2)
 		curr_state = &exit.state1;
-	if (i > 160 && i <= 240)
+	else if (i <= REVEAL_EXIT_SPEED * 3)
 		curr_state = &exit.state2;
-	if (i > 240 && i <= 320)
+	else if (i <= REVEAL_EXIT_SPEED * 4)
 		curr_state = &exit.state3;
-	if (i > 320)
+	else if (i < REVEAL_EXIT_SPEED * 5)
 		curr_state = &exit.state4;
-	if (i == 400)
+	if (i == REVEAL_EXIT_SPEED * 5)
 		curr_state = &exit.state5;
 	else
 		++i;
@@ -332,7 +332,6 @@ int	sl_render(t_env *env)
 	t_img	*img2;
 	static int	i;
 	int	j;
-	static int	k;
 	
 	sl_clear_sprites_last_positions(env);
 	sl_draw_collectibles(env);
@@ -340,10 +339,32 @@ int	sl_render(t_env *env)
 		env->p1.alive = false;
 	if (env->p1.alive == true)
 	{
-		if (env->tex.exit_pipe.appear == true)
-			sl_reveal_exit(env);
-		if (env->tex.bomb.set_bomb == true)
-			sl_set_bomb(env);
+	/*	
+		int k = 0;
+			printf("==============\n");
+			while (k < env->tex.bomb.set_bombs_nbr)
+			{
+					printf("x: %d   \n", env->tex.bomb.set_bombs[k].pos.x);
+					printf("y: %d   \n", env->tex.bomb.set_bombs[k].pos.y);
+					printf("draw: %d   \n", env->tex.bomb.set_bombs[k].draw);
+					printf("t1: %d   \n", env->tex.bomb.set_bombs[k].time1);
+					printf("t2: %d   \n", env->tex.bomb.set_bombs[k].time2);
+					printf("t3: %d   \n", env->tex.bomb.set_bombs[k].time3);
+					printf("---------------\n");
+				++k;
+			}
+			printf("==============\n");
+	*/	
+		int l = 0;
+		if (env->tex.bomb.set_bombs_nbr > 0)
+		{
+			while (l < env->tex.bomb.collected)
+			{
+				if (env->tex.bomb.set_bombs[l].draw == true)
+					sl_set_bomb(env, &env->tex.bomb.set_bombs[l]);
+				++l;
+			}
+		}
 		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
 		sl_read_and_animate_ennemies(env);
 		img = env->p1.curr_state;
