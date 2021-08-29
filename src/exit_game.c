@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:37:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/29 03:37:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,8 @@
 int    sl_exit_game(t_env *env, char *err_mess)
 {
  //   free(env->map);
-/*
 	mlx_destroy_image(env->mlx_ptr, env->canvas.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.wall.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.bomb.item_bomb.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state0.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state1.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state2.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state3.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state4.mlx_img);
-	mlx_destroy_image(env->mlx_ptr, env->tex.exit_pipe.state5.mlx_img);
-	mlx_destroy_window(env->mlx_ptr, env->win_ptr);*/
+	mlx_destroy_window(env->mlx_ptr, env->win_ptr);
 	mlx_destroy_display(env->mlx_ptr);
 	mlx_loop_end(env->mlx_ptr);
 	ft_free(env->mlx_ptr);

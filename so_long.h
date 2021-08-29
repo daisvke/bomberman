@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 04:40:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/29 03:24:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,6 @@ typedef struct s_env
 	bool		keypress;
 	char		**map;
 	int			**buffer_bkgd;
-	int			**buffer;
 	t_textures	tex;
 	t_sprite	p1;
 	t_img		icon_bomb;

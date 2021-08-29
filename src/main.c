@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 03:55:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/29 03:24:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	main(int argc, char *argv[])
 		"Bomberman");
 	if (!env.win_ptr)
 	{
-		free(env.mlx_ptr);
+		free(env.win_ptr);
 		exit(EXIT_FAILURE);
 	}
 	sl_load_all_textures(&env);

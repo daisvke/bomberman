@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 03:55:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/29 03:25:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,7 @@ void	sl_init_buffers(t_env *env)
 {
 	int	i;
 
-	env->buffer = malloc(sizeof(int *) * env->height * BLOC_LEN);
-	if (!env->buffer)
-		sl_exit_game(env, "Error: memory allocation for buffer failed");
 	i = 0;
-	while (i < env->height * BLOC_LEN)
-	{
-		env->buffer[i] = malloc(sizeof(int) * env->width * BLOC_LEN);
-		++i;
-	}
 	env->buffer_bkgd = malloc(sizeof(int *) * env->height * BLOC_LEN);
 	if (!env->buffer_bkgd)
 		sl_exit_game(env, "Error: memory allocation for buffer failed");

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:37:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/08/29 05:09:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,23 +130,50 @@ void	sl_render_buffer_green_tile(t_env *env, int x, int y)
 		sl_render_buffer_with_colored_bloc(buffer, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y);
 }
 
-void	sl_render_green_tile(t_env *env, t_dir curr_dir, int x, int y, int sub_x, int sub_y)
+void	sl_render_green_tile(t_env *env, t_dir curr_dir, int pos_x, int pos_y)
 {
 	t_img	*bkgd;
 	char	**map;
+	int		x;
+	int		y;
 
+	x = pos_x / BLOC_LEN;
+	y = pos_y / BLOC_LEN;
 	bkgd = &env->canvas;
 	map = env->map;
-	if (sub_x != 0)
+	if (map[y - 1][x] == MAP_WALL && curr_dir.down == false)
+		sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
+			pos_x, pos_y, false);
+	else if	(map[y - 1][x] == MAP_WALL && curr_dir.down == true)
+		sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
+			pos_x, pos_y, false);
+	else	
+		sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x, pos_y);
+	if (curr_dir.up == true && map[y - 1][x] != MAP_WALL)
 	{
-		if (map[y - 1][x] == MAP_WALL && curr_dir.down == false)
+		if (map[y - 2][x] == MAP_WALL)
 			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
-				sub_x, sub_y, false);
-		else if	(map[y - 1][x] == MAP_WALL && curr_dir.down == true && sub_y == y * BLOC_LEN)
+				pos_x, pos_y - BLOC_LEN, false);
+		else
+			sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x, pos_y - BLOC_LEN);
+	}
+	if (curr_dir.down == true && map[y + 1][x] != MAP_WALL)
+		sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x, pos_y + BLOC_LEN);
+	if (curr_dir.left == true && map[y][x - 1] != MAP_WALL)
+	{
+		if (map[y - 1][x - 1] == MAP_WALL)
 			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
-				sub_x, sub_y, false);
-		else	
-			sl_render_colored_bloc(bkgd, GREEN_PXL, sub_x, sub_y);
+				pos_x - BLOC_LEN, pos_y, false);
+		else
+			sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x - BLOC_LEN, pos_y);
+	}
+	if (curr_dir.right == true && map[y][x + 1] != MAP_WALL)
+	{
+		if (map[y - 1][x + 1] == MAP_WALL)
+			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
+				pos_x + BLOC_LEN, pos_y, false);
+		else
+			sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x + BLOC_LEN, pos_y);
 	}
 }
 
@@ -256,24 +283,6 @@ void	sl_put_buffer_bkgd_to_img(t_env *env)
 	}
 }
 
-void	sl_init_canvas(t_env *env)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < env->height * BLOC_LEN)
-	{
-		j = 0;
-		while (j < env->width * BLOC_LEN)
-		{
-			env->buffer[i][j] = 0;
-			++j;
-		}
-		++i;
-	}
-}
-
 void	sl_clear_sprites_last_positions(t_env *env)
 {
 	t_img		*bkgd;
@@ -283,17 +292,16 @@ void	sl_clear_sprites_last_positions(t_env *env)
 	int			i;
 
 	bkgd = &env->canvas;
-	p1_pos.x = env->p1.sub_pos.x;
-	p1_pos.y = env->p1.sub_pos.y;
-	sl_render_green_tile(env, env->p1.curr_dir, env->p1.pos.x, env->p1.pos.y, p1_pos.x, p1_pos.y); 
+	p1_pos.x = env->p1.pos.x * BLOC_LEN;
+	p1_pos.y = env->p1.pos.y * BLOC_LEN;
+	sl_render_green_tile(env, env->p1.curr_dir, p1_pos.x, p1_pos.y); 
 	ennemies = env->tex.ennemies;
 	i = 0;
 	while (i < ennemies.count) 
 	{
-		ennemy_pos.x = ennemies.sprites[i].sub_pos.x;
-		ennemy_pos.y = ennemies.sprites[i].sub_pos.y;
-		sl_render_green_tile(env, ennemies.sprites[i].curr_dir, ennemies.sprites[i].pos.x, \
-			ennemies.sprites[i].pos.y, ennemy_pos.x, ennemy_pos.y);
+		ennemy_pos.x = ennemies.sprites[i].pos.x * BLOC_LEN;
+		ennemy_pos.y = ennemies.sprites[i].pos.y * BLOC_LEN;
+		sl_render_green_tile(env, ennemies.sprites[i].curr_dir, ennemy_pos.x, ennemy_pos.y);
 		++i;
 	}
 	//clear bomb explosion
