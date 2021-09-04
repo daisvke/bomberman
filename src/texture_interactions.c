@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 14:03:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 02:32:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/04 12:37:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	sl_collect_speed(t_env *env, char **map, int x, int y)
 	}
 }
 
-void	sl_exit_when_game_clear(char **map, t_pipe *exit_pipe, int x, int y)
+void	sl_exit_when_game_clear(char **map, int x, int y)
 {
 	if (map[y][x] == MAP_EXIT)
 	{
@@ -94,7 +94,7 @@ void	sl_handle_textures_while_moving(t_env *env, int apply_to, int delta_x, \
 		if (env->tex.bomb.collected - START_BOMB == env->tex.bomb.to_collect)
 		{
 			sl_reveal_exit(env);
-			sl_exit_when_game_clear(map, &env->tex.exit_pipe, x, y);
+			sl_exit_when_game_clear(map, x, y);
 		}
 	}
 }

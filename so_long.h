@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/29 03:24:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/04 13:01:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define FILE_EXTENSION		".ber"
 # define FILE_EXTENSION_LEN	3
+# define SAME				0
 
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEPM"
@@ -45,6 +46,8 @@
 # define DOWN				1
 # define LEFT				-1
 # define RIGHT				1
+
+# define NO_AVAILABLE_SLOT	-1
 
 /*
 ** parsing
@@ -175,8 +178,8 @@ typedef struct s_explode_states
 
 typedef struct s_items
 {
-	t_coord	pos;
 	bool	draw;
+	t_coord	pos;
 	int		explode_size;
 	int		time1;
 	int		time2;
@@ -269,6 +272,11 @@ void	sl_init_env(t_env *env);
 void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed);
 
 /*
+** keypress
+*/
+int	sl_handle_keypress(int keycode, t_env *env);
+
+/*
 ** parse
 */
 void	sl_parse_map(t_env *data, char *filename);
@@ -297,11 +305,14 @@ void	sl_find_and_turn_off_item(t_items *items, int max, int x, int y);
 */
 int	sl_is_collectible(char elem_to_check);
 
-int    sl_exit_game(t_env *env, char *err_mess);
-
 /*
 ** bomb
 */
 void    sl_set_bomb(t_env *env, t_items *bomb);
+
+/*
+** exit game
+*/
+int    sl_exit_game(t_env *env);
 
 #endif

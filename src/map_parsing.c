@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/28 04:51:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/04 13:19:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,8 @@ char    *ft_strchr(const char *s, int c)
 void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int texture)
 {
 	if (x == 0 || y == 0 || x == env->width || y == env->height)
-	{
 		if (texture != MAP_WALL - '0')
-		{
-			printf("no walls\n");
-			exit(EXIT_FAILURE);
-		}
-	}
+			sl_set_err_code_and_exit_game(env, 11);
 }
 
 void	sl_read_ennemies_from_map(t_env *env, int x, int y)
@@ -46,7 +41,7 @@ void	sl_read_ennemies_from_map(t_env *env, int x, int y)
 	ennemies_count = &env->tex.ennemies.count;
 	*ennemies_count += 1;
 	if (*ennemies_count >= ENNEMY_LIMIT)
-		sl_exit_game(env, "Error: too many ennemies on the map");
+		sl_set_err_code_and_exit_game(env, 7);
 	sl_init_sprite(&ennemies[i], x, y, ENNEMY_SPEED);
 	++i;
 }
@@ -62,7 +57,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	if (j == 0 || x % 2 == 0)
 	{
 		if (j >= ITEM_LIMIT)
-			sl_exit_game(env, "Error: too many bomb items on the map");
+			sl_set_err_code_and_exit_game(env, 8);
 		map[y][x] = 'B';
 		env->tex.bomb.item_bombs[j].pos.x = x;
 		env->tex.bomb.item_bombs[j].pos.y = y;
@@ -73,7 +68,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	else if (x % 3 == 0)
 	{
 		if (k >= ITEM_LIMIT)
-			sl_exit_game(env, "Error: too many fire items on the map");
+			sl_set_err_code_and_exit_game(env, 9);
 		map[y][x] = 'F';
 		env->tex.fire.items[k].pos.x = x;
 		env->tex.fire.items[k].pos.y = y;
@@ -84,7 +79,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	else 
 	{
 		if (l >= ITEM_LIMIT)
-			sl_exit_game(env, "Error: too many speed items on the map");
+			sl_set_err_code_and_exit_game(env, 10);
 		map[y][x] = 'S';
 		env->tex.speed.items[l].pos.x = x;
 		env->tex.speed.items[l].pos.y = y;
@@ -133,10 +128,15 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
 		}
 		++i;
 	}
-	exit(EXIT_FAILURE);//error message
-		// exut but no mlx destroy
-//		else
-//			sl_exit_game(env, "Error: unknown element on the map file");
+	sl_set_err_code_and_exit_game(env, 12);
+}
+
+void	sl_exit_cleanly_when_gnl_fails(t_env *env, int err_code, char *line, int map_fd)
+{
+	close(map_fd);
+	free(line);
+	line = NULL;
+	sl_set_err_code_and_exit_game(env, err_code);
 }
 
 void	sl_get_window_dimensions(t_env *env, char *filename)
@@ -145,41 +145,45 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	int		i;
 	int		j;
 	int		map_fd;
+	int		res;
 
+	line = NULL;
 	map_fd = open(filename, O_RDONLY);
 	if (map_fd == ERROR)
-		exit(EXIT_FAILURE);
+		sl_exit_cleanly_when_gnl_fails(env, 16, line, map_fd);
 	i = 0;
-	while (get_next_line(map_fd, &line) && ft_strlen(line) != 0)
+	res = 1;
+	while (res > 0)
 	{
+		res = get_next_line(map_fd, &line);
+		if (res <= 0)
+			break ;
 		j = 0;
 		while (line[j])
 			++j;
-		if (j > 0)
-			env->width = j;
+		env->width = j;
 		if (env->width && j != env->width)
-			exit(EXIT_FAILURE);
-		free(line);
+			sl_exit_cleanly_when_gnl_fails(env, 17, line, map_fd);
+		line = ft_free(line);
 		++i;
 	}
-	// if error
-	free(line);
-	line = NULL;
-	env->height = i;
 	close (map_fd);
-	//this but without mlx destroy
-//	if (env->height == env->width)
-	//	sl_exit_game(env, "Error: the map is a square but has to be a rectangle");
+	line = ft_free(line);
+	if (res == ERROR)
+		sl_set_err_code_and_exit_game(env, 18);
+	env->height = i;
+	if (env->height < 2 || env->width < 2)
+		sl_set_err_code_and_exit_game(env, 19);
 }
 
 void    sl_check_counter(t_env *env, t_count counter)
 {
     if (!counter.collectible)
-		sl_exit_game(env, "Error: the map has to contain at least one collectible");
+		sl_set_err_code_and_exit_game(env, 13);
     if (!counter.player || counter.player > 1)
-		sl_exit_game(env, "Error: the map has to contain one player");
+		sl_set_err_code_and_exit_game(env, 14);
     if (!counter.exit_pipe)
-		sl_exit_game(env, "Error: the map has to contain an exit");
+		sl_set_err_code_and_exit_game(env, 15);
 }
 
 void	sl_parse_map(t_env *env, char *filename)
@@ -192,14 +196,14 @@ void	sl_parse_map(t_env *env, char *filename)
 
 	map_fd = open(filename, O_RDONLY);
 	sl_get_window_dimensions(env, filename);
-	env->map = malloc(env->height * sizeof(*env->map));
+	env->map = malloc(sizeof(*env->map) * (env->height + 1));
     counter.player = 0;
 	counter.collectible = 0;
     counter.exit_pipe = 0;
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{
-		env->map[i] = malloc(ft_strlen(line) * sizeof(*env->map));
+		env->map[i] = malloc(sizeof(*env->map) * (ft_strlen(line) + 1));
 		//ft_malloc error + free
 		j = 0;
 		while (line[j])
@@ -207,9 +211,11 @@ void	sl_parse_map(t_env *env, char *filename)
 			sl_populate_map_with_textures(env, line[j], j, i, &counter);
 			++j;
 		}
+		line[j] = '\0';
 		free(line);
 		++i;
 	}
+	env->map[i] = '\0';
 	close (map_fd);
     sl_check_counter(env, counter);
 	// if error

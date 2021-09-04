@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/29 05:09:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/04 13:19:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,22 +347,6 @@ int	sl_render(t_env *env)
 		env->p1.alive = false;
 	if (env->p1.alive == true)
 	{
-	/*	
-		int k = 0;
-			printf("==============\n");
-			while (k < env->tex.bomb.set_bombs_nbr)
-			{
-					printf("x: %d   \n", env->tex.bomb.set_bombs[k].pos.x);
-					printf("y: %d   \n", env->tex.bomb.set_bombs[k].pos.y);
-					printf("draw: %d   \n", env->tex.bomb.set_bombs[k].draw);
-					printf("t1: %d   \n", env->tex.bomb.set_bombs[k].time1);
-					printf("t2: %d   \n", env->tex.bomb.set_bombs[k].time2);
-					printf("t3: %d   \n", env->tex.bomb.set_bombs[k].time3);
-					printf("---------------\n");
-				++k;
-			}
-			printf("==============\n");
-	*/	
 		int l = 0;
 		if (env->tex.bomb.set_bombs_nbr > 0)
 		{
@@ -406,6 +390,7 @@ int	sl_render(t_env *env)
 			++j;
 		}
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
+		sl_put_counts_to_window(env);
 	}
 	t_img		*death_state;
 	static int	m = 0;
@@ -440,7 +425,6 @@ int	sl_render(t_env *env)
 			sl_exit_game_over(env);
 		++m;
 	}
-	sl_put_counts_to_window(env);
 	if (i <= CENTER_MESS_TIME)
 	{
 		sl_put_centered_message_to_window(env, "START !");

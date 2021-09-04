@@ -6,20 +6,20 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/29 03:25:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/04 13:22:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	sl_init_buffers(t_env *env)
+void	sl_init_buffer(t_env *env)
 {
 	int	i;
 
 	i = 0;
 	env->buffer_bkgd = malloc(sizeof(int *) * env->height * BLOC_LEN);
 	if (!env->buffer_bkgd)
-		sl_exit_game(env, "Error: memory allocation for buffer failed");
+		sl_set_err_code_and_exit_game(env, 6);
 	i = 0;
 	while (i < env->height * BLOC_LEN)
 	{
@@ -28,12 +28,12 @@ void	sl_init_buffers(t_env *env)
 	}
 }
 
-void	sl_init_set_bomb(t_items *bomb)
+void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size)
 {
-	bomb->draw = false;
-	bomb->explode_size = 0;
-	bomb->pos.x = 0;
-	bomb->pos.y = 0;
+	bomb->draw = draw;
+	bomb->pos.x = x;
+	bomb->pos.y = y;
+	bomb->explode_size = size;
 	bomb->time1 = 0;
 	bomb->time2 = 0;
 	bomb->time3 = 0;
@@ -65,9 +65,27 @@ void	sl_init_env(t_env *env)
 	env->tex.bomb.to_collect = 0;
 	env->tex.bomb.collected = 1;
 	env->tex.bomb.explode_size = 2;
-	sl_init_set_bomb(&env->tex.bomb.set_bombs[0]);
+	sl_init_set_bomb(&env->tex.bomb.set_bombs[0], false, 0, 0, 0);
 	env->tex.fire.to_collect = 0;
 	env->tex.speed.to_collect = 0;
 	env->tex.ennemies.count = 0;
 	sl_init_sprite(&env->p1, 0, 0, PLAYER_SPEED);
+}
+
+void	sl_init_all(t_env *env, char *argv[])
+{
+	int		width;
+	int		height;
+
+	sl_init_env(env);
+	sl_parse_map(env, argv[1]);
+	width = env->width * BLOC_LEN;
+	height = env->height * BLOC_LEN;
+	sl_init_buffer(env);
+	sl_init_mlx(env, width, height);
+	sl_load_all_textures(env);
+	env->canvas.mlx_img = mlx_new_image(env->mlx_ptr, width, height);
+	env->canvas.addr = mlx_get_data_addr(env->canvas.mlx_img, &env->canvas.bpp, &env->canvas.line_len, &env->canvas.endian);
+	sl_render_background(env);
+	sl_put_buffer_bkgd_to_img(env);
 }
