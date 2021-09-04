@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/04 13:01:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 00:30:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ typedef struct s_env
 	t_textures	tex;
 	t_sprite	p1;
 	t_img		icon_bomb;
+	bool		error;
 }				t_env;
 
 typedef struct s_square

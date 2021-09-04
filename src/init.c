@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/04 13:22:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 00:30:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	sl_init_env(t_env *env)
 	env->width = 0;
 	env->height = 0;
 	env->map = NULL;
+	env->error = false;
 	env->tex.bomb.to_collect = 0;
 	env->tex.bomb.collected = 1;
 	env->tex.bomb.explode_size = 2;

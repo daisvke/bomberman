@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/04 13:19:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 00:30:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 {
 	if (x == 0 || y == 0 || x == env->width || y == env->height)
 		if (texture != MAP_WALL - '0')
-			sl_set_err_code_and_exit_game(env, 11);
+			env->error = true;
 }
 
 void	sl_read_ennemies_from_map(t_env *env, int x, int y)
@@ -134,7 +134,7 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
 void	sl_exit_cleanly_when_gnl_fails(t_env *env, int err_code, char *line, int map_fd)
 {
 	close(map_fd);
-	free(line);
+	ft_free(line);
 	line = NULL;
 	sl_set_err_code_and_exit_game(env, err_code);
 }
@@ -164,11 +164,12 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 		env->width = j;
 		if (env->width && j != env->width)
 			sl_exit_cleanly_when_gnl_fails(env, 17, line, map_fd);
-		line = ft_free(line);
+		ft_free(line);
 		++i;
 	}
 	close (map_fd);
-	line = ft_free(line);
+	ft_free(line);
+	line = NULL;
 	if (res == ERROR)
 		sl_set_err_code_and_exit_game(env, 18);
 	env->height = i;
@@ -215,8 +216,10 @@ void	sl_parse_map(t_env *env, char *filename)
 		free(line);
 		++i;
 	}
-	env->map[i] = '\0';
-	close (map_fd);
+	env->map[i] = NULL;
+	close(map_fd);
+	if (env->error == true)
+		sl_set_err_code_and_exit_game(env, 11);
     sl_check_counter(env, counter);
 	// if error
 	free(line);
