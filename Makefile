@@ -18,6 +18,8 @@ SRC_FILES	=	animate_sprites.c \
 				ennemies_ai.c \
 				exit_game.c \
 				init.c \
+				init_sprites.c \
+				init_utils.c \
 				keypress.c \
 				load_textures.c \
 				main.c \

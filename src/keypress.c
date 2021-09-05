@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 18:41:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/01 23:44:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 13:59:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ void	sl_handle_keypress_b(t_env *env, int x, int y)
 
 int	sl_handle_keypress(int keycode, t_env *env)
 {
+	int	set_bombs;
+	int	collected_bombs;
+
 	if (keycode == XK_Escape)
 		sl_exit_game(env);
 	if (keycode == XK_w || keycode == XK_z)
@@ -53,7 +56,9 @@ int	sl_handle_keypress(int keycode, t_env *env)
 		env->p1.curr_dir.left = true;
 	if (keycode == XK_d || keycode == XK_d)
 		env->p1.curr_dir.right = true;
-    if (keycode == XK_b && env->tex.bomb.set_bombs_nbr < env->tex.bomb.collected)
+	set_bombs = env->tex.bomb.set_bombs_nbr;
+	collected_bombs = env->tex.bomb.collected;
+    if (keycode == XK_b && set_bombs < collected_bombs)
 		sl_handle_keypress_b(env, env->p1.pos.x, env->p1.pos.y);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/04 12:34:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 14:01:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ void	sl_check_inputs(t_env *env, int argc, char *filename)
 
 void	sl_init_mlx(t_env *env, int width, int height)
 {
+	char	*title;
+
 	env->mlx_ptr = mlx_init();
 	if (!env->mlx_ptr)
 		sl_set_err_code_and_exit_game(env, 1);
-	env->win_ptr = mlx_new_window(env->mlx_ptr, width, height, \
-		"minibomberman");
+	title = "minibomberman";
+	env->win_ptr = mlx_new_window(env->mlx_ptr, width, height, title);
 	if (!env->win_ptr)
 		sl_set_err_code_and_exit_game(env, 2);
 }
