@@ -6,11 +6,12 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 00:30:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 05:48:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
 char    *ft_strchr(const char *s, int c)
 {
         while (*s)
@@ -28,7 +29,7 @@ void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int textur
 {
 	if (x == 0 || y == 0 || x == env->width || y == env->height)
 		if (texture != MAP_WALL - '0')
-			env->error = true;
+			env->errors[11] = true;
 }
 
 void	sl_read_ennemies_from_map(t_env *env, int x, int y)
@@ -57,7 +58,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	if (j == 0 || x % 2 == 0)
 	{
 		if (j >= ITEM_LIMIT)
-			sl_set_err_code_and_exit_game(env, 8);
+			env->errors[8] = true;
 		map[y][x] = 'B';
 		env->tex.bomb.item_bombs[j].pos.x = x;
 		env->tex.bomb.item_bombs[j].pos.y = y;
@@ -68,7 +69,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	else if (x % 3 == 0)
 	{
 		if (k >= ITEM_LIMIT)
-			sl_set_err_code_and_exit_game(env, 9);
+			env->errors[9] = true;
 		map[y][x] = 'F';
 		env->tex.fire.items[k].pos.x = x;
 		env->tex.fire.items[k].pos.y = y;
@@ -79,7 +80,7 @@ void	sl_assign_collectible_type_randomly(t_env *env, int x, int y)
 	else 
 	{
 		if (l >= ITEM_LIMIT)
-			sl_set_err_code_and_exit_game(env, 10);
+			env->errors[10] = true;
 		map[y][x] = 'S';
 		env->tex.speed.items[l].pos.x = x;
 		env->tex.speed.items[l].pos.y = y;
@@ -128,29 +129,32 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, int x, int y,
 		}
 		++i;
 	}
-	sl_set_err_code_and_exit_game(env, 12);
+	env->errors[12] = true;
 }
 
-void	sl_exit_cleanly_when_gnl_fails(t_env *env, int err_code, char *line, int map_fd)
+int	sl_get_width(t_env *env, char *line, int map_fd, int height)
 {
-	close(map_fd);
-	ft_free(line);
-	line = NULL;
-	sl_set_err_code_and_exit_game(env, err_code);
+	int		j;
+
+	j = 0;
+	while (line[j])
+		++j;
+	if (env->width && j != env->width)
+		env->errors[17] = true;
+	return (j);
 }
 
 void	sl_get_window_dimensions(t_env *env, char *filename)
 {
 	char	*line;
 	int		i;
-	int		j;
 	int		map_fd;
 	int		res;
 
 	line = NULL;
 	map_fd = open(filename, O_RDONLY);
 	if (map_fd == ERROR)
-		sl_exit_cleanly_when_gnl_fails(env, 16, line, map_fd);
+		env->errors[16] = true;
 	i = 0;
 	res = 1;
 	while (res > 0)
@@ -158,33 +162,27 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 		res = get_next_line(map_fd, &line);
 		if (res <= 0)
 			break ;
-		j = 0;
-		while (line[j])
-			++j;
-		env->width = j;
-		if (env->width && j != env->width)
-			sl_exit_cleanly_when_gnl_fails(env, 17, line, map_fd);
+		env->width = sl_get_width(env, line, map_fd, i);
 		ft_free(line);
 		++i;
 	}
-	close (map_fd);
-	ft_free(line);
-	line = NULL;
+	close(map_fd);
+	line = ft_free(line);
 	if (res == ERROR)
-		sl_set_err_code_and_exit_game(env, 18);
+		env->errors[18] = true;
 	env->height = i;
 	if (env->height < 2 || env->width < 2)
-		sl_set_err_code_and_exit_game(env, 19);
+		env->errors[19] = true;
 }
 
 void    sl_check_counter(t_env *env, t_count counter)
 {
     if (!counter.collectible)
-		sl_set_err_code_and_exit_game(env, 13);
+		env->errors[13] = true;
     if (!counter.player || counter.player > 1)
-		sl_set_err_code_and_exit_game(env, 14);
+		env->errors[14] = true;
     if (!counter.exit_pipe)
-		sl_set_err_code_and_exit_game(env, 15);
+		env->errors[15] = true;
 }
 
 void	sl_parse_map(t_env *env, char *filename)
@@ -195,17 +193,18 @@ void	sl_parse_map(t_env *env, char *filename)
 	int		j;
     t_count counter;
 
-	map_fd = open(filename, O_RDONLY);
 	sl_get_window_dimensions(env, filename);
-	env->map = malloc(sizeof(*env->map) * (env->height + 1));
+	env->map = ft_malloc(env, env->height + 1, sizeof(*env->map));
     counter.player = 0;
 	counter.collectible = 0;
     counter.exit_pipe = 0;
+	map_fd = open(filename, O_RDONLY);
 	i = 0;
 	while (get_next_line(map_fd, &line))
 	{
 		env->map[i] = malloc(sizeof(*env->map) * (ft_strlen(line) + 1));
-		//ft_malloc error + free
+		if (!env->map[i])
+			env->errors[20] = true;
 		j = 0;
 		while (line[j])
 		{
@@ -218,10 +217,7 @@ void	sl_parse_map(t_env *env, char *filename)
 	}
 	env->map[i] = NULL;
 	close(map_fd);
-	if (env->error == true)
-		sl_set_err_code_and_exit_game(env, 11);
     sl_check_counter(env, counter);
-	// if error
 	free(line);
 	line = NULL;
 } 

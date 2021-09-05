@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/31 19:06:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 00:49:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,11 @@ void    sl_set_bomb(t_env *env, t_items *bomb)
         if (bomb->time1 % 320 == 0)
 			++bomb->time2;
 		if (bomb->time2 % 2 == 0)
-			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.one, bomb_pos_x, bomb_pos_y);
+			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.one, bomb_pos_x, bomb_pos_y, true);
 		else
 		{
 			sl_replace_with_green_tile(env, bomb_pos_x, bomb_pos_y);
-			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.three, bomb_pos_x, bomb_pos_y);
+			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.three, bomb_pos_x, bomb_pos_y, true);
 		}
         ++bomb->time1;
     }

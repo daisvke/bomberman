@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 00:30:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 05:46:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,24 @@ void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed)
 	sprite->time = 0;
 }
 
+void	sl_init_errors(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (i < ERR_MAX)
+	{
+		env->errors[i] = false;
+		++i;
+	}
+}
+
 void	sl_init_env(t_env *env)
 {
 	env->width = 0;
 	env->height = 0;
 	env->map = NULL;
-	env->error = false;
+	sl_init_errors(env);
 	env->tex.bomb.to_collect = 0;
 	env->tex.bomb.collected = 1;
 	env->tex.bomb.explode_size = 2;
@@ -73,6 +85,26 @@ void	sl_init_env(t_env *env)
 	sl_init_sprite(&env->p1, 0, 0, PLAYER_SPEED);
 }
 
+void	sl_check_errors(t_env *env)
+{
+	int		i;
+	bool	quit;
+
+	quit = false;
+	i = 0;
+	while (i < ERR_MAX)
+	{
+		if (env->errors[i] == true)
+		{
+			sl_print_err_message(env, i);
+			quit = true;
+		}
+		++i;
+	}
+	if (quit == true)
+		sl_exit_game(env);
+}
+
 void	sl_init_all(t_env *env, char *argv[])
 {
 	int		width;
@@ -80,6 +112,7 @@ void	sl_init_all(t_env *env, char *argv[])
 
 	sl_init_env(env);
 	sl_parse_map(env, argv[1]);
+	sl_check_errors(env);
 	width = env->width * BLOC_LEN;
 	height = env->height * BLOC_LEN;
 	sl_init_buffer(env);

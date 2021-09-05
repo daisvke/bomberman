@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 00:30:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 05:31:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	sl_free_buffer(int *buffer[], int height)
 		ft_free(buffer[i]);
 		++i;
 	}
-	ft_free(buffer);
+	buffer = ft_free(buffer);
 }
 
 void	sl_free_map(t_env *env, char *map[])
@@ -35,7 +35,20 @@ void	sl_free_map(t_env *env, char *map[])
 		ft_free(map[i]);
 		++i;
 	}
-	ft_free(map);
+	map = ft_free(map);
+}
+
+void	sl_free_map_when_not_complete(t_env *env, char *map[], int height)
+{
+	int	i;
+
+	i = 0;
+	while (i < height)
+	{
+		ft_free(map[i]);
+		++i;
+	}
+	map = ft_free(map);
 }
 
 char	**sl_get_array_of_error_messages(void)
@@ -62,6 +75,7 @@ char	**sl_get_array_of_error_messages(void)
 	array[17] = "map is not a rectangle";
 	array[18] = "function get_next_line failed";
 	array[19] = "map is too small";
+	array[20] = "malloc failed";
 	return (array);
 }
 
@@ -94,7 +108,18 @@ int    sl_exit_game(t_env *env)
 	return (0);
 }
 
-int    sl_set_err_code_and_exit_game(t_env *env, int err_code)
+void    sl_print_err_message(t_env *env, int err_code)
+{
+	char	*err_message;
+
+	err_message = NULL;
+	printf("\n");
+	printf("Error code: %d", err_code);
+	err_message = sl_get_err_message_from_err_code(err_code);
+	printf("\033[31m\t\t%s\033[0m\n\n", err_message);
+}
+
+void    sl_set_err_code_and_exit_game(t_env *env, int err_code)
 {
 	char	*err_message;
 
