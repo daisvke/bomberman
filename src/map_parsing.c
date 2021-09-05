@@ -6,24 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 05:48:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 14:50:25 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
-char    *ft_strchr(const char *s, int c)
-{
-        while (*s)
-        {
-                if (*s == (char)c)
-                        return ((char *)s);
-                s++;
-        }
-        if (!(char)c)
-                return ((char *)s);
-        return (0);
-}
 
 void	sl_check_if_map_is_surrounded_by_walls(t_env *env, int x, int y, int texture)
 {

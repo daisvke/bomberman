@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 05:20:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/05 14:50:25 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,12 +276,17 @@ typedef struct s_count
 */
 void	*ft_free(void *ptr);
 void	*ft_malloc(t_env *env, size_t num, size_t size);
+char    *ft_strchr(const char *s, int c);
+int		ft_strcmp(char *s1, char *s2);
 
 /*
 ** init
 */
+void	sl_check_errors(t_env *env);
 void	sl_init_buffers(t_env *env);
 void	sl_init_env(t_env *env);
+void	sl_init_errors(t_env *env);
+void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size);
 void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed);
 
 /*
@@ -290,7 +295,7 @@ void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed);
 int	sl_handle_keypress(int keycode, t_env *env);
 
 /*
-** parse
+** parsing
 */
 void	sl_parse_map(t_env *data, char *filename);
 
