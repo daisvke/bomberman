@@ -6,11 +6,22 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/26 03:38:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 01:44:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+void	sl_display_message_at_start(t_env *env)
+{
+	static int	i;
+	
+	if (i <= CENTER_MESS_TIME)
+	{
+		sl_put_centered_message_to_window(env, "START !");
+		++i;
+	}
+}
 
 void	sl_put_counts_to_window(t_env *env)
 {

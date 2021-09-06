@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 21:54:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 23:03:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,16 +138,20 @@ void	sl_exit_game_over(t_env *env)
 	static int	i;
 	int			collected;
 	int			to_collect;
+	char		*count;
 
-	collected = env->tex.bomb.collected - 1;
-	to_collect = env->tex.bomb.to_collect;
 	if (i <= CENTER_MESS_TIME)
 		sl_put_centered_message_to_window(env, "GAME OVER !");
 	else
 	{
 		printf("\n");
 		printf("\033[31m\t\tGAME OVER !\033[0m\n\n");
-		printf("Collected items: %d/%d\n", collected, to_collect);
+		collected = env->tex.bomb.collected - 1;
+		to_collect = env->tex.bomb.to_collect;
+		printf("> Collected items:\t%d/%d\n", collected, to_collect);
+//if error
+		count = ft_itoa(env->p1.moves);
+		printf("> Steps:\t\t%s\n", count);
 		printf("\n");
 		sl_exit_game(env);
 	}

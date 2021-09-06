@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 22:40:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 01:44:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,7 @@ void	sl_parse_map(t_env *data, char *filename);
 /*
 ** put to window
 */
+void	sl_display_message_at_start(t_env *env);
 void	sl_put_move_count_to_window(t_env *env);
 void	sl_put_centered_message_to_window(t_env *env, char *message);
 

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/27 05:55:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 23:06:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,18 @@ void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
 	t_sprite *sprite, int x, int y)
 {
 	char	**map;
-	int		old_x;
-	int		old_y;
-	int		new_x;
-	int		new_y;
+	t_coord	old;
+	t_coord	new;
 
 	map = env->map;
-	old_x = sprite->pos.x;
-	old_y = sprite->pos.y;
-	new_x = sprite->pos.x + x;
-	new_y = sprite->pos.y + y;
-	if (!(apply_to == ENNEMY && sl_is_collectible(map[old_y][old_x])))
-		map[old_y][old_x] = MAP_FLOOR;
+	old = sl_assign_pos(sprite->pos.x, sprite->pos.y);
+	new = sl_assign_pos(sprite->pos.x + x, sprite->pos.y + y);
+	if (!(apply_to == ENNEMY && sl_is_collectible(map[old.y][old.x])))
+		map[old.y][old.x] = MAP_FLOOR;
 	if (apply_to == PLAYER)
 		map[sprite->pos.y + y][sprite->pos.x + x] = MAP_PLAYER;
-	else if (apply_to == ENNEMY && !sl_is_collectible(map[new_y][new_x]))
-		map[new_y][new_x] = MAP_ENNEMY;
+	else if (apply_to == ENNEMY && !sl_is_collectible(map[new.y][new.x]))
+		map[new.y][new.x] = MAP_ENNEMY;
 	sl_put_back_exit_on_map(env);
 }
 
@@ -69,8 +65,7 @@ bool	sl_check_if_bomb_is_there(t_env *env, t_items *bombs, int x, int y)
 	i = 0;
 	while (i < env->tex.bomb.set_bombs_nbr)
 	{
-		bomb_pos.x = bombs[i].pos.x;
-		bomb_pos.y = bombs[i].pos.y;
+		bomb_pos = sl_assign_pos(bombs[i].pos.x, bombs[i].pos.y);
 		if (bombs[i].draw == true && x == bomb_pos.x && y == bomb_pos.y)
 			return (true);
 		++i;
@@ -80,23 +75,12 @@ bool	sl_check_if_bomb_is_there(t_env *env, t_items *bombs, int x, int y)
 
 void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, int x, int y)
 {
-	char		**map;
-	int			pos_x;
-	int			pos_y;
-	int		old_x;
-	int		old_y;
-	int		new_x;
-	int		new_y;
-
-	old_x = sprite->pos.x;
-	old_y = sprite->pos.y;
-	new_x = sprite->pos.x + x;
-	new_y = sprite->pos.y + y;
+	char	**map;
+	t_coord	pos;
 
 	map = env->map;
-	pos_x = sprite->pos.x + x;
-	pos_y = sprite->pos.y + y;
-	if (map[pos_y][pos_x] == MAP_WALL || sl_check_if_bomb_is_there(env, env->tex.bomb.set_bombs, pos_x, pos_y))
+	pos = sl_assign_pos(sprite->pos.x + x, sprite->pos.y + y);
+	if (map[pos.y][pos.x] == MAP_WALL || sl_check_if_bomb_is_there(env, env->tex.bomb.set_bombs, pos.x, pos.y))
 	{
 		x = 0;
 		y = 0;
@@ -120,8 +104,8 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 			++env->p1.moves;
 		sprite->curr_state = &img->one;
 		sl_update_player_pos_on_map(env, apply_to, sprite, x, y);
-		sprite->pos.x += x;
-		sprite->pos.y += y;
+		sprite->pos = sl_assign_pos(sprite->pos.x + x, sprite->pos.y + y);
+	//	sprite->sub_pos = sl_assign_pos(sprite->pos.x * BLOC_LEN, sprite->pos.y * BLOC_LEN);
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN;
 		if (apply_to != ENNEMY)

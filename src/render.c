@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/04 13:19:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 01:44:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,102 +333,115 @@ void	sl_draw_collectibles(t_env *env)
 	sl_draw_collectibles_by_category(env, env->tex.speed.items, &env->tex.speed.img, env->tex.speed.to_collect);
 }
 
-//put img to window (not render
-int	sl_render(t_env *env)
+void	sl_render_p1(t_env *env)
 {
 	t_img	*img;
-	t_img	*img2;
-	static int	i;
-	int	j;
+	sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
+	sl_read_and_animate_ennemies(env);
+	img = env->p1.curr_state;
+	sl_render_bloc_with_xpm(&env->canvas, img, env->p1.sub_pos.x, \
+		env->p1.sub_pos.y, true);
+}
+
+void	sl_render_bombs(t_env *env)
+{
+	int 	i;
 	
+	i = 0;
+	if (env->tex.bomb.set_bombs_nbr > 0)
+	{
+		while (i < env->tex.bomb.collected)
+		{
+			if (env->tex.bomb.set_bombs[i].draw == true)
+				sl_set_bomb(env, &env->tex.bomb.set_bombs[i]);
+			++i;
+		}
+	}
+}
+
+void	sl_render_ennemies(t_env *env)
+{
+	t_ennemies	ennemies;
+	t_img		*img;
+	int			*time_death;
+	int			i;
+
+	ennemies = env->tex.ennemies;
+	i = 0;
+	while (i < ennemies.count) 
+	{
+		if (ennemies.sprites[i].alive == true)
+		{
+			img = env->tex.ennemies.sprites[i].curr_state;
+			sl_render_bloc_with_xpm(&env->canvas, img, \
+				ennemies.sprites[i].sub_pos.x, \
+				ennemies.sprites[i].sub_pos.y, true);
+		}
+		else
+		{
+			time_death = &env->tex.ennemies.sprites[i].time_death;
+			if (*time_death <= 1100)
+			{
+				sl_render_bloc_with_xpm(&env->canvas, &ennemies.dead, \
+					ennemies.sprites[i].sub_pos.x, \
+					ennemies.sprites[i].sub_pos.y, true);
+				++env->tex.ennemies.sprites[i].time_death;
+			}
+		}
+		++i;
+	}
+}
+
+void	sl_kill_p1(t_env *env)
+{
+	t_img		*death_state;
+	static int	m;
+	
+	death_state = NULL;
+	if (m <= CENTER_MESS_TIME)
+	{
+		if (m <= CENTER_MESS_TIME / 4)
+			death_state = &env->p1.img.dead.one;
+		else if (m <= CENTER_MESS_TIME / 3.5)
+			death_state = &env->p1.img.dead.two;
+		else if (m <= CENTER_MESS_TIME / 2.7)
+			death_state = &env->p1.img.dead.three;
+		else if (m <= CENTER_MESS_TIME / 2.3)
+			death_state = &env->p1.img.dead.four;
+		else if (m <= CENTER_MESS_TIME / 2)
+			death_state = &env->p1.img.dead.five;
+		else if (m <= CENTER_MESS_TIME / 1.6)
+			death_state = &env->p1.img.dead.six;
+		else if (m <= CENTER_MESS_TIME / 1.3)
+			death_state = &env->p1.img.dead.seven;
+		else if (m <= CENTER_MESS_TIME)
+			death_state = &env->p1.img.dead.eight;
+		sl_render_bloc_with_xpm(&env->canvas, death_state, env->p1.sub_pos.x, \
+			env->p1.sub_pos.y, true);
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
+		sl_put_centered_message_to_window(env, "GAME OVER !");
+	}
+	else
+		sl_exit_game_over(env);
+	++m;
+}
+
+int	sl_render(t_env *env)
+{
 	sl_clear_sprites_last_positions(env);
 	sl_draw_collectibles(env);
 	if (env->map[env->p1.pos.y][env->p1.pos.x] == MAP_ENNEMY)
 		env->p1.alive = false;
+	sl_render_bombs(env);
 	if (env->p1.alive == true)
 	{
-		int l = 0;
-		if (env->tex.bomb.set_bombs_nbr > 0)
-		{
-			while (l < env->tex.bomb.collected)
-			{
-				if (env->tex.bomb.set_bombs[l].draw == true)
-					sl_set_bomb(env, &env->tex.bomb.set_bombs[l]);
-				++l;
-			}
-		}
-		sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
-		sl_read_and_animate_ennemies(env);
-		img = env->p1.curr_state;
-		sl_render_bloc_with_xpm(&env->canvas, img, env->p1.sub_pos.x, \
-			env->p1.sub_pos.y, true);
-
-		j = 0;
-		t_ennemies	ennemies;
-		ennemies = env->tex.ennemies;
-		int	*time_death;
-		while (j < ennemies.count) 
-		{
-			if (ennemies.sprites[j].alive == true)
-			{
-				img2 = env->tex.ennemies.sprites[j].curr_state;
-				sl_render_bloc_with_xpm(&env->canvas, img2, \
-					ennemies.sprites[j].sub_pos.x, \
-					ennemies.sprites[j].sub_pos.y, true);
-			}
-			else
-			{
-				time_death = &env->tex.ennemies.sprites[j].time_death;
-				if (*time_death <= 1100)
-				{
-					sl_render_bloc_with_xpm(&env->canvas, &ennemies.dead, \
-						ennemies.sprites[j].sub_pos.x, \
-						ennemies.sprites[j].sub_pos.y, true);
-					++env->tex.ennemies.sprites[j].time_death;
-				}
-			}
-			++j;
-		}
+		sl_render_p1(env);
+		sl_render_ennemies(env);
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
 		sl_put_counts_to_window(env);
 	}
-	t_img		*death_state;
-	static int	m = 0;
-	
-	death_state = NULL;
-	if (env->p1.alive == false)
-	{
-		if (m <= CENTER_MESS_TIME)
-		{
-			if (m <= CENTER_MESS_TIME / 4)
-				death_state = &env->p1.img.dead.one;
-			else if (m <= CENTER_MESS_TIME / 3.5)
-				death_state = &env->p1.img.dead.two;
-			else if (m <= CENTER_MESS_TIME / 3.2)
-				death_state = &env->p1.img.dead.three;
-			else if (m <= CENTER_MESS_TIME / 3)
-				death_state = &env->p1.img.dead.four;
-			else if (m <= CENTER_MESS_TIME / 2.7)
-				death_state = &env->p1.img.dead.five;
-			else if (m <= CENTER_MESS_TIME / 2.5)
-				death_state = &env->p1.img.dead.six;
-			else if (m <= CENTER_MESS_TIME / 2.3)
-				death_state = &env->p1.img.dead.seven;
-			else if (m <= CENTER_MESS_TIME)
-				death_state = &env->p1.img.dead.eight;
-			sl_render_bloc_with_xpm(&env->canvas, death_state, env->p1.sub_pos.x, \
-				env->p1.sub_pos.y, true);
-			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
-			sl_put_centered_message_to_window(env, "GAME OVER !");
-		}
-		else
-			sl_exit_game_over(env);
-		++m;
-	}
-	if (i <= CENTER_MESS_TIME)
-	{
-		sl_put_centered_message_to_window(env, "START !");
-		++i;
-	}
+	else
+		sl_kill_p1(env);
+	sl_display_message_at_start(env);
 	return (0);
 }
