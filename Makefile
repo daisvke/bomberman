@@ -24,10 +24,13 @@ SRC_FILES	=	animate_sprites.c \
 				load_textures.c \
 				main.c \
 				map_parsing.c \
+				map_parsing_items.c \
+				map_parsing_populate.c \
 				render.c \
 				set_bomb.c \
 				system_calls.c \
 				texture_interactions.c \
+				utils.c \
 				put_to_window.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))

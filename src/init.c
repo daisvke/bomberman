@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 14:45:40 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 20:35:25 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	sl_init_all(t_env *env, char *argv[])
 
 	sl_init_env(env);
 	sl_parse_map(env, argv[1]);
-	sl_check_errors(env);
+	sl_check_errors_1(env);
 	width = env->width * BLOC_LEN;
 	height = env->height * BLOC_LEN;
 	sl_init_buffer(env);
