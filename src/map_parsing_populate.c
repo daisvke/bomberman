@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:32:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 19:33:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 22:41:37 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, \
 			if (i != COLLECTIBLE)
 				env->map[pos.y][pos.x] = i + '0';
 			else
-				sl_assign_collectible_type_randomly(env, pos, &counter->collectible);
+				sl_assign_collectible_type_randomly(env, pos, \
+					&counter->collectible);
 			if (i == PLAYER)
 				sl_assign_sprites_position(env, i, pos, &counter->player);
 			if (i == EXIT)

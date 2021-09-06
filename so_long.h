@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 20:47:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 22:40:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,6 +303,8 @@ int		sl_handle_keypress(int keycode, t_env *env);
 ** parsing
 */
 void	sl_assign_collectible_type_randomly(t_env *env, t_coord pos, int *count);
+void    sl_check_counter(t_env *env, t_count counter);
+void	sl_check_errors_2(t_env *env, int res);
 void	sl_parse_map(t_env *data, char *filename);
 
 /*

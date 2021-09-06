@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 20:58:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 22:40:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ int	sl_get_width(t_env *env, char *line, int map_fd, int height)
 	return (j);
 }
 
-void	sl_check_errors_2(t_env *env, int res)
-{
-	if (res == ERROR)
-		env->errors[18] = true;
-	if (env->height < 2 || env->width < 2)
-		env->errors[19] = true;
-}
-
 void	sl_get_window_dimensions(t_env *env, char *filename)
 {
 	char	*line;
@@ -40,7 +32,7 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	int		res;
 
 	line = NULL;
-	map_fd = open(filename, O_RDONLY);
+	map_fd = ft_open(env, filename);
 	if (map_fd == ERROR)
 		env->errors[16] = true;
 	i = 0;
@@ -55,19 +47,9 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 		++i;
 	}
 	env->height = i;
-	close(map_fd);
+	ft_close(env, map_fd);
 	line = ft_free(line);
 	sl_check_errors_2(env, res);
-}
-
-void    sl_check_counter(t_env *env, t_count counter)
-{
-    if (!counter.collectible)
-		env->errors[13] = true;
-    if (!counter.player || counter.player > 1)
-		env->errors[14] = true;
-    if (!counter.exit_pipe)
-		env->errors[15] = true;
 }
 
 t_count	sl_init_counter(void)
@@ -116,9 +98,9 @@ void	sl_parse_map(t_env *env, char *filename)
 
 	sl_get_window_dimensions(env, filename);
 	env->map = ft_malloc(env, env->height + 1, sizeof(*env->map));
-	map_fd = open(filename, O_RDONLY);
+	map_fd = ft_open(env, filename);
 	counter = sl_init_counter();
 	sl_parse_map_with_gnl(env, map_fd, &counter);
-	close(map_fd);
+	ft_close(env, map_fd);
     sl_check_counter(env, counter);
 } 

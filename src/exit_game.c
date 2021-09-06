@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 05:31:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 21:54:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ char	**sl_get_array_of_error_messages(void)
 	array[17] = "map is not a rectangle";
 	array[18] = "function get_next_line failed";
 	array[19] = "map is too small";
-	array[20] = "malloc failed";
+	array[20] = "failed to allocate memory";
+	array[21] = "failed to open file";
+	array[22] = "failed to close file";
 	return (array);
 }
 

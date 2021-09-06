@@ -26,6 +26,7 @@ SRC_FILES	=	animate_sprites.c \
 				map_parsing.c \
 				map_parsing_items.c \
 				map_parsing_populate.c \
+				map_parsing_utils.c \
 				render.c \
 				set_bomb.c \
 				system_calls.c \

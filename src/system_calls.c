@@ -6,13 +6,28 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 05:35:13 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 21:06:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/06 22:40:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-// include in libft
+int	ft_open(t_env *env, char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == ERROR)
+		sl_set_err_code_and_exit_game(env, 21);
+	return (fd);
+}
+
+void	ft_close(t_env *env, int fd)
+{
+	if (close(fd) == ERROR)
+		sl_set_err_code_and_exit_game(env, 22);
+}
+
 void	*ft_free(void *ptr)
 {
     if (ptr)
