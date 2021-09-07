@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 01:44:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 02:20:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,12 +335,18 @@ void	sl_draw_collectibles(t_env *env)
 
 void	sl_render_p1(t_env *env)
 {
-	t_img	*img;
-	sl_read_direction_and_animate_sprite(env, &env->p1.curr_dir, &env->p1, PLAYER, &env->p1.img);
+	t_dir			*dir;
+	t_img_patterns	p1_img;
+	t_img			*img;
+	t_coord			pos;
+
+	dir = &env->p1.curr_dir;
+	p1_img = env->p1.img;
+	sl_read_direction_and_animate_sprite(env, dir, &env->p1, PLAYER, &p1_img);
 	sl_read_and_animate_ennemies(env);
 	img = env->p1.curr_state;
-	sl_render_bloc_with_xpm(&env->canvas, img, env->p1.sub_pos.x, \
-		env->p1.sub_pos.y, true);
+	pos = sl_assign_pos(env->p1.sub_pos.x, env->p1.sub_pos.y);
+	sl_render_bloc_with_xpm(&env->canvas, img, pos.x, pos.y, true);
 }
 
 void	sl_render_bombs(t_env *env)
@@ -359,11 +365,26 @@ void	sl_render_bombs(t_env *env)
 	}
 }
 
+void	sl_kill_ennemy(t_env *env, t_sprite *ennemy)
+{
+	t_ennemies	ennemies;
+	t_coord		pos;
+	int			*time_death;
+
+	ennemies = env->tex.ennemies;
+	pos = sl_assign_pos(ennemy->sub_pos.x, ennemy->sub_pos.y);
+	time_death = &ennemy->time_death;
+	if (*time_death <= 1100)
+	{
+		sl_render_bloc_with_xpm(&env->canvas, &ennemies.dead, pos.x, pos.y, true);
+		++ennemy->time_death;
+	}
+}
+
 void	sl_render_ennemies(t_env *env)
 {
 	t_ennemies	ennemies;
 	t_img		*img;
-	int			*time_death;
 	int			i;
 
 	ennemies = env->tex.ennemies;
@@ -378,16 +399,7 @@ void	sl_render_ennemies(t_env *env)
 				ennemies.sprites[i].sub_pos.y, true);
 		}
 		else
-		{
-			time_death = &env->tex.ennemies.sprites[i].time_death;
-			if (*time_death <= 1100)
-			{
-				sl_render_bloc_with_xpm(&env->canvas, &ennemies.dead, \
-					ennemies.sprites[i].sub_pos.x, \
-					ennemies.sprites[i].sub_pos.y, true);
-				++env->tex.ennemies.sprites[i].time_death;
-			}
-		}
+			sl_kill_ennemy(env, &env->tex.ennemies.sprites[i]);
 		++i;
 	}
 }
