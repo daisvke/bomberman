@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 02:20:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 03:04:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,8 +292,7 @@ void	sl_clear_sprites_last_positions(t_env *env)
 	int			i;
 
 	bkgd = &env->canvas;
-	p1_pos.x = env->p1.pos.x * BLOC_LEN;
-	p1_pos.y = env->p1.pos.y * BLOC_LEN;
+	p1_pos = sl_assign_pos(env->p1.pos.x * BLOC_LEN, env->p1.pos.y * BLOC_LEN);
 	sl_render_green_tile(env, env->p1.curr_dir, p1_pos.x, p1_pos.y); 
 	ennemies = env->tex.ennemies;
 	i = 0;
@@ -304,10 +303,10 @@ void	sl_clear_sprites_last_positions(t_env *env)
 		sl_render_green_tile(env, ennemies.sprites[i].curr_dir, ennemy_pos.x, ennemy_pos.y);
 		++i;
 	}
-	//clear bomb explosion
 }
 
-void	sl_draw_collectibles_by_category(t_env *env, t_items *items, t_img *img, int max)
+void	sl_draw_collectibles_by_category(t_env *env, t_items *items, \
+	t_img *img, int max)
 {
 	int	i;
 	int	x;
@@ -328,9 +327,12 @@ void	sl_draw_collectibles_by_category(t_env *env, t_items *items, t_img *img, in
 
 void	sl_draw_collectibles(t_env *env)
 {
-	sl_draw_collectibles_by_category(env, env->tex.bomb.item_bombs, &env->tex.bomb.item_bomb, env->tex.bomb.to_collect);
-	sl_draw_collectibles_by_category(env, env->tex.fire.items, &env->tex.fire.img, env->tex.fire.to_collect);
-	sl_draw_collectibles_by_category(env, env->tex.speed.items, &env->tex.speed.img, env->tex.speed.to_collect);
+	sl_draw_collectibles_by_category(env, env->tex.bomb.item_bombs, \
+		&env->tex.bomb.item_bomb, env->tex.bomb.to_collect);
+	sl_draw_collectibles_by_category(env, env->tex.fire.items, \
+		&env->tex.fire.img, env->tex.fire.to_collect);
+	sl_draw_collectibles_by_category(env, env->tex.speed.items, \
+		&env->tex.speed.img, env->tex.speed.to_collect);
 }
 
 void	sl_render_p1(t_env *env)
@@ -450,10 +452,11 @@ int	sl_render(t_env *env)
 		sl_render_p1(env);
 		sl_render_ennemies(env);
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
+		sl_put_stage_name(env);
 		sl_put_counts_to_window(env);
 	}
 	else
 		sl_kill_p1(env);
-	sl_display_message_at_start(env);
+	sl_put_message_at_start(env);
 	return (0);
 }

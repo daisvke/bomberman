@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 14:03:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/04 12:37:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 03:09:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	sl_collect_speed(t_env *env, char **map, int x, int y)
 		sl_find_and_turn_off_item(env->tex.speed.items, env->tex.speed.to_collect, x, y);
 		map[y][x] = MAP_FLOOR;
 		if (env->p1.speed >= 30)
-			env->p1.speed -= 10;
+			env->p1.speed -= 20;
 	}
 }
 

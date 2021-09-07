@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 01:44:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 03:05:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	sl_display_message_at_start(t_env *env)
+void	sl_put_message_at_start(t_env *env)
 {
 	static int	i;
 	
@@ -21,6 +21,19 @@ void	sl_display_message_at_start(t_env *env)
 		sl_put_centered_message_to_window(env, "START !");
 		++i;
 	}
+}
+
+void	sl_put_stage_name(t_env *env)
+{
+	char	*str;
+	int		width;
+	int		height;
+
+	width = env->width * BLOC_LEN;
+	height = env->height * BLOC_LEN;
+	mlx_set_font(env->mlx_ptr, env->win_ptr, "7x14");
+	str = env->stage_name;
+	mlx_string_put(env->mlx_ptr, env->win_ptr, 10, height - 10, 0xFFFFFF, str);
 }
 
 void	sl_put_counts_to_window(t_env *env)

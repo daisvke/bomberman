@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 01:44:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 03:01:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,13 +246,13 @@ typedef struct s_env
 	t_img		canvas;
 	int			width;
 	int			height;
-	bool		keypress;
 	char		**map;
 	int			**buffer_bkgd;
 	t_textures	tex;
 	t_sprite	p1;
 	t_img		icon_bomb;
 	bool		errors[ERR_MAX];
+	char		*stage_name;
 }				t_env;
 
 typedef struct s_square
@@ -289,7 +289,6 @@ t_coord	sl_assign_pos(int x, int y);
 */
 void	sl_check_errors_1(t_env *env);
 void	sl_init_buffers(t_env *env);
-void	sl_init_env(t_env *env);
 void	sl_init_errors(t_env *env);
 void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size);
 void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed);
@@ -310,7 +309,7 @@ void	sl_parse_map(t_env *data, char *filename);
 /*
 ** put to window
 */
-void	sl_display_message_at_start(t_env *env);
+void	sl_put_message_at_start(t_env *env);
 void	sl_put_move_count_to_window(t_env *env);
 void	sl_put_centered_message_to_window(t_env *env, char *message);
 

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 20:35:25 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/07 02:57:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	sl_init_buffer(t_env *env)
 	}
 }
 
-void	sl_init_env(t_env *env)
+void	sl_init_env(t_env *env, char *stage_name)
 {
 	env->width = 0;
 	env->height = 0;
@@ -45,6 +45,7 @@ void	sl_init_env(t_env *env)
 	env->tex.speed.to_collect = 0;
 	env->tex.ennemies.count = 0;
 	sl_init_sprite(&env->p1, 0, 0, PLAYER_SPEED);
+	env->stage_name = stage_name;
 }
 
 void	sl_init_canvas(t_env *env, int width, int height)
@@ -67,7 +68,7 @@ void	sl_init_all(t_env *env, char *argv[])
 	int	width;
 	int	height;
 
-	sl_init_env(env);
+	sl_init_env(env, argv[1]);
 	sl_parse_map(env, argv[1]);
 	sl_check_errors_1(env);
 	width = env->width * BLOC_LEN;
