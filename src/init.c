@@ -22,7 +22,7 @@ void	sl_init_buffer(t_env *env)
 	width= env->width * BLOC_LEN;
 	env->buffer_bkgd = malloc(sizeof(int *) * height);
 	if (!env->buffer_bkgd)
-		sl_set_err_code_and_exit_game(env, 6);
+		sl_put_err_code_and_exit_game(env, 6);
 	i = 0;
 	while (i < height)
 	{

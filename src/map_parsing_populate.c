@@ -35,7 +35,7 @@ void	sl_read_ennemies_from_map(t_env *env, t_coord pos)
 	ennemies_count = &env->tex.ennemies.count;
 	*ennemies_count += 1;
 	if (*ennemies_count >= ENNEMY_LIMIT)
-		sl_set_err_code_and_exit_game(env, 7);
+		sl_put_err_code_and_exit_game(env, 7);
 	sl_init_sprite(&ennemies[i], pos.x, pos.y, ENNEMY_SPEED);
 	++i;
 }

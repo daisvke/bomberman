@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 23:03:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 06:30:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char	**sl_get_array_of_error_messages(void)
 char	*sl_get_err_message_from_err_code(int err_code)
 {
 	char	**err_messages;
-//	char	err_messages[30][60];
 
 	err_messages = sl_get_array_of_error_messages();
 	return (err_messages[err_code]);
@@ -121,7 +120,21 @@ void    sl_print_err_message(t_env *env, int err_code)
 	printf("\033[31m\t\t%s\033[0m\n\n", err_message);
 }
 
-void    sl_set_err_code_and_exit_game(t_env *env, int err_code)
+void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, \
+	int err_code, int i)
+{
+	char	*err_message;
+
+	sl_free_map_when_not_complete(env, env->map, i);
+	err_message = NULL;
+	printf("\n");
+	printf("Error code: 20");
+	err_message = sl_get_err_message_from_err_code(20);
+	printf("\033[31m\t\t%s\033[0m\n\n", err_message);
+	exit(EXIT_SUCCESS);
+}
+
+void    sl_put_err_code_and_exit_game(t_env *env, int err_code)
 {
 	char	*err_message;
 

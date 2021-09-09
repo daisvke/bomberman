@@ -18,14 +18,14 @@ int	ft_open(t_env *env, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == ERROR)
-		sl_set_err_code_and_exit_game(env, 21);
+		sl_put_err_code_and_exit_game(env, 21);
 	return (fd);
 }
 
 void	ft_close(t_env *env, int fd)
 {
 	if (close(fd) == ERROR)
-		sl_set_err_code_and_exit_game(env, 22);
+		sl_put_err_code_and_exit_game(env, 22);
 }
 
 void	*ft_free(void *ptr)
@@ -41,7 +41,7 @@ void	*ft_malloc(t_env *env, size_t num, size_t size)
 
 	ptr = (void *)malloc(num * size);
 	if (!ptr)
-		sl_set_err_code_and_exit_game(env, 20);
+		sl_put_err_code_and_exit_game(env, 20);
 	return (ptr);
 }
 

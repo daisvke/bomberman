@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 04:27:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 04:54:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,7 +390,7 @@ void	sl_kill_ennemy(t_env *env, t_sprite *ennemy)
 	ennemies = env->tex.ennemies;
 	pos = sl_assign_pos(ennemy->sub_pos.x, ennemy->sub_pos.y);
 	time_death = &ennemy->time_death;
-	if (*time_death <= 1100)
+	if (*time_death <= ENNEMY_DEATH_TIME)
 	{
 		sl_render_bloc_with_xpm(&env->canvas, &ennemies.dead, pos.x, pos.y, true);
 		++ennemy->time_death;
@@ -425,19 +425,19 @@ t_img	*sl_get_death_state(t_env *env, int time)
 	t_img	*death_state;
 
 	death_state = NULL;
-	if (time <= CENTER_MESS_TIME / 4)
+	if (time <= PLAYER_DEATH_TIME / 4)
 		death_state = &env->p1.img.dead.one;
-	else if (time <= CENTER_MESS_TIME / 3.5)
+	else if (time <= PLAYER_DEATH_TIME / 3.5)
 		death_state = &env->p1.img.dead.two;
-	else if (time <= CENTER_MESS_TIME / 2.7)
+	else if (time <= PLAYER_DEATH_TIME / 2.7)
 		death_state = &env->p1.img.dead.three;
-	else if (time <= CENTER_MESS_TIME / 2.3)
+	else if (time <= PLAYER_DEATH_TIME / 2.3)
 		death_state = &env->p1.img.dead.four;
-	else if (time <= CENTER_MESS_TIME / 2)
+	else if (time <= PLAYER_DEATH_TIME / 2)
 		death_state = &env->p1.img.dead.five;
-	else if (time <= CENTER_MESS_TIME / 1.6)
+	else if (time <= PLAYER_DEATH_TIME / 1.6)
 		death_state = &env->p1.img.dead.six;
-	else if (time <= CENTER_MESS_TIME / 1.3)
+	else if (time <= PLAYER_DEATH_TIME / 1.3)
 		death_state = &env->p1.img.dead.seven;
 	else
 		death_state = &env->p1.img.dead.eight;

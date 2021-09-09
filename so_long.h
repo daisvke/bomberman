@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 04:25:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 05:58:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define FILE_EXTENSION_LEN	3
 # define SAME				0
 
-# define ERR_MAX			20
+# define ERR_MAX			22
 
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEPM"
@@ -104,6 +104,12 @@
 ** bombs
 */
 # define START_BOMB			1
+
+/*
+** death
+*/
+# define PLAYER_DEATH_TIME	1000
+# define ENNEMY_DEATH_TIME	1100
 
 typedef struct s_coord
 {
@@ -287,6 +293,7 @@ t_coord	sl_assign_pos(int x, int y);
 ** init
 */
 void	sl_check_errors_1(t_env *env);
+t_count	sl_init_counter(void);
 void	sl_init_buffers(t_env *env);
 void	sl_init_errors(t_env *env);
 void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size);
@@ -311,6 +318,8 @@ void	sl_parse_map(t_env *data, char *filename);
 void	sl_put_message_at_start(t_env *env);
 void	sl_put_move_count_to_window(t_env *env);
 void	sl_put_centered_message_to_window(t_env *env, char *message);
+void	sl_put_counts_to_window(t_env *env);
+void	sl_put_stage_name(t_env *env);
 
 /*
 ** render
@@ -337,6 +346,7 @@ int		sl_is_collectible(char elem_to_check);
 /*
 ** bomb
 */
+void	sl_clear_segments_of_exploding_bomb(t_env *env, t_items *bomb, int x, int y);
 void	sl_draw_segments_of_exploding_bomb(t_env *env, t_items *bomb, int x, int y);
 void    sl_set_bomb(t_env *env, t_items *bomb);
 
@@ -344,6 +354,6 @@ void    sl_set_bomb(t_env *env, t_items *bomb);
 ** exit game
 */
 int    sl_exit_game(t_env *env);
-void	sl_set_err_code_and_exit_game(t_env *env, int err_code);
+void	sl_put_err_code_and_exit_game(t_env *env, int err_code);
 
 #endif
