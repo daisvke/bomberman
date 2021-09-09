@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 03:01:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:50:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,13 +327,12 @@ void	sl_replace_with_green_tile(t_env *env, int x, int y);
 ** texture interactions
 */
 void	sl_find_and_turn_off_item(t_items *items, int max, int x, int y);
-void	sl_handle_textures_while_moving(t_env *env, int apply_to, int delta_x, \
-	int delta_y);
+void	sl_handle_textures_while_moving(t_env *env, int apply_to, t_coord delta);
 
 /*
 ** animate sprites
 */
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, int x, int y);
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, t_coord coord); 
 int		sl_is_collectible(char elem_to_check);
 
 /*

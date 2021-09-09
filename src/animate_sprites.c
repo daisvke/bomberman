@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 23:06:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:51:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,39 +73,46 @@ bool	sl_check_if_bomb_is_there(t_env *env, t_items *bombs, int x, int y)
 	return (false);
 }
 
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, int x, int y)
+void	sl_update_sub_pos(t_sprite *sprite, t_img *img, t_coord delta)
+{
+	sprite->curr_state = img;
+	sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + delta.x;
+	sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + delta.y;
+}
+
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, t_coord coord) 
 {
 	char	**map;
 	t_coord	pos;
+	t_coord	delta_pos;
+	int		x;
+	int		y;
 
 	map = env->map;
-	pos = sl_assign_pos(sprite->pos.x + x, sprite->pos.y + y);
+	pos = sl_assign_pos(sprite->pos.x + coord.x, sprite->pos.y + coord.y);
 	if (map[pos.y][pos.x] == MAP_WALL || sl_check_if_bomb_is_there(env, env->tex.bomb.set_bombs, pos.x, pos.y))
-	{
-		x = 0;
-		y = 0;
-	}
-	sl_handle_textures_while_moving(env, apply_to, x, y);
+		coord = sl_assign_pos(0, 0);
+	x = coord.x;
+	y = coord.y;
+	sl_handle_textures_while_moving(env, apply_to, coord);
 	if (sprite->time <= sprite->speed)
 	{
-		sprite->curr_state = &img->two;
-		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (BLOC_LEN / 3);
-		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (BLOC_LEN / 3);
+		delta_pos = sl_assign_pos(x * BLOC_LEN / 3, y * BLOC_LEN / 3);
+		sl_update_sub_pos(sprite, &img->two, delta_pos);
 	}
 	if (sprite->time > sprite->speed)
 	{
-		sprite->curr_state = &img->three;
-		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN + x * (2 * (BLOC_LEN / 3));
-		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + y * (2 * (BLOC_LEN / 3));
+		delta_pos = sl_assign_pos(x * 2 * BLOC_LEN / 3, y * 2 * BLOC_LEN / 3);
+		sl_update_sub_pos(sprite, &img->three, delta_pos);
 	}
 	if (sprite->time == sprite->speed * 2)
 	{
 		if (apply_to == PLAYER && (x != 0 || y != 0))
 			++env->p1.moves;
-		sprite->curr_state = &img->one;
+		delta_pos = sl_assign_pos(0, 0);
+		sl_update_sub_pos(sprite, &img->one, delta_pos);
 		sl_update_player_pos_on_map(env, apply_to, sprite, x, y);
 		sprite->pos = sl_assign_pos(sprite->pos.x + x, sprite->pos.y + y);
-	//	sprite->sub_pos = sl_assign_pos(sprite->pos.x * BLOC_LEN, sprite->pos.y * BLOC_LEN);
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN;
 		if (apply_to != ENNEMY)

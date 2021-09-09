@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 03:04:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:46:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,24 +226,24 @@ void	sl_reveal_exit(t_env *env)
 {
 	t_pipe		exit;
 	t_img		*curr_state;
-	static int	i;
+	static int	time;
 
 	exit = env->tex.exit_pipe;
 	curr_state = NULL;
-	if (i <= REVEAL_EXIT_SPEED)
+	if (time <= REVEAL_EXIT_SPEED)
 		curr_state = &exit.state0;
-	else if (i <= REVEAL_EXIT_SPEED * 2)
+	else if (time <= REVEAL_EXIT_SPEED * 2)
 		curr_state = &exit.state1;
-	else if (i <= REVEAL_EXIT_SPEED * 3)
+	else if (time <= REVEAL_EXIT_SPEED * 3)
 		curr_state = &exit.state2;
-	else if (i <= REVEAL_EXIT_SPEED * 4)
+	else if (time <= REVEAL_EXIT_SPEED * 4)
 		curr_state = &exit.state3;
-	else if (i < REVEAL_EXIT_SPEED * 5)
+	else if (time < REVEAL_EXIT_SPEED * 5)
 		curr_state = &exit.state4;
-	if (i == REVEAL_EXIT_SPEED * 5)
+	if (time == REVEAL_EXIT_SPEED * 5)
 		curr_state = &exit.state5;
 	else
-		++i;
+		++time;
 	sl_render_bloc_with_xpm(&env->canvas, curr_state, exit.pos.x * BLOC_LEN, \
 		exit.pos.y * BLOC_LEN, true);
 }
@@ -251,14 +251,28 @@ void	sl_reveal_exit(t_env *env)
 void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, \
 	t_sprite *sprite, int apply_to, t_img_patterns *img)
 {
+	t_coord	pos;
+
 	if (dir->up)
-		sl_animate_sprite(env, sprite, apply_to, &img->up, &dir->up, 0, UP);
+	{
+		pos = sl_assign_pos(0, UP);
+		sl_animate_sprite(env, sprite, apply_to, &img->up, &dir->up, pos);
+	}
 	if (dir->down)
-		sl_animate_sprite(env, sprite, apply_to, &img->down, &dir->down, 0, DOWN);
+	{
+		pos = sl_assign_pos(0, DOWN);
+		sl_animate_sprite(env, sprite, apply_to, &img->down, &dir->down, pos);
+	}
 	if (dir->left)
-		sl_animate_sprite(env, sprite, apply_to, &img->left, &dir->left, LEFT, 0);
+	{
+		pos = sl_assign_pos(LEFT, 0);
+		sl_animate_sprite(env, sprite, apply_to, &img->left, &dir->left, pos);
+	}
 	if (dir->right)
-		sl_animate_sprite(env, sprite, apply_to, &img->right, &dir->right, RIGHT, 0);
+	{
+		pos = sl_assign_pos(RIGHT, 0);
+		sl_animate_sprite(env, sprite, apply_to, &img->right, &dir->right, pos);
+	}
 }
 
 void	sl_put_buffer_bkgd_to_img(t_env *env)
@@ -406,42 +420,53 @@ void	sl_render_ennemies(t_env *env)
 	}
 }
 
+t_img	*sl_get_death_state(t_env *env, int time)
+{
+	t_img	*death_state;
+
+	death_state = NULL;
+	if (time <= CENTER_MESS_TIME / 4)
+		death_state = &env->p1.img.dead.one;
+	else if (time <= CENTER_MESS_TIME / 3.5)
+		death_state = &env->p1.img.dead.two;
+	else if (time <= CENTER_MESS_TIME / 2.7)
+		death_state = &env->p1.img.dead.three;
+	else if (time <= CENTER_MESS_TIME / 2.3)
+		death_state = &env->p1.img.dead.four;
+	else if (time <= CENTER_MESS_TIME / 2)
+		death_state = &env->p1.img.dead.five;
+	else if (time <= CENTER_MESS_TIME / 1.6)
+		death_state = &env->p1.img.dead.six;
+	else if (time <= CENTER_MESS_TIME / 1.3)
+		death_state = &env->p1.img.dead.seven;
+	else
+		death_state = &env->p1.img.dead.eight;
+	return (death_state);
+}
+
 void	sl_kill_p1(t_env *env)
 {
 	t_img		*death_state;
-	static int	m;
+	static int	time;
 	
 	death_state = NULL;
-	if (m <= CENTER_MESS_TIME)
+	if (time <= CENTER_MESS_TIME)
 	{
-		if (m <= CENTER_MESS_TIME / 4)
-			death_state = &env->p1.img.dead.one;
-		else if (m <= CENTER_MESS_TIME / 3.5)
-			death_state = &env->p1.img.dead.two;
-		else if (m <= CENTER_MESS_TIME / 2.7)
-			death_state = &env->p1.img.dead.three;
-		else if (m <= CENTER_MESS_TIME / 2.3)
-			death_state = &env->p1.img.dead.four;
-		else if (m <= CENTER_MESS_TIME / 2)
-			death_state = &env->p1.img.dead.five;
-		else if (m <= CENTER_MESS_TIME / 1.6)
-			death_state = &env->p1.img.dead.six;
-		else if (m <= CENTER_MESS_TIME / 1.3)
-			death_state = &env->p1.img.dead.seven;
-		else if (m <= CENTER_MESS_TIME)
-			death_state = &env->p1.img.dead.eight;
-		sl_render_bloc_with_xpm(&env->canvas, death_state, env->p1.sub_pos.x, \
-			env->p1.sub_pos.y, true);
-		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
+		death_state = sl_get_death_state(env, time);
+		sl_render_bloc_with_xpm(&env->canvas, death_state, env->p1.sub_pos.x, env->p1.sub_pos.y, true);
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, \
+			env->canvas.mlx_img, 0, 0);    
 		sl_put_centered_message_to_window(env, "GAME OVER !");
 	}
 	else
 		sl_exit_game_over(env);
-	++m;
+	++time;
 }
 
 int	sl_render(t_env *env)
 {
+	void	*mlx_img;
+
 	sl_clear_sprites_last_positions(env);
 	sl_draw_collectibles(env);
 	if (env->map[env->p1.pos.y][env->p1.pos.x] == MAP_ENNEMY)
@@ -451,7 +476,8 @@ int	sl_render(t_env *env)
 	{
 		sl_render_p1(env);
 		sl_render_ennemies(env);
-		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->canvas.mlx_img, 0, 0);    
+		mlx_img = env->canvas.mlx_img;
+		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, mlx_img, 0, 0);
 		sl_put_stage_name(env);
 		sl_put_counts_to_window(env);
 	}
