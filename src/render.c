@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/08 18:46:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 04:27:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	sl_render_buffer_green_tile(t_env *env, int x, int y)
 		sl_render_buffer_with_colored_bloc(buffer, GREEN_PXL, BLOC_LEN * x, BLOC_LEN * y);
 }
 
-void	sl_render_green_tile(t_env *env, t_dir curr_dir, int pos_x, int pos_y)
+void	sl_render_green_tile(t_env *env, int curr_dir, int pos_x, int pos_y)
 {
 	t_img	*bkgd;
 	char	**map;
@@ -141,15 +141,15 @@ void	sl_render_green_tile(t_env *env, t_dir curr_dir, int pos_x, int pos_y)
 	y = pos_y / BLOC_LEN;
 	bkgd = &env->canvas;
 	map = env->map;
-	if (map[y - 1][x] == MAP_WALL && curr_dir.down == false)
+	if (map[y - 1][x] == MAP_WALL && !(curr_dir & CR_DOWN))
 		sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
 			pos_x, pos_y, false);
-	else if	(map[y - 1][x] == MAP_WALL && curr_dir.down == true)
+	else if	(map[y - 1][x] == MAP_WALL && (curr_dir & CR_DOWN))
 		sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
 			pos_x, pos_y, false);
 	else	
 		sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x, pos_y);
-	if (curr_dir.up == true && map[y - 1][x] != MAP_WALL)
+	if ((curr_dir & CR_UP) && map[y - 1][x] != MAP_WALL)
 	{
 		if (map[y - 2][x] == MAP_WALL)
 			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
@@ -157,9 +157,9 @@ void	sl_render_green_tile(t_env *env, t_dir curr_dir, int pos_x, int pos_y)
 		else
 			sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x, pos_y - BLOC_LEN);
 	}
-	if (curr_dir.down == true && map[y + 1][x] != MAP_WALL)
+	if ((curr_dir & CR_DOWN) && map[y + 1][x] != MAP_WALL)
 		sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x, pos_y + BLOC_LEN);
-	if (curr_dir.left == true && map[y][x - 1] != MAP_WALL)
+	if ((curr_dir & CR_LEFT) && map[y][x - 1] != MAP_WALL)
 	{
 		if (map[y - 1][x - 1] == MAP_WALL)
 			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
@@ -167,7 +167,7 @@ void	sl_render_green_tile(t_env *env, t_dir curr_dir, int pos_x, int pos_y)
 		else
 			sl_render_colored_bloc(bkgd, GREEN_PXL, pos_x - BLOC_LEN, pos_y);
 	}
-	if (curr_dir.right == true && map[y][x + 1] != MAP_WALL)
+	if ((curr_dir & CR_RIGHT) && map[y][x + 1] != MAP_WALL)
 	{
 		if (map[y - 1][x + 1] == MAP_WALL)
 			sl_render_bloc_with_xpm(bkgd, &env->tex.tiles.tile_shadow, \
@@ -248,30 +248,32 @@ void	sl_reveal_exit(t_env *env)
 		exit.pos.y * BLOC_LEN, true);
 }
 
-void	sl_read_direction_and_animate_sprite(t_env *env, t_dir *dir, \
-	t_sprite *sprite, int apply_to, t_img_patterns *img)
+void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite *sprite, \
+	int apply_to, t_img_patterns *img)
 {
 	t_coord	pos;
+	int		dir;
 
-	if (dir->up)
+	dir = sprite->curr_dir;
+	if (dir & CR_UP)
 	{
 		pos = sl_assign_pos(0, UP);
-		sl_animate_sprite(env, sprite, apply_to, &img->up, &dir->up, pos);
+		sl_animate_sprite(env, sprite, apply_to, &img->up, pos);
 	}
-	if (dir->down)
+	if (dir & CR_DOWN)
 	{
 		pos = sl_assign_pos(0, DOWN);
-		sl_animate_sprite(env, sprite, apply_to, &img->down, &dir->down, pos);
+		sl_animate_sprite(env, sprite, apply_to, &img->down, pos);
 	}
-	if (dir->left)
+	if (dir & CR_LEFT)
 	{
 		pos = sl_assign_pos(LEFT, 0);
-		sl_animate_sprite(env, sprite, apply_to, &img->left, &dir->left, pos);
+		sl_animate_sprite(env, sprite, apply_to, &img->left, pos);
 	}
-	if (dir->right)
+	if (dir & CR_RIGHT)
 	{
 		pos = sl_assign_pos(RIGHT, 0);
-		sl_animate_sprite(env, sprite, apply_to, &img->right, &dir->right, pos);
+		sl_animate_sprite(env, sprite, apply_to, &img->right, pos);
 	}
 }
 
@@ -351,14 +353,12 @@ void	sl_draw_collectibles(t_env *env)
 
 void	sl_render_p1(t_env *env)
 {
-	t_dir			*dir;
 	t_img_patterns	p1_img;
 	t_img			*img;
 	t_coord			pos;
 
-	dir = &env->p1.curr_dir;
 	p1_img = env->p1.img;
-	sl_read_direction_and_animate_sprite(env, dir, &env->p1, PLAYER, &p1_img);
+	sl_read_direction_and_animate_sprite(env, &env->p1, PLAYER, &p1_img);
 	sl_read_and_animate_ennemies(env);
 	img = env->p1.curr_state;
 	pos = sl_assign_pos(env->p1.sub_pos.x, env->p1.sub_pos.y);

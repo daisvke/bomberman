@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/08 18:50:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 04:25:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@
 # define DOWN				1
 # define LEFT				-1
 # define RIGHT				1
+
+/*
+** current direction
+*/
+# define CR_UP				8
+# define CR_DOWN			4
+# define CR_LEFT			2
+# define CR_RIGHT			1
 
 # define NO_AVAILABLE_SLOT	-1
 
@@ -151,22 +159,13 @@ typedef struct s_img_patterns
 	t_dead		dead;
 }				t_img_patterns;
 
-// try bitshift
-typedef struct s_dir
-{
-	bool	up;
-	bool	down;
-	bool	left;
-	bool	right;
-}			t_dir;
-
 typedef struct s_sprite
 {
 	bool			alive;
 	int				time_death;
 	t_img_patterns	img;
 	void			*curr_state;
-	t_dir			curr_dir;
+	int				curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
 	int				speed;
@@ -332,7 +331,7 @@ void	sl_handle_textures_while_moving(t_env *env, int apply_to, t_coord delta);
 /*
 ** animate sprites
 */
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, t_coord coord); 
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, t_coord coord); 
 int		sl_is_collectible(char elem_to_check);
 
 /*

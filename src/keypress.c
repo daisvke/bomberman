@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 18:41:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 02:27:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 04:27:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void	sl_handle_keypress_b(t_env *env, int x, int y)
 
 bool	sl_find_no_current_direction(t_env *env)
 {
-	t_dir	dir;
+	int	dir;
 	
 	dir = env->p1.curr_dir;
-	if (dir.up || dir.down || dir.left || dir.right)
+	if ((dir & CR_UP) || (dir & CR_DOWN) || (dir & CR_LEFT) || (dir & CR_RIGHT))
 		return (false);
 	else
 		return (true);
@@ -54,21 +54,23 @@ bool	sl_find_no_current_direction(t_env *env)
 
 int	sl_handle_keypress(int keycode, t_env *env)
 {
+	int	*dir;
 	int	set_bombs;
 	int	collected_bombs;
 
 	if (keycode == XK_Escape)
 		sl_exit_game(env);
+	dir = &env->p1.curr_dir;
 	if (sl_find_no_current_direction(env))
 	{
 		if (keycode == XK_w || keycode == XK_z)
-			env->p1.curr_dir.up = true;
+			*dir |= CR_UP;
 		if (keycode == XK_s)
-			env->p1.curr_dir.down = true;
+			*dir |= CR_DOWN;
 		if (keycode == XK_a || keycode == XK_q)
-			env->p1.curr_dir.left = true;
+			*dir |= CR_LEFT;
 		if (keycode == XK_d || keycode == XK_d)
-			env->p1.curr_dir.right = true;
+			*dir |= CR_RIGHT;
 	}
 	set_bombs = env->tex.bomb.set_bombs_nbr;
 	collected_bombs = env->tex.bomb.collected;

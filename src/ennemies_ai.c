@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:23:20 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/20 05:52:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 04:06:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	sl_assign_ennemy_curr_dir(t_sprite *sprite, int i)
 {
+	int	*curr_dir;
+
+	curr_dir = &sprite->curr_dir;
 	if (i == 0)
-		sprite->curr_dir.up = true;
+		*curr_dir |= CR_UP;
 	if (i == 1)
-		sprite->curr_dir.down = true;
+		*curr_dir |= CR_DOWN;
 	if (i == 2)
-		sprite->curr_dir.left = true;
+		*curr_dir |= CR_LEFT;
 	if (i == 3)
-		sprite->curr_dir.right = true;
+		*curr_dir |= CR_RIGHT;
 }
 
 void	sl_get_max_len(t_sprite *sprite, int len_array[])
@@ -46,15 +49,15 @@ void	sl_get_max_len(t_sprite *sprite, int len_array[])
 	}
 }
 
-int	sl_keep_direction_if_no_wall(char **map, t_coord bomb, t_dir curr_dir, int pos_x, int pos_y)
+int	sl_keep_direction_if_no_wall(char **map, t_coord bomb, int curr_dir, int pos_x, int pos_y)
 {
-	if (curr_dir.up == true && map[pos_y - 1][pos_x] != MAP_WALL && (pos_y - 1 != bomb.y && pos_x != bomb.x))
+	if ((curr_dir & CR_UP) && map[pos_y - 1][pos_x] != MAP_WALL && (pos_y - 1 != bomb.y && pos_x != bomb.x))
 		return (KEEP);
-	if (curr_dir.down == true && map[pos_y + 1][pos_x] != MAP_WALL && (pos_y + 1 != bomb.y && pos_x != bomb.x))
+	if ((curr_dir & CR_DOWN) && map[pos_y + 1][pos_x] != MAP_WALL && (pos_y + 1 != bomb.y && pos_x != bomb.x))
 		return (KEEP);
-	if (curr_dir.left == true && map[pos_y][pos_x - 1] != MAP_WALL && (pos_y != bomb.y && pos_x - 1 != bomb.x))
+	if ((curr_dir & CR_LEFT) && map[pos_y][pos_x - 1] != MAP_WALL && (pos_y != bomb.y && pos_x - 1 != bomb.x))
 		return (KEEP);
-	if (curr_dir.right == true && map[pos_y][pos_x + 1] != MAP_WALL && (pos_y != bomb.y && pos_x + 1 != bomb.x))
+	if ((curr_dir & CR_RIGHT) && map[pos_y][pos_x + 1] != MAP_WALL && (pos_y != bomb.y && pos_x + 1 != bomb.x))
 		return (KEEP);
 	return (0);
 }
@@ -74,10 +77,10 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 	keep = sl_keep_direction_if_no_wall(map, env->tex.bomb.pos, sprite->curr_dir, pos_x, pos_y);
 	if (keep == true)
 		return ;
-	sprite->curr_dir.up = false;
-	sprite->curr_dir.down = false;
-	sprite->curr_dir.left = false;
-	sprite->curr_dir.right = false;
+	sprite->curr_dir &= ~CR_UP;
+	sprite->curr_dir &= ~CR_DOWN;
+	sprite->curr_dir &= ~CR_LEFT;
+	sprite->curr_dir &= ~CR_RIGHT;;
 	 int i=0;
 	while (i < 4)
 	{
@@ -88,7 +91,7 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 	{
 		if (map[pos_y][pos_x] == MAP_PLAYER)
 		{
-			sprite->curr_dir.up = true;
+			sprite->curr_dir |= CR_UP;
 			return ;
 		}
 		++len_array[UP_LEN];
@@ -100,7 +103,7 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 	{
 		if (map[pos_y][pos_x] == MAP_PLAYER)
 		{
-			sprite->curr_dir.down = true;
+			sprite->curr_dir |= CR_DOWN;
 			return ;
 		}
 		++len_array[DOWN_LEN];
@@ -112,7 +115,7 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 	{
 		if (map[pos_y][pos_x] == MAP_PLAYER)
 		{
-			sprite->curr_dir.left = true;
+			sprite->curr_dir |= CR_LEFT;
 			return ;
 		}
 		++len_array[LEFT_LEN];
@@ -124,7 +127,7 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 	{
 		if (map[pos_y][pos_x] == MAP_PLAYER)
 		{
-			sprite->curr_dir.right = true;
+			sprite->curr_dir |= CR_RIGHT;
 			return ;
 		}
 		++len_array[RIGHT_LEN];
@@ -147,8 +150,7 @@ void	sl_read_and_animate_ennemies(t_env *env)
 		if (is_alive == true)
 		{
 			sl_determine_ennemy_direction(env, &env->tex.ennemies.sprites[i]);
-		//	sl_read_direction_and_animate_sprite(env, &env->tex.ennemies.sprites[i].curr_dir, &env->tex.ennemies.sprites[i], ENNEMY, &env->p1.img);
-			sl_read_direction_and_animate_sprite(env, &env->tex.ennemies.sprites[i].curr_dir, &env->tex.ennemies.sprites[i], ENNEMY, &env->tex.ennemies.img);
+			sl_read_direction_and_animate_sprite(env, &env->tex.ennemies.sprites[i], ENNEMY, &env->tex.ennemies.img);
 		}
 		++i;
 	}

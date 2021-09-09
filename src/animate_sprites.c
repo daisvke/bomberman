@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/08 18:51:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 04:47:37 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	sl_update_sub_pos(t_sprite *sprite, t_img *img, t_coord delta)
 	sprite->sub_pos.y = sprite->pos.y * BLOC_LEN + delta.y;
 }
 
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, bool *state, t_coord coord) 
+void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img, t_coord coord) 
 {
 	char	**map;
 	t_coord	pos;
@@ -116,7 +116,7 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 		sprite->sub_pos.x = sprite->pos.x * BLOC_LEN;
 		sprite->sub_pos.y = sprite->pos.y * BLOC_LEN;
 		if (apply_to != ENNEMY)
-			*state = false;
+			sprite->curr_dir = 0;
 		sprite->time = 0;
 	}
 	else
