@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/08/24 04:51:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:43:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,91 +14,51 @@
 
 void	sl_load_texture(t_env *env, t_img *img, char *path_to_file)
 {
-	int	width;
-	int	height;
+	void	**mlx;
+	char	**addr;
+	int		w;
+	int		h;
 
-	img->mlx_img = mlx_xpm_file_to_image(env->mlx_ptr, path_to_file, &width, &height);
+	mlx = &img->mlx_img;
+	*mlx = mlx_xpm_file_to_image(env->mlx_ptr, path_to_file, &w, &h);
 	if (!img->mlx_img)
-	{
-		printf("texture loading error\n");
-		exit(EXIT_FAILURE);
-	}
-	img->addr = mlx_get_data_addr(img->mlx_img, &img->bpp, &img->line_len, &img->endian);
+		sl_put_err_code_and_exit_game(env, 23);
+	addr = &img->addr;
+	*addr = mlx_get_data_addr(*mlx, &img->bpp, &img->line_len, &img->endian);
 }
 
 void	sl_load_set_bomb(t_env *env)
 {
-	sl_load_texture(env, &env->tex.bomb.set_states.one, "./img/set-bomb-0.xpm");
-	sl_load_texture(env, &env->tex.bomb.set_states.two, "./img/set-bomb-1.xpm");
-	sl_load_texture(env, &env->tex.bomb.set_states.three, "./img/set-bomb-2.xpm");
+	t_img	*state_1;
+	t_img	*state_2;
+	t_img	*state_3;
+
+	state_1 = &env->tex.bomb.set_states.one;
+	sl_load_texture(env, state_1, "./img/set-bomb-0.xpm");
+	state_2 = &env->tex.bomb.set_states.two;
+	sl_load_texture(env, state_2, "./img/set-bomb-1.xpm");
+	state_3 = &env->tex.bomb.set_states.three;
+	sl_load_texture(env, state_3, "./img/set-bomb-2.xpm");
 }
 
 void	sl_load_bomb_explode(t_env *env)
 {
-	sl_load_texture(env, &env->tex.bomb.explode_states.ctr, "./img/bomb-explode-ctr.xpm");
-	sl_load_texture(env, &env->tex.bomb.explode_states.hrz.one, "./img/bomb-explode-hrz.xpm");
-	sl_load_texture(env, &env->tex.bomb.explode_states.hrz.two, "./img/bomb-explode-hrz-l.xpm");
-	sl_load_texture(env, &env->tex.bomb.explode_states.hrz.three, "./img/bomb-explode-hrz-r.xpm");
-	sl_load_texture(env, &env->tex.bomb.explode_states.vrt.one, "./img/bomb-explode-vrt.xpm");
-	sl_load_texture(env, &env->tex.bomb.explode_states.vrt.two, "./img/bomb-explode-vrt-u.xpm");
-	sl_load_texture(env, &env->tex.bomb.explode_states.vrt.three, "./img/bomb-explode-vrt-d.xpm");
-}
+	t_img	*img;
 
-void	sl_load_white_bomber(t_env *env)
-{
-	sl_load_texture(env, &env->p1.img.up.one, "./img/white-up-0.xpm");
-	sl_load_texture(env, &env->p1.img.up.two, "./img/white-up-l.xpm");
-	sl_load_texture(env, &env->p1.img.up.three, "./img/white-up-r.xpm");
-	sl_load_texture(env, &env->p1.img.down.one, "./img/white-down-0.xpm");
-	sl_load_texture(env, &env->p1.img.down.two, "./img/white-down-l.xpm");
-	sl_load_texture(env, &env->p1.img.down.three, "./img/white-down-r.xpm");
-	sl_load_texture(env, &env->p1.img.left.one, "./img/white-left-0.xpm");
-	sl_load_texture(env, &env->p1.img.left.two, "./img/white-left-l.xpm");
-	sl_load_texture(env, &env->p1.img.left.three, "./img/white-left-r.xpm");
-	sl_load_texture(env, &env->p1.img.right.one, "./img/white-right-0.xpm");
-	sl_load_texture(env, &env->p1.img.right.two, "./img/white-right-l.xpm");
-	sl_load_texture(env, &env->p1.img.right.three, "./img/white-right-r.xpm");
-	sl_load_texture(env, &env->p1.img.dead.one, "./img/white-dead-0.xpm");
-	sl_load_texture(env, &env->p1.img.dead.two, "./img/white-dead-1.xpm");
-	sl_load_texture(env, &env->p1.img.dead.three, "./img/white-dead-2.xpm");
-	sl_load_texture(env, &env->p1.img.dead.four, "./img/white-dead-3.xpm");
-	sl_load_texture(env, &env->p1.img.dead.five, "./img/white-dead-4.xpm");
-	sl_load_texture(env, &env->p1.img.dead.six, "./img/white-dead-5.xpm");
-	sl_load_texture(env, &env->p1.img.dead.seven, "./img/white-dead-6.xpm");
-	sl_load_texture(env, &env->p1.img.dead.eight, "./img/white-dead-7.xpm");
-}
-
-void	sl_load_ennemies(t_env *env)
-{
-	sl_load_texture(env, &env->tex.ennemies.img.up.one, "./img/ennemy-up-0.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.up.two, "./img/ennemy-up-l.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.up.three, "./img/ennemy-up-r.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.down.one, "./img/ennemy-down-0.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.down.two, "./img/ennemy-down-l.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.down.three, "./img/ennemy-down-r.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.left.one, "./img/ennemy-left-0.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.left.two, "./img/ennemy-left-l.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.left.three, "./img/ennemy-left-r.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.right.one, "./img/ennemy-right-0.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.right.two, "./img/ennemy-right-l.xpm");
-	sl_load_texture(env, &env->tex.ennemies.img.right.three, "./img/ennemy-right-r.xpm");
-	sl_load_texture(env, &env->tex.ennemies.dead, "./img/ennemy-dead.xpm");
-}
-
-void	sl_load_exit(t_env *env)
-{
-	sl_load_texture(env, &env->tex.exit_pipe.state0, "./img/exit-0.xpm");
-	sl_load_texture(env, &env->tex.exit_pipe.state1, "./img/exit-1.xpm");
-	sl_load_texture(env, &env->tex.exit_pipe.state2, "./img/exit-2.xpm");
-	sl_load_texture(env, &env->tex.exit_pipe.state3, "./img/exit-3.xpm");
-	sl_load_texture(env, &env->tex.exit_pipe.state4, "./img/exit-4.xpm");
-	sl_load_texture(env, &env->tex.exit_pipe.state5, "./img/exit-5.xpm");
-}
-
-void	sl_load_tiles(t_env *env)
-{
-//	sl_load_texture(env, &env->tex.tiles.tile, "./img/green-tile.xpm");
-	sl_load_texture(env, &env->tex.tiles.tile_shadow, "./img/green-tile-with-shadow.xpm");
+	img = &env->tex.bomb.explode_states.ctr; 
+	sl_load_texture(env, img, "./img/bomb-explode-ctr.xpm");
+	img = &env->tex.bomb.explode_states.hrz.one;
+	sl_load_texture(env, img, "./img/bomb-explode-hrz.xpm");
+	img = &env->tex.bomb.explode_states.hrz.two;
+	sl_load_texture(env, img, "./img/bomb-explode-hrz-l.xpm");
+	img = &env->tex.bomb.explode_states.hrz.three;
+	sl_load_texture(env, img, "./img/bomb-explode-hrz-r.xpm");
+	img = &env->tex.bomb.explode_states.vrt.one;
+	sl_load_texture(env, img, "./img/bomb-explode-vrt.xpm");
+	img = &env->tex.bomb.explode_states.vrt.two;
+	sl_load_texture(env, img, "./img/bomb-explode-vrt-u.xpm");
+	img = &env->tex.bomb.explode_states.vrt.three;
+	sl_load_texture(env, img, "./img/bomb-explode-vrt-d.xpm");
 }
 
 void	sl_load_items(t_env *env)
@@ -110,9 +70,12 @@ void	sl_load_items(t_env *env)
 
 void	sl_load_all_textures(t_env *env)
 {
+	t_img	*tile;
+
 	sl_load_texture(env, &env->tex.wall, "./img/grey-tile.xpm");
 	sl_load_items(env);
-	sl_load_tiles(env);
+	tile = &env->tex.tiles.tile_shadow;
+	sl_load_texture(env, tile, "./img/green-tile-with-shadow.xpm");
 	sl_load_set_bomb(env);
 	sl_load_bomb_explode(env);
 	sl_load_white_bomber(env);

@@ -13,26 +13,38 @@ RM			=	rm -rf
 
 SRC_DIR		=	src/
 SRC_FILES	=	animate_sprites.c \
-				clear_exploding_bomb.c \
-				draw_exploding_bomb.c \
-				ennemies_ai.c \
+				bomb_clear.c \
+				bomb_draw.c \
+				bomb_set.c \
+				death.c \
+				ennemy_ai.c \
+				ennemy_direction.c \
+				ennemy_utils.c \
 				exit_game.c \
+				get_next_line.c \
+				get_next_line_utils.c \
 				init.c \
 				init_sprites.c \
 				init_utils.c \
 				keypress.c \
+				load_sprites_and_exit.c \
 				load_textures.c \
 				main.c \
 				map_parsing.c \
 				map_parsing_items.c \
 				map_parsing_populate.c \
 				map_parsing_utils.c \
+				put_to_window.c \
 				render.c \
-				set_bomb.c \
+				render_background.c \
+				render_bloc.c \
+				render_buffer.c \
+				render_green_tile_by_direction.c \
+				render_sprites.c \
 				system_calls.c \
 				texture_interactions.c \
-				utils.c \
-				put_to_window.c
+				update_position.c \
+				utils.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 
@@ -49,7 +61,7 @@ mlx:
 				@echo "\033[32m\t\t[OK]\033[0m\n"
 
 $(NAME): mlx $(OBJ)
-				$(CC) $(LIB_FLAGS) $(OBJ) $(MLX) libft/libft.a -o $@
+				$(CC) $(LIB_FLAGS) $(OBJ) $(MLX) -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p obj/

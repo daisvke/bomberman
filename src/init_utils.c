@@ -6,11 +6,23 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 14:41:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 05:58:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/13 03:59:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+void	sl_init_array(int *array, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < size)
+	{
+		array[i] = 0;
+		++i;
+	}
+}
 
 void	sl_init_errors(t_env *env)
 {

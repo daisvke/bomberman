@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 05:58:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/13 03:59:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,23 @@
 # include <mlx.h>
 # include <X11/X.h>
 
-# include "libft/libft.h"
+
+/*
+** get_next_line
+*/
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
+
+# define ERROR2 -2
+# define REACHED_EOF 0
+# define LINE_READ 1
 
 # define FILE_EXTENSION		".ber"
 # define FILE_EXTENSION_LEN	3
 # define SAME				0
 
-# define ERR_MAX			22
+# define ERR_MAX			23
 
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEPM"
@@ -75,7 +85,8 @@
 /*
 ** colors
 */
-# define GREEN_PXL			0x107830
+# define WHITE			0xFFFFFF
+# define GREEN			0x107830
 
 /*
 **	write to window 
@@ -99,6 +110,7 @@
 # define LEFT_LEN			2
 # define RIGHT_LEN			3
 # define KEEP				1
+# define FOUND_PLAYER		1
 
 /*
 ** bombs
@@ -279,25 +291,38 @@ typedef struct s_count
 /*
 ** system calls
 */
+void	ft_close(t_env *env, int fd);
 void	*ft_free(void *ptr);
 void	*ft_malloc(t_env *env, size_t num, size_t size);
-char    *ft_strchr(const char *s, int c);
-int		ft_strcmp(char *s1, char *s2);
+int	ft_open(t_env *env, char *filename);
 
 /*
 ** utils
 */
 t_coord	sl_assign_pos(int x, int y);
+char	*ft_itoa(t_env *env, int n);
+char    *ft_strchr(const char *s, int c);
+int		ft_strcmp(char *s1, char *s2);
 
 /*
 ** init
 */
 void	sl_check_errors_1(t_env *env);
+void	sl_init_array(int *array, size_t size);
 t_count	sl_init_counter(void);
 void	sl_init_buffers(t_env *env);
 void	sl_init_errors(t_env *env);
 void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size);
 void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed);
+
+/*
+** load textures
+*/
+void	sl_load_ennemies(t_env *env);
+void	sl_load_ennemies_horizontal(t_env *env);
+void	sl_load_ennemies_vertical(t_env *env);
+void	sl_load_exit(t_env *env);
+void	sl_load_white_bomber(t_env *env);
 
 /*
 ** keypress
@@ -324,12 +349,23 @@ void	sl_put_stage_name(t_env *env);
 /*
 ** render
 */
-void	sl_img_pixel_put(t_img *img, int x , int y, int color, bool mask);
+void	sl_draw_collectibles(t_env *env);
+void	sl_draw_collectibles_by_category(t_env *env, t_items *items, \
+	t_img *img, int max);
+int		sl_get_color_from_img(t_img *img, int x, int y);
+void	sl_img_pixel_put(t_img *img, int x, int y, int color, bool mask);
 int		sl_render(t_env *data);
 void	sl_render_background(t_env *data);
-void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, int x, int y, bool mask);
-int		sl_render_colored_bloc(t_img *img, int color, int x, int y);
-void	sl_replace_with_green_tile(t_env *env, int x, int y);
+void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, t_coord pos, bool mask);
+void	sl_render_bombs(t_env *env);
+void	sl_render_buffer_bloc_with_xpm(int **buffer, t_img *xpm_img, t_coord pos);
+void	sl_render_buffer_green_tile(t_env *env, t_coord pos);
+int		sl_render_buffer_with_colored_bloc(int **buffer, int color, t_coord pos);
+int		sl_render_colored_bloc(t_img *img, int color, t_coord pos);
+void	sl_render_ennemies(t_env *env);
+void	sl_render_green_tile_by_direction(t_env *env, int curr_dir, t_coord pos);
+void	sl_render_p1(t_env *env);
+void	sl_replace_with_green_tile(t_env *env, t_coord pos);
 
 /*
 ** texture interactions
@@ -344,16 +380,42 @@ void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, t_states *img
 int		sl_is_collectible(char elem_to_check);
 
 /*
+** update position
+*/
+void	sl_update_player_pos_on_map(t_env *env, int apply_to, t_sprite *sprite, int x, int y);
+void	sl_update_sub_pos(t_sprite *sprite, t_img *img, t_coord delta);
+void	sl_update_sub_pos_state_0(t_sprite *sprite, t_states *img, t_coord pos);
+void	sl_update_sub_pos_state_1(t_sprite *sprite, t_states *img, t_coord pos);
+void	sl_update_sub_pos_state_2(t_env *env, t_sprite *sprite, int apply_to, t_states *img, t_coord coord);
+
+/*
 ** bomb
 */
-void	sl_clear_segments_of_exploding_bomb(t_env *env, t_items *bomb, int x, int y);
-void	sl_draw_segments_of_exploding_bomb(t_env *env, t_items *bomb, int x, int y);
+void	sl_clear_segments_of_exploding_bomb(t_env *env, t_items *bomb, t_coord pos);
+void	sl_draw_segments_of_exploding_bomb(t_env *env, t_items *bomb, t_coord pos);
 void    sl_set_bomb(t_env *env, t_items *bomb);
+
+/*
+** death
+*/
+void	sl_kill_ennemy(t_env *env, t_sprite *ennemy);
+void	sl_kill_p1(t_env *env);
 
 /*
 ** exit game
 */
 int    sl_exit_game(t_env *env);
 void	sl_put_err_code_and_exit_game(t_env *env, int err_code);
+
+
+
+/*
+** gnl
+*/
+
+char	*ft_strrchr(const char *s, int c);
+size_t	ft_strlen(const char *s);
+char	*ft_strsdup(char *src, int size);
+char	*ft_gnl_substr(char *s, size_t start, size_t len);
 
 #endif

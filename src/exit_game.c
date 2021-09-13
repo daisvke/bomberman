@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 06:30:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 19:12:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	**sl_get_array_of_error_messages(void)
 	array[20] = "failed to allocate memory";
 	array[21] = "failed to open file";
 	array[22] = "failed to close file";
+	array[23] = "failed to load texture";
 	return (array);
 }
 
@@ -163,7 +164,7 @@ void	sl_exit_game_over(t_env *env)
 		to_collect = env->tex.bomb.to_collect;
 		printf("> Collected items:\t%d/%d\n", collected, to_collect);
 //if error
-		count = ft_itoa(env->p1.moves);
+		count = ft_itoa(env, env->p1.moves);
 		printf("> Steps:\t\t%s\n", count);
 		printf("\n");
 		sl_exit_game(env);

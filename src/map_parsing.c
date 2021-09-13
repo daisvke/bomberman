@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 06:34:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:49:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	sl_check_errors_2(env, res);
 }
 
-void	sl_read_line_and_populate_map(t_env *env, char *line, int i, int *c)
+void	sl_read_line_and_populate_map(t_env *env, char *line, int i, t_count *c)
 {
 	int		j;
 	t_coord	pos;
