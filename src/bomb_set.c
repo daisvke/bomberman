@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/12 20:17:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:29:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ bool	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, char 
 	x_end = x - size;
 	if (x_end < 0)
 		x_end = 0;
-	while (x_start > x_end && map[y][x_start] != MAP_WALL)
+	while (x_start >= x_end && map[y][x_start] != MAP_WALL)
 	{
 		sl_check_each_element(env, x_start, y);
 		--x_start;
@@ -82,7 +82,7 @@ bool	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, char 
 	x_end = x + size;
 	if (x_end > env->width)
 		x_end = env->width;
-	while (x_start < x_end && map[y][x_start] != MAP_WALL)
+	while (x_start <= x_end && map[y][x_start] != MAP_WALL)
 	{
 		sl_check_each_element(env, x_start, y);
 		++x_start;
@@ -91,7 +91,7 @@ bool	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, char 
 	y_end = y - size;
 	if (y_end < 0)
 		y_end = 0;
-	while (y_start > y_end && map[y_start][x] != MAP_WALL)
+	while (y_start >= y_end && map[y_start][x] != MAP_WALL)
 	{
 		sl_check_each_element(env, x, y_start);
 		--y_start;
@@ -100,7 +100,7 @@ bool	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, char 
 	y_end = y + size;
 	if (y_end > env->height)
 		y_end = env->height;
-	while (y_start < y_end && map[y_start][x] != MAP_WALL)
+	while (y_start <= y_end && map[y_start][x] != MAP_WALL)
 	{
 		sl_check_each_element(env, x, y_start);
 		++y_start;

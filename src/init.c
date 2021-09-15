@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/07 02:57:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:29:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,17 @@ void	sl_init_buffer(t_env *env)
 
 void	sl_init_env(t_env *env, char *stage_name)
 {
+	t_bombs	*bomb;
+
+	bomb = &env->tex.bomb;
 	env->width = 0;
 	env->height = 0;
 	env->map = NULL;
 	sl_init_errors(env);
-	env->tex.bomb.to_collect = 0;
-	env->tex.bomb.collected = 1;
-	env->tex.bomb.explode_size = 2;
+	bomb->to_collect = 0;
+	bomb->collected = 1;
+	bomb->set_bombs_nbr = 0;	
+	bomb->explode_size = 2;
 	sl_init_set_bomb(&env->tex.bomb.set_bombs[0], false, 0, 0, 0);
 	env->tex.fire.to_collect = 0;
 	env->tex.speed.to_collect = 0;
