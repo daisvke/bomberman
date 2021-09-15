@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 14:41:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/13 03:59:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 13:36:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ t_count	sl_init_counter(void)
 	counter.collectible = 0;
     counter.exit_pipe = 0;
 	return (counter);
+}
+
+void	sl_init_mlx(t_env *env, int width, int height)
+{
+	char	*title;
+
+	env->mlx_ptr = mlx_init();
+	if (!env->mlx_ptr)
+		sl_put_err_code_and_exit_game(env, 1);
+	title = "minibomberman";
+	env->win_ptr = mlx_new_window(env->mlx_ptr, width, height, title);
+	if (!env->win_ptr)
+		sl_put_err_code_and_exit_game(env, 2);
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 19:12:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/13 04:24:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void    sl_print_err_message(t_env *env, int err_code)
 	printf("\n");
 	printf("Error code: %d", err_code);
 	err_message = sl_get_err_message_from_err_code(err_code);
-	printf("\033[31m\t\t%s\033[0m\n\n", err_message);
+	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
 }
 
 void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, \
@@ -131,7 +131,7 @@ void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, \
 	printf("\n");
 	printf("Error code: 20");
 	err_message = sl_get_err_message_from_err_code(20);
-	printf("\033[31m\t\t%s\033[0m\n\n", err_message);
+	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
 	exit(EXIT_SUCCESS);
 }
 
@@ -143,7 +143,7 @@ void    sl_put_err_code_and_exit_game(t_env *env, int err_code)
 	printf("\n");
 	printf("Error code: %d", err_code);
 	err_message = sl_get_err_message_from_err_code(err_code);
-	printf("\033[31m\t\t%s\033[0m\n\n", err_message);
+	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
 	sl_exit_game(env);
 }
 
@@ -159,11 +159,10 @@ void	sl_exit_game_over(t_env *env)
 	else
 	{
 		printf("\n");
-		printf("\033[31m\t\tGAME OVER !\033[0m\n\n");
+		printf("%s\t\tGAME OVER !%s\n\n", STR_RED, STR_WHITE);
 		collected = env->tex.bomb.collected - 1;
 		to_collect = env->tex.bomb.to_collect;
 		printf("> Collected items:\t%d/%d\n", collected, to_collect);
-//if error
 		count = ft_itoa(env, env->p1.moves);
 		printf("> Steps:\t\t%s\n", count);
 		printf("\n");

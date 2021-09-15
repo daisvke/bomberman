@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/12 21:09:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/13 04:16:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	sl_put_stage_name(t_env *env)
 	sl_string_put(env, 10, height - 10, str);
 }
 
-void	sl_put_counts_to_window(t_env *env)
+void	sl_put_collectible_count_to_window(t_env *env)
 {
 	char	*count;
 	char	*collected;
@@ -64,16 +64,16 @@ void	sl_put_counts_to_window(t_env *env)
 	free(to_collect);
 }
 
-void	sl_put_centered_message_to_window(t_env *env, char *message)
+void	sl_put_centered_message_to_window(t_env *env, char *str)
 {
 	static int	time;
 	int			width;
 	int			height;
 
-	width = env->width * BLOC_LEN;
-	height = env->height * BLOC_LEN;
+	width = env->width * BLOC_LEN / 2;
+	height = env->height * BLOC_LEN / 2;
 	mlx_set_font(env->mlx_ptr, env->win_ptr, "7x14");
 	if (time <= 3200)
-		mlx_string_put(env->mlx_ptr, env->win_ptr, width / 2, height / 2, 0xFFFFFF, message);
+		mlx_string_put(env->mlx_ptr, env->win_ptr, width, height, WHITE, str);
 	++time;
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/05 14:50:25 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 13:44:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,14 @@ void	sl_check_inputs(t_env *env, int argc, char *filename)
 		sl_put_err_code_and_exit_game(env, 5);
 }
 
-void	sl_init_mlx(t_env *env, int width, int height)
+void	sl_handle_events(t_env *env)
 {
-	char	*title;
+	void	*win;
 
-	env->mlx_ptr = mlx_init();
-	if (!env->mlx_ptr)
-		sl_put_err_code_and_exit_game(env, 1);
-	title = "minibomberman";
-	env->win_ptr = mlx_new_window(env->mlx_ptr, width, height, title);
-	if (!env->win_ptr)
-		sl_put_err_code_and_exit_game(env, 2);
+	win = env->win_ptr;
+	mlx_hook(win, KeyPress, KeyPressMask, &sl_handle_keypress, env);
+	mlx_hook(win, KeyRelease, KeyReleaseMask, &sl_handle_keyrelease, env);
+	mlx_hook(win, ClientMessage, StructureNotifyMask, &sl_exit_game, env);
 }
 
 int	main(int argc, char *argv[])
@@ -44,9 +41,7 @@ int	main(int argc, char *argv[])
 	
 	sl_check_inputs(&env,argc, argv[1]);
 	sl_init_all(&env, argv);
-	mlx_hook(env.win_ptr, 2, 1L << 0, sl_handle_keypress, &env);
-//	mlx_hook(env.win_ptr, 3, 1L << 1, sl_handle_keyrelease, &env);
-	mlx_hook(env.win_ptr, 33, 1L << 17, sl_exit_game, &env);
+	sl_handle_events(&env);
 	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);
 	mlx_loop(env.mlx_ptr);
 }

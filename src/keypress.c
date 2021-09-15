@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 18:41:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 04:27:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 00:30:37 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	sl_handle_keypress_b(t_env *env, int x, int y)
 	}
 }
 
-bool	sl_find_no_current_direction(t_env *env)
+bool	sl_found_no_current_direction(t_env *env)
 {
 	int	dir;
 	
@@ -61,7 +61,7 @@ int	sl_handle_keypress(int keycode, t_env *env)
 	if (keycode == XK_Escape)
 		sl_exit_game(env);
 	dir = &env->p1.curr_dir;
-	if (sl_find_no_current_direction(env))
+	if (sl_found_no_current_direction(env))
 	{
 		if (keycode == XK_w || keycode == XK_z)
 			*dir |= CR_UP;
@@ -69,8 +69,11 @@ int	sl_handle_keypress(int keycode, t_env *env)
 			*dir |= CR_DOWN;
 		if (keycode == XK_a || keycode == XK_q)
 			*dir |= CR_LEFT;
-		if (keycode == XK_d || keycode == XK_d)
+		if (keycode == XK_d)
+		{
 			*dir |= CR_RIGHT;
+			env->p1.stop = false;
+		}
 	}
 	set_bombs = env->tex.bomb.set_bombs_nbr;
 	collected_bombs = env->tex.bomb.collected;
@@ -79,22 +82,15 @@ int	sl_handle_keypress(int keycode, t_env *env)
 	return (0);
 }
 
-/*
 int	sl_handle_keyrelease(int keycode, t_env *env)
 {
-	int			x;
-	int			y;
+	t_sprite	*sprite;
 
-	x = env->p1.pos.x;
-	y = env->p1.pos.y;
-	if (keycode == XK_w || keycode == XK_z)
-		env->p1.curr_dir.up = false;
-	if (keycode == XK_s)
-		env->p1.curr_dir.down = false;
-	if (keycode == XK_a || keycode == XK_q)
-		env->p1.curr_dir.left = false;
-	if (keycode == XK_d || keycode == XK_d)
-		env->p1.curr_dir.right = false;
+	sprite = &env->p1;
+	if (keycode == XK_d && sl_found_no_current_direction(env) && sprite->time)
+	{
+		printf("stopped !!!\n");
+		env->p1.stop = true;
+	}
 	return (0);
 }
-*/

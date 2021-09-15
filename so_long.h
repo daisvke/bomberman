@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/13 03:59:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 13:36:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@
 # define ERROR2 -2
 # define REACHED_EOF 0
 # define LINE_READ 1
+
+/*
+** string colors
+*/
+# define STR_RED			"\033[31m"
+# define STR_WHITE			"\033[0m"
 
 # define FILE_EXTENSION		".ber"
 # define FILE_EXTENSION_LEN	3
@@ -186,6 +192,7 @@ typedef struct s_sprite
 	int				curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
+	bool			stop;
 	int				speed;
 	int				time;
 	int				moves;
@@ -294,7 +301,7 @@ typedef struct s_count
 void	ft_close(t_env *env, int fd);
 void	*ft_free(void *ptr);
 void	*ft_malloc(t_env *env, size_t num, size_t size);
-int	ft_open(t_env *env, char *filename);
+int		ft_open(t_env *env, char *filename);
 
 /*
 ** utils
@@ -312,6 +319,7 @@ void	sl_init_array(int *array, size_t size);
 t_count	sl_init_counter(void);
 void	sl_init_buffers(t_env *env);
 void	sl_init_errors(t_env *env);
+void	sl_init_mlx(t_env *env, int width, int height);
 void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size);
 void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed);
 
@@ -324,10 +332,12 @@ void	sl_load_ennemies_vertical(t_env *env);
 void	sl_load_exit(t_env *env);
 void	sl_load_white_bomber(t_env *env);
 
+void	sl_handle_keypress_bb(int keycode, t_env *env);
 /*
 ** keypress
 */
 int		sl_handle_keypress(int keycode, t_env *env);
+int		sl_handle_keyrelease(int keycode, t_env *env);
 
 /*
 ** parsing
