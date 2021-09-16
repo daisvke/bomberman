@@ -1,7 +1,7 @@
 /* XPM */
 static char *set_bomb_1_24x24[] = {
 /* columns rows colors chars-per-pixel */
-"24 24 159 2 ",
+"24 24 158 2 ",
 "   c #010103",
 ".  c #00010B",
 "X  c #030B0F",
@@ -153,7 +153,6 @@ static char *set_bomb_1_24x24[] = {
 "B. c #AAE3F2",
 "V. c #BDE6F2",
 "C. c #D6DBD9",
-"Z. c #CFDDEA",
 "A. c #C2D6E9",
 "S. c #C6DFF3",
 "D. c #C0ECF6",
@@ -167,7 +166,7 @@ static char *set_bomb_1_24x24[] = {
 "Z Z Z Z Z V Z * . o @ o o o $ 3 N M 3 &.*.,.D Z ",
 "Z Z Z Z n   X o 6 H I f 6 u $.q.3 l j.4 > A V Z ",
 "Z Z Z n y i i 0.z.| Q d 0 k.z.X.O.O.E # q C Z Z ",
-"Z Z V   G 8.3.N.Z..._ i 0 J.x.  @.#..   b V Z Z ",
+"Z Z V   G 8.3.N.N..._ i 0 J.x.  @.#..   b V Z Z ",
 "Z Z V   ) i.t.p.r. ...Y 0 C.x.    g ^ @ e V Z Z ",
 "Z M 9 ` v.F.A.m.s.9.5.~ = l.c.@.l T +.9 & b Z Z ",
 "V - , t.F.H.H.G.b.a.7.! f ( ;.q.%./ R p o X V Z ",

@@ -14,13 +14,16 @@ RM			=	rm -rf
 SRC_DIR		=	src/
 SRC_FILES	=	animate_sprites.c \
 				bomb_clear.c \
+				bomb_consequences.c \
 				bomb_draw.c \
 				bomb_set.c \
 				death.c \
 				ennemy_ai.c \
 				ennemy_direction.c \
 				ennemy_utils.c \
+				errors.c \
 				exit_game.c \
+				free.c \
 				get_next_line.c \
 				get_next_line_utils.c \
 				init.c \

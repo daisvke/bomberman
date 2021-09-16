@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 18:41:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 14:28:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 16:20:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,5 @@ int	sl_handle_keypress(int keycode, t_env *env)
 			*dir |= CR_RIGHT;
 	}
 	sl_handle_keypress_b(env, keycode, env->p1.pos);
-	return (0);
-}
-
-int	sl_handle_keyrelease(int keycode, t_env *env)
-{
-	t_sprite	*sprite;
-
-	sprite = &env->p1;
-	if (keycode == XK_d && sl_found_no_current_direction(env) && sprite->time)
-	{
-		printf("stopped !!!\n");
-		env->p1.stop = true;
-	}
 	return (0);
 }

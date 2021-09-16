@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 14:29:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 03:28:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	sl_init_env(t_env *env, char *stage_name)
 	env->width = 0;
 	env->height = 0;
 	env->map = NULL;
+	env->game_clear = false;
 	sl_init_errors(env);
 	bomb->to_collect = 0;
 	bomb->collected = 1;

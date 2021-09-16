@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/13 04:14:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 03:37:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,20 +121,25 @@ int	sl_render(t_env *env)
 	sl_draw_collectibles(env);
 	if (env->tex.bomb.collected - START_BOMB == env->tex.bomb.to_collect)
 		sl_reveal_exit(env);
-	if (env->map[env->p1.pos.y][env->p1.pos.x] == MAP_ENNEMY)
-		env->p1.alive = false;
-	sl_render_bombs(env);
-	if (env->p1.alive == true)
-	{
-		sl_render_p1(env);
-		sl_render_ennemies(env);
-		mlx_img = env->canvas.mlx_img;
-		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, mlx_img, 0, 0);
-		sl_put_stage_name(env);
-		sl_put_collectible_count_to_window(env);
-	}
+	if (env->game_clear)
+		sl_exit_when_game_clear(env, env->map, env->p1.pos.x, env->p1.pos.y);
 	else
-		sl_kill_p1(env);
-	sl_put_message_at_start(env);
+	{
+		if (env->map[env->p1.pos.y][env->p1.pos.x] == MAP_ENNEMY)
+			env->p1.alive = false;
+		sl_render_bombs(env);
+		if (env->p1.alive == true)
+		{
+			sl_render_p1(env);
+			sl_render_ennemies(env);
+			mlx_img = env->canvas.mlx_img;
+			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, mlx_img, 0, 0);
+			sl_put_stage_name(env);
+			sl_put_collectible_count_to_window(env);
+		}
+		else
+			sl_kill_p1(env);
+		sl_put_message_at_start(env);
+	}
 	return (0);
 }

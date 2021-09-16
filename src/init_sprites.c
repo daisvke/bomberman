@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 14:40:21 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 14:04:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 16:21:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed)
 	sprite->curr_state = &sprite->img.down.one;
 	sprite->sub_pos = sl_assign_pos(0, 0);
 	sprite->pos = sl_assign_pos(x, y);
-	sprite->stop = false;
 	sprite->speed = speed;
 	sprite->time = 0;
 }

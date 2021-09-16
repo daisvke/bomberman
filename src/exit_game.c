@@ -6,89 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/13 04:24:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 03:52:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
-void	sl_free_buffer(int *buffer[], int height)
-{
-	int	i;
-
-	i = 0;
-	while (i < height)
-	{
-		ft_free(buffer[i]);
-		++i;
-	}
-	buffer = ft_free(buffer);
-}
-
-void	sl_free_map(t_env *env, char *map[])
-{
-	int	i;
-
-	i = 0;
-	while (i < env->height)
-	{
-		ft_free(map[i]);
-		++i;
-	}
-	map = ft_free(map);
-}
-
-void	sl_free_map_when_not_complete(t_env *env, char *map[], int height)
-{
-	int	i;
-
-	i = 0;
-	while (i < height)
-	{
-		ft_free(map[i]);
-		++i;
-	}
-	map = ft_free(map);
-}
-
-char	**sl_get_array_of_error_messages(void)
-{
-	char	*array[30];
-
-	array[0] = NULL;
-	array[1] = "mlx init failed";
-	array[2] = "failed to create new window";
-	array[3] = "not enough arguments";
-	array[4] = "map's file has no extension";
-	array[5] = "map's file has the wrong extension (needs to be .ber)";
-	array[6] = "memory allocation for the buffer failed";
-	array[7] = "too many ennemies on the map";
-	array[8] = "too many bomb items on the map";
-	array[9] = "too many fire items on the map";
-	array[10] = "too many speed items on the map";
-	array[11] = "stage is not surrounded by walls";
-	array[12] = "unknown element on the map";
-	array[13] = "map has to contain at least one collectible";
-	array[14] = "map has to contain one player";
-	array[15] = "map has to contain an exit";
-	array[16] = "map file failed to open";
-	array[17] = "map is not a rectangle";
-	array[18] = "function get_next_line failed";
-	array[19] = "map is too small";
-	array[20] = "failed to allocate memory";
-	array[21] = "failed to open file";
-	array[22] = "failed to close file";
-	array[23] = "failed to load texture";
-	return (array);
-}
-
-char	*sl_get_err_message_from_err_code(int err_code)
-{
-	char	**err_messages;
-
-	err_messages = sl_get_array_of_error_messages();
-	return (err_messages[err_code]);
-}
 
 int    sl_exit_game(t_env *env)
 {
@@ -147,14 +69,35 @@ void    sl_put_err_code_and_exit_game(t_env *env, int err_code)
 	sl_exit_game(env);
 }
 
-void	sl_exit_game_over(t_env *env)
+void	sl_exit_when_game_clear(t_env *env, char **map, int x, int y)
 {
-	static int	i;
+	static int	time;
 	int			collected;
 	int			to_collect;
 	char		*count;
 
-	if (i <= CENTER_MESS_TIME)
+	if (time <= CENTER_MESS_TIME * 2)
+		sl_put_centered_message_to_window(env, "GAME CLEAR !");
+	else
+	{
+		printf("\n");
+		printf("%s\t\tGAME CLEAR !%s\n\n", STR_CYAN, STR_WHITE);
+		count = ft_itoa(env, env->p1.moves);
+		printf("> Steps:\t\t%s\n", count);
+		printf("\n");
+		sl_exit_game(env);
+	}
+	++time;
+}
+
+void	sl_exit_when_game_over(t_env *env)
+{
+	static int	time;
+	int			collected;
+	int			to_collect;
+	char		*count;
+
+	if (time <= CENTER_MESS_TIME)
 		sl_put_centered_message_to_window(env, "GAME OVER !");
 	else
 	{
@@ -168,5 +111,5 @@ void	sl_exit_game_over(t_env *env)
 		printf("\n");
 		sl_exit_game(env);
 	}
-	++i;
+	++time;
 }

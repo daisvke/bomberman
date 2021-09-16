@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/13 04:16:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 03:44:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ void	sl_put_collectible_count_to_window(t_env *env)
 void	sl_put_centered_message_to_window(t_env *env, char *str)
 {
 	static int	time;
+	int			str_len;
 	int			width;
 	int			height;
 
-	width = env->width * BLOC_LEN / 2;
+	str_len = ft_strlen(str) / 4;
+	width = (env->width - str_len) * BLOC_LEN / 2;
 	height = env->height * BLOC_LEN / 2;
 	mlx_set_font(env->mlx_ptr, env->win_ptr, "7x14");
 	if (time <= 3200)

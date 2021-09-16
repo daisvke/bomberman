@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 14:28:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 03:51:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@
 /*
 ** string colors
 */
-# define STR_RED			"\033[31m"
 # define STR_WHITE			"\033[0m"
+# define STR_RED			"\033[31m"
+# define STR_CYAN			"\033[36m"
 
 # define FILE_EXTENSION		".ber"
 # define FILE_EXTENSION_LEN	3
@@ -192,7 +193,6 @@ typedef struct s_sprite
 	int				curr_dir;
 	t_coord			pos;
 	t_coord			sub_pos;
-	bool			stop;
 	int				speed;
 	int				time;
 	int				moves;
@@ -277,6 +277,7 @@ typedef struct s_env
 	t_img		icon_bomb;
 	bool		errors[ERR_MAX];
 	char		*stage_name;
+	bool		game_clear;
 }				t_env;
 
 typedef struct s_square
@@ -401,6 +402,7 @@ void	sl_update_sub_pos_state_2(t_env *env, t_sprite *sprite, int apply_to, t_sta
 /*
 ** bomb
 */
+void	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, t_coord pos);
 void	sl_clear_segments_of_exploding_bomb(t_env *env, t_items *bomb, t_coord pos);
 void	sl_draw_segments_of_exploding_bomb(t_env *env, t_items *bomb, t_coord pos);
 void    sl_set_bomb(t_env *env, t_items *bomb);
@@ -410,6 +412,19 @@ void    sl_set_bomb(t_env *env, t_items *bomb);
 */
 void	sl_kill_ennemy(t_env *env, t_sprite *ennemy);
 void	sl_kill_p1(t_env *env);
+
+/*
+** errors
+*/
+char	**sl_get_array_of_error_messages(void);
+char	*sl_get_err_message_from_err_code(int err_code);
+
+/*
+** free
+*/
+void	sl_free_buffer(int *buffer[], int height);
+void	sl_free_map(t_env *env, char *map[]);
+void	sl_free_map_when_not_complete(t_env *env, char *map[], int height);
 
 /*
 ** exit game

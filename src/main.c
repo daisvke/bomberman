@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 13:44:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/15 16:20:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	sl_handle_events(t_env *env)
 
 	win = env->win_ptr;
 	mlx_hook(win, KeyPress, KeyPressMask, &sl_handle_keypress, env);
-	mlx_hook(win, KeyRelease, KeyReleaseMask, &sl_handle_keyrelease, env);
 	mlx_hook(win, ClientMessage, StructureNotifyMask, &sl_exit_game, env);
 }
 
