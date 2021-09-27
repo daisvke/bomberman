@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 void	sl_get_max_len(t_sprite *sprite, int len_array[])
 {

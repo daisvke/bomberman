@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 int	ft_gnl_bzero(char *s, size_t n)
 {

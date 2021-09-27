@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 static void	sl_draw_upper_segment(t_env *env, t_items *bomb, char *map[], \
 	t_explode_states states, t_coord pos)

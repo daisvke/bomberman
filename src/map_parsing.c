@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 13:16:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 04:49:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 int	sl_get_width(t_env *env, char *line)
 {
@@ -81,7 +81,7 @@ void	sl_parse_map_with_gnl(t_env *env, int map_fd, t_count *counter)
 			break ;
 		env->map[i] = malloc(sizeof(*env->map) * (ft_strlen(line) + 1));
 		if (!env->map[i])
-			sl_put_err_code_and_exit_if_map_is_incomplete(env, 20, i);
+			sl_put_err_code_and_exit_if_map_is_incomplete(env, i);
 		sl_read_line_and_populate_map(env, line, i, counter);
 		free(line);
 		++i;

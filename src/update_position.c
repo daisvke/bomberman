@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
 	t_sprite *sprite, int x, int y)

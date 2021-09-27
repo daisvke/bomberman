@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 int		sl_render_buffer_with_colored_bloc(int **buffer, int color, t_coord pos)
 {

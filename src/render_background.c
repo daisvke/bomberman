@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:37:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/13 03:42:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 04:28:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 void	sl_render_background_green_tile(t_env *env, int x, int y)
 {
@@ -47,6 +47,28 @@ void	sl_render_background(t_env *env)
 				sl_render_background_green_tile(env, j, i);
 			else
 				sl_render_background_wall(env, j, i);
+			++j;
+		}
+		++i;
+	}
+}
+
+void	sl_put_buffer_bkgd_to_img(t_env *env)
+{
+	int	**buffer;
+	int	color;
+	int	i;
+	int	j;
+
+	buffer = env->buffer_bkgd;
+	i = 0;
+	while (i < env->height * BLOC_LEN)
+	{
+		j = 0;
+		while (j < env->width * BLOC_LEN)
+		{
+			color = buffer[i][j];
+			sl_img_pixel_put(&env->canvas, j, i, color, false);
 			++j;
 		}
 		++i;

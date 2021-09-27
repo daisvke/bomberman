@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size)
 {

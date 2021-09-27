@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 14:41:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 13:36:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/27 04:06:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 void	sl_init_array(int *array, size_t size)
 {
@@ -29,7 +29,7 @@ void	sl_init_errors(t_env *env)
 	int	i;
 
 	i = 0;
-	while (i < ERR_MAX)
+	while (i <= ERR_MAX)
 	{
 		env->errors[i] = false;
 		++i;
@@ -47,7 +47,7 @@ void	sl_check_errors_1(t_env *env)
 	{
 		if (env->errors[i] == true)
 		{
-			sl_print_err_message(env, i);
+			sl_print_err_message(i);
 			quit = true;
 		}
 		++i;

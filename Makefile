@@ -64,7 +64,10 @@ mlx:
 				@echo "\033[32m\t\t[OK]\033[0m\n"
 
 $(NAME): mlx $(OBJ)
-				$(CC) $(LIB_FLAGS) $(OBJ) $(MLX) -o $@
+				@echo -n "\n"
+				@echo -n "NOW GENERATING EXECUTABLE..."
+				@$(CC) $(LIB_FLAGS) $(OBJ) $(MLX) -o $@
+				@echo "\033[32m\t\t[OK]\033[0m\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p obj/
@@ -73,7 +76,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 clean:
 				@make -s clean -C $(MLX_DIR)
-				$(RM) $(OBJ_DIR)
+				@$(RM) $(OBJ_DIR)
 
 fclean: clean
 				$(RM) $(MLX) $(NAME)

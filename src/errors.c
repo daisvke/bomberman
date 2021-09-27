@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 16:38:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 16:45:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/27 04:10:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 void	sl_fill_array_with_err_1(char **array)
 {
@@ -44,19 +44,28 @@ void	sl_fill_array_with_err_2(char **array)
 	array[23] = "failed to load texture";
 }
 
-char	**sl_get_array_of_error_messages(void)
+char	**sl_get_array_of_error_messages(char *errors[])
 {
-	char	*array[30];
-
-	sl_fill_array_with_err_1(array);
-	sl_fill_array_with_err_2(array);
-	return (array);
+	sl_fill_array_with_err_1(errors);
+	sl_fill_array_with_err_2(errors);
+	return (errors);
 }
 
 char	*sl_get_err_message_from_err_code(int err_code)
 {
-	char	**err_messages;
+	char	*err_messages[ERR_MAX + 1];
 
-	err_messages = sl_get_array_of_error_messages();
+	sl_get_array_of_error_messages(err_messages);
 	return (err_messages[err_code]);
+}
+
+void    sl_print_err_message(int err_code)
+{
+	char	*err_message;
+
+	err_message = NULL;
+	printf("\n");
+	printf("Error code: %d", err_code);
+	err_message = sl_get_err_message_from_err_code(err_code);
+	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
 }

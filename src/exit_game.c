@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 03:52:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/27 03:42:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 int    sl_exit_game(t_env *env)
 {
@@ -29,26 +29,13 @@ int    sl_exit_game(t_env *env)
 		ft_free(env->mlx_ptr);
 	}
 	exit(EXIT_SUCCESS);
-	return (0);
 }
 
-void    sl_print_err_message(t_env *env, int err_code)
+void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, int i)
 {
 	char	*err_message;
 
-	err_message = NULL;
-	printf("\n");
-	printf("Error code: %d", err_code);
-	err_message = sl_get_err_message_from_err_code(err_code);
-	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
-}
-
-void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, \
-	int err_code, int i)
-{
-	char	*err_message;
-
-	sl_free_map_when_not_complete(env, env->map, i);
+	sl_free_map_when_not_complete(env->map, i);
 	err_message = NULL;
 	printf("\n");
 	printf("Error code: 20");
@@ -69,11 +56,9 @@ void    sl_put_err_code_and_exit_game(t_env *env, int err_code)
 	sl_exit_game(env);
 }
 
-void	sl_exit_when_game_clear(t_env *env, char **map, int x, int y)
+void	sl_exit_when_game_clear(t_env *env)
 {
 	static int	time;
-	int			collected;
-	int			to_collect;
 	char		*count;
 
 	if (time <= CENTER_MESS_TIME * 2)

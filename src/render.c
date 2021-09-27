@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 03:37:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/09/16 05:00:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 void	sl_reveal_exit(t_env *env)
 {
@@ -68,28 +68,6 @@ void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite *sprite, \
 	}
 }
 
-void	sl_put_buffer_bkgd_to_img(t_env *env)
-{
-	int	**buffer;
-	int	color;
-	int	i;
-	int	j;
-
-	buffer = env->buffer_bkgd;
-	i = 0;
-	while (i < env->height * BLOC_LEN)
-	{
-		j = 0;
-		while (j < env->width * BLOC_LEN)
-		{
-			color = buffer[i][j];
-			sl_img_pixel_put(&env->canvas, j, i, color, false);
-			++j;
-		}
-		++i;
-	}
-}
-
 void	sl_clear_sprites_last_positions(t_env *env)
 {
 	t_img		*bkgd;
@@ -113,16 +91,25 @@ void	sl_clear_sprites_last_positions(t_env *env)
 	}
 }
 
-int	sl_render(t_env *env)
+void	sl_put_rendered_img_on_canvas(t_env *env)
 {
 	void	*mlx_img;
+
+	mlx_img = env->canvas.mlx_img;
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, mlx_img, 0, 0);
+	sl_put_stage_name(env);
+	sl_put_collectible_count_to_window(env);
+}
+
+int	sl_render(t_env *env)
+{
 
 	sl_clear_sprites_last_positions(env);
 	sl_draw_collectibles(env);
 	if (env->tex.bomb.collected - START_BOMB == env->tex.bomb.to_collect)
 		sl_reveal_exit(env);
 	if (env->game_clear)
-		sl_exit_when_game_clear(env, env->map, env->p1.pos.x, env->p1.pos.y);
+		sl_exit_when_game_clear(env);
 	else
 	{
 		if (env->map[env->p1.pos.y][env->p1.pos.x] == MAP_ENNEMY)
@@ -132,10 +119,7 @@ int	sl_render(t_env *env)
 		{
 			sl_render_p1(env);
 			sl_render_ennemies(env);
-			mlx_img = env->canvas.mlx_img;
-			mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, mlx_img, 0, 0);
-			sl_put_stage_name(env);
-			sl_put_collectible_count_to_window(env);
+			sl_put_rendered_img_on_canvas(env);
 		}
 		else
 			sl_kill_p1(env);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 bool	sl_determine_ennemy_direction_up(t_env *env, t_sprite *sprite, \
 	t_coord pos, int len_array[])

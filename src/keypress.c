@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../inc/so_long.h"
 
 int	sl_get_free_slot_in_array(t_env *env, t_items *bombs, t_coord pos)
 {
