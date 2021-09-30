@@ -64,8 +64,8 @@ void    sl_print_err_message(int err_code)
 	char	*err_message;
 
 	err_message = NULL;
-	printf("\n");
-	printf("Error code: %d", err_code);
+	ppx_printf("\n");
+	ppx_printf("Error code: %d", err_code);
 	err_message = sl_get_err_message_from_err_code(err_code);
-	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
+	ppx_printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
 }

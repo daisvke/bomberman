@@ -37,10 +37,10 @@ void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, int i)
 
 	sl_free_map_when_not_complete(env->map, i);
 	err_message = NULL;
-	printf("\n");
-	printf("Error code: 20");
+	ppx_printf("\n");
+	ppx_printf("Error code: 20");
 	err_message = sl_get_err_message_from_err_code(20);
-	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
+	ppx_printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
 	exit(EXIT_SUCCESS);
 }
 
@@ -49,10 +49,10 @@ void    sl_put_err_code_and_exit_game(t_env *env, int err_code)
 	char	*err_message;
 
 	err_message = NULL;
-	printf("\n");
-	printf("Error code: %d", err_code);
+	ppx_printf("\n");
+	ppx_printf("Error code: %d", err_code);
 	err_message = sl_get_err_message_from_err_code(err_code);
-	printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
+	ppx_printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
 	sl_exit_game(env);
 }
 
@@ -65,11 +65,11 @@ void	sl_exit_when_game_clear(t_env *env)
 		sl_put_centered_message_to_window(env, "GAME CLEAR !");
 	else
 	{
-		printf("\n");
-		printf("%s\t\tGAME CLEAR !%s\n\n", STR_CYAN, STR_WHITE);
+		ppx_printf("\n");
+		ppx_printf("%s\t\tGAME CLEAR !%s\n\n", STR_CYAN, STR_WHITE);
 		count = ft_itoa(env, env->p1.moves);
-		printf("> Steps:\t\t%s\n", count);
-		printf("\n");
+		ppx_printf("> Steps:\t\t%s\n", count);
+		ppx_printf("\n");
 		sl_exit_game(env);
 	}
 	++time;
@@ -86,14 +86,14 @@ void	sl_exit_when_game_over(t_env *env)
 		sl_put_centered_message_to_window(env, "GAME OVER !");
 	else
 	{
-		printf("\n");
-		printf("%s\t\tGAME OVER !%s\n\n", STR_RED, STR_WHITE);
+		ppx_printf("\n");
+		ppx_printf("%s\t\tGAME OVER !%s\n\n", STR_RED, STR_WHITE);
 		collected = env->tex.bomb.collected - 1;
 		to_collect = env->tex.bomb.to_collect;
-		printf("> Collected items:\t%d/%d\n", collected, to_collect);
+		ppx_printf("> Collected items:\t%d/%d\n", collected, to_collect);
 		count = ft_itoa(env, env->p1.moves);
-		printf("> Steps:\t\t%s\n", count);
-		printf("\n");
+		ppx_printf("> Steps:\t\t%s\n", count);
+		ppx_printf("\n");
 		sl_exit_game(env);
 	}
 	++time;
