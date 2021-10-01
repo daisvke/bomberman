@@ -14,10 +14,8 @@
 
 void	ft_init_arg(t_flags *arg)
 {
-	arg->minus = 0;
 	arg->zero = 0;
 	arg->dot = 0;
-	arg->wc = 0;
 	arg->min = 0;
 	arg->max = 0;
 	arg->sp = 0;

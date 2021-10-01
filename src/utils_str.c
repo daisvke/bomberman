@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ppx_printf.h"
+#include "../inc/ft_printf.h"
 
 void	ft_putstr_res(t_flags *arg, char *str)
 {

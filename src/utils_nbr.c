@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ppx_printf.h"
+#include "../inc/ft_printf.h"
 
 void	ft_check_arg(t_flags *arg, long nb)
 {
@@ -20,7 +20,7 @@ void	ft_check_arg(t_flags *arg, long nb)
 		arg->dot = false;
 }
 
-void	ft_print_di_l(t_flags *arg, int n, long l)
+void	ft_print_d_l(t_flags *arg, int n, long l)
 {
 	if (n == INT_MIN)
 		ft_putnbr_res(arg, INT_MAX + 1L);

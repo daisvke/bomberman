@@ -10,21 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ppx_printf.h"
-
-void	ft_read_zero_minus(t_flags *arg)
-{
-	if (*(arg->s) == '0')
-		if (!arg->minus)
-			arg->zero = true;
-	if (*(arg->s) == '-')
-	{
-		arg->zero = false;
-		arg->minus = true;
-	}
-	arg->len++;
-	arg->s++;
-}
+#include "../inc/ft_printf.h"
 
 bool	ft_read_dot(t_flags *arg)
 {
@@ -58,26 +44,4 @@ void	ft_read_nbr(t_flags *arg)
 		arg->len++;
 		arg->s++;
 	}
-}
-
-bool	ft_read_wc(t_flags *arg, va_list ap)
-{
-	if (*(arg->s - 1) == '*')
-		return (false);
-	arg->wc = true;
-	arg->len++;
-	arg->s++;
-	if (!arg->dot && arg->wc)
-	{
-		arg->min = va_arg(ap, int);
-		if (arg->min < 0)
-		{
-			arg->minus = true;
-			arg->zero = false;
-			arg->min = -(arg->min);
-		}
-	}
-	else if (arg->dot && arg->wc)
-		arg->max = va_arg(ap, int);
-	return (true);
 }

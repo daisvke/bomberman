@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ppx_printf.h"
+#include "../inc/ft_printf.h"
 
 t_sharp	ft_print_hex_shp(t_flags *arg, unsigned int h, char *prefix)
 {
@@ -54,33 +54,4 @@ void	ft_process_x(va_list ap, t_flags *arg)
 		if (!(arg->dot && arg->max == 0))
 			ft_print_hex(arg, h, HEX_LOWER);
 	}
-}
-
-void	ft_process_x2(va_list ap, t_flags *arg)
-{
-	unsigned int	h;
-	t_sharp			shp;
-
-	h = va_arg(ap, unsigned int);
-	shp = ft_print_hex_shp(arg, h, "0X");
-	if (arg->minus)
-	{
-		ft_print_zero(arg, shp.zero);
-		if (!(arg->dot && arg->max == 0))
-			ft_print_hex(arg, h, HEX_UPPER);
-		ft_print_space(arg, shp.zero + ft_baselen(h, 16));
-	}
-	else
-	{
-		ft_print_space(arg, shp.zero + ft_baselen(h, 16));
-		ft_print_zero(arg, shp.zero);
-		if (!(arg->dot && arg->max == 0))
-			ft_print_hex(arg, h, HEX_UPPER);
-	}
-}
-
-void	ft_process_per(t_flags *arg)
-{
-	ft_putchar('%');
-	arg->res++;
 }

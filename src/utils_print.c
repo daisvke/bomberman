@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ppx_printf.h"
+#include "../inc/ft_printf.h"
 
 void	ft_read_sp(t_flags *arg)
 {
@@ -24,26 +24,12 @@ void	ft_read_sp(t_flags *arg)
 
 void	ft_redirect_sp(va_list ap, t_flags *arg)	
 {
-	if (arg->sp == 'c')
-		ft_process_c(ap, arg);
 	else if (arg->sp == 's')
 		ft_process_s(ap, arg);
-	else if (arg->sp == 'p')
-		ft_process_p(ap, arg);
-	else if (arg->sp == 'd' || arg->sp == 'i')
+	else if (arg->sp == 'd')
 		ft_process_di(ap, arg);
-	else if (arg->sp == 'o')
-		ft_process_o(ap, arg);
-	else if (arg->sp == 'u')
-		ft_process_u(ap, arg);
 	else if (arg->sp == 'x')
-		ft_process_x(ap, arg);
-	else if (arg->sp == 'X')
 		ft_process_x2(ap, arg);
-	else if (arg->sp == 'n')
-		ft_process_n(ap, arg);
-	else if (arg->sp == '%')
-		ft_process_per(arg);
 }
 
 bool	ft_redirect_fg(va_list ap, t_flags *arg)
@@ -51,21 +37,7 @@ bool	ft_redirect_fg(va_list ap, t_flags *arg)
 	bool	err;
 
 	err = 1;
-	if (*(arg->s) == '#')
-		ft_read_shp(arg);
-	else if (*(arg->s) == 'h')
-		ft_read_lm(arg);
-	else if ((*(arg->s) == '0') || (*(arg->s) == '-'))
-		ft_read_zero_minus(arg);
-	else if (*(arg->s) == '+')
-		ft_read_plus(arg);
-	else if (*(arg->s) == ' ')
-		ft_read_space(arg);
-	else if (*(arg->s) == '*')
-		err = ft_read_wc(arg, ap);
-	else if (ft_isdigit(*(arg->s)))
-		ft_read_nbr(arg);
-	else if (*(arg->s) == '.')
+	if (*(arg->s) == '.')
 		err = ft_read_dot(arg);
 	return (err);
 }
@@ -86,8 +58,6 @@ int	ft_set_flags(t_flags *arg, char *s, va_list ap)
 			break ;
 	}
 	ft_read_sp(arg);
-	if (arg->minus && arg->zero)
-		arg->zero = false;
 	return (arg->res);
 }
 

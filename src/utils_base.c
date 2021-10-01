@@ -10,20 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ppx_printf.h"
+#include "../inc/ft_printf.h"
 
 void	ft_print_hex(t_flags *arg, size_t nb, char *base)
 {
 	if (nb >= 16)
 		ft_print_hex(arg, nb / 16, base);
 	ft_putnchar(arg, base[nb % 16], 1);
-}
-
-void	ft_print_oct(t_flags *arg, unsigned int nb)
-{
-	if (nb >= 8)
-		ft_print_oct(arg, nb / 8);
-	ft_putnchar(arg, "012345678"[nb % 8], 1);
 }
 
 void	ft_print_p(t_flags *arg, size_t nb)

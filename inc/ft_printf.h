@@ -19,7 +19,7 @@
 # include "../libft/libft.h"
 
 # define SP_LIST "cspdiouxXn%"
-# define FG_LIST "#h0-+ *123456789."
+# define FG_LIST "123456789."
 # define HEX_LOWER "0123456789abcdef"
 # define HEX_UPPER "0123456789ABCDEF"
 # define ERROR -1
@@ -28,26 +28,14 @@
 
 typedef struct s_flags
 {
-	bool	minus;
-	bool	zero;
 	bool	dot;
-	bool	wc;
 	int		min;	
 	int		max;
 	char	sp;
 	int		len;
 	char	*s;
 	int		res;
-	bool	sharp;
-	bool	space;
-	bool	plus;
 }				t_flags;
-
-typedef struct s_sharp
-{
-	int		len;
-	int		zero;
-}				t_sharp;
 
 int		ft_baselen(size_t l, size_t base);
 void	ft_check_arg(t_flags *arg, long nb);
