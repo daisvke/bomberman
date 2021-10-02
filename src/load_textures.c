@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 18:43:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/02 15:33:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	sl_load_texture(t_env *env, t_img *img, char *path_to_file)
 	mlx = &img->mlx_img;
 	*mlx = mlx_xpm_file_to_image(env->mlx_ptr, path_to_file, &w, &h);
 	if (!img->mlx_img)
-		sl_put_err_code_and_exit_game(env, 23);
+		sl_put_err_code_and_exit_game(env, 0);
 	addr = &img->addr;
 	*addr = mlx_get_data_addr(*mlx, &img->bpp, &img->line_len, &img->endian);
 }

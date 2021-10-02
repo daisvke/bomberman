@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:34:01 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/10 05:01:26 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/02 16:50:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ t_coord	sl_assign_pos(int x, int y)
 	pos.x = x;
 	pos.y = y;
 	return (pos);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str)
+	{
+		while (str[i])
+			++i;
+	}
+	return (i);
 }
 
 int	ft_strcmp(char *s1, char *s2)

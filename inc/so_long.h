@@ -6,15 +6,12 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 05:49:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/02 16:51:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-
-/* DEL !!!  */
-# include <stdio.h>
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -26,6 +23,15 @@
 
 # include "so_long_macros.h"
 # include "so_long_structs.h"
+# include "get_next_line.h"
+
+/*
+** put_to_terminal
+*/
+void	sl_put_colored_str_to_terminal(char *str, char *color);
+void	sl_put_steps_on_terminal(t_env *env);
+void	sl_put_str_to_terminal(char *str);
+void	sl_put_nbr_to_terminal(int nbr);
 
 /*
 ** system calls
@@ -42,6 +48,7 @@ t_coord	sl_assign_pos(int x, int y);
 char	*ft_itoa(t_env *env, int n);
 char    *ft_strchr(const char *s, int c);
 int		ft_strcmp(char *s1, char *s2);
+int		ft_strlen(char *str);
 
 /*
 ** init
@@ -186,16 +193,5 @@ void	sl_exit_when_game_clear(t_env *env);
 void	sl_exit_when_game_over(t_env *env);
 void	sl_put_err_code_and_exit_game(t_env *env, int err_code);
 void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, int i);
-
-
-
-/*
-** gnl
-*/
-
-char	*ft_strrchr(const char *s, int c);
-size_t	ft_strlen(const char *s);
-char	*ft_strsdup(char *src, int size);
-char	*ft_gnl_substr(char *s, size_t start, size_t len);
 
 #endif

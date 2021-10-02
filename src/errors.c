@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 16:38:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/27 04:10:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/02 16:23:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sl_fill_array_with_err_1(char **array)
 {
-	array[0] = NULL;
+	array[0] = "failed to load texture";
 	array[1] = "mlx init failed";
 	array[2] = "failed to create new window";
 	array[3] = "not enough arguments";
@@ -41,7 +41,6 @@ void	sl_fill_array_with_err_2(char **array)
 	array[20] = "failed to allocate memory";
 	array[21] = "failed to open file";
 	array[22] = "failed to close file";
-	array[23] = "failed to load texture";
 }
 
 char	**sl_get_array_of_error_messages(char *errors[])
@@ -64,8 +63,8 @@ void    sl_print_err_message(int err_code)
 	char	*err_message;
 
 	err_message = NULL;
-	ppx_printf("\n");
-	ppx_printf("Error code: %d", err_code);
+	sl_put_str_to_terminal("\nError code: ");
+	sl_put_nbr_to_terminal(err_code);
 	err_message = sl_get_err_message_from_err_code(err_code);
-	ppx_printf("%s\t\t%s%s\n\n", STR_RED, err_message, STR_WHITE);
+	sl_put_colored_str_to_terminal(err_message, STR_RED);
 }

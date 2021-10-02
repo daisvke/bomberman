@@ -1,6 +1,6 @@
 NAME		=	so_long
-CC			=	clang $(C_FLAGS) $(MEM)
-C_FLAGS		=	-g -Wall -Wextra #-Werror $(MEM)
+CC			=	clang $(C_FLAGS)
+C_FLAGS		=	-g -Wall -Wextra -Werror $(MEM)
 MEM			=	-fsanitize=address
 
 LIB_FLAGS	=	-lX11 -lXext -lm -lmlx
@@ -25,7 +25,6 @@ SRC_FILES	=	animate_sprites.c \
 				exit_game.c \
 				free.c \
 				get_next_line.c \
-				get_next_line_utils.c \
 				init.c \
 				init_sprites.c \
 				init_utils.c \
@@ -37,6 +36,7 @@ SRC_FILES	=	animate_sprites.c \
 				map_parsing_items.c \
 				map_parsing_populate.c \
 				map_parsing_utils.c \
+				put_to_terminal.c \
 				put_to_window.c \
 				render.c \
 				render_background.c \
