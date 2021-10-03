@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 16:21:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:52:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ bool	sl_found_obstacle(t_env *env, t_coord pos)
 }
 
 void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, \
-	t_states *img, t_coord coord) 
+	t_states *img, t_coord coord)
 {
 	char	**map;
 	t_coord	pos;

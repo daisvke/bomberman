@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 16:38:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/02 16:23:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:55:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*sl_get_err_message_from_err_code(int err_code)
 	return (err_messages[err_code]);
 }
 
-void    sl_print_err_message(int err_code)
+void	sl_print_err_message(int err_code)
 {
 	char	*err_message;
 

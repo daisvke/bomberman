@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:41:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/12 19:47:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:40:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	sl_render_green_tile_when_going_down(t_env *env, t_img *bkgd, \
 	tile_shadow = &env->tex.tiles.tile_shadow;
 	if (map[y - 1][x] == MAP_WALL && !(curr_dir & CR_DOWN))
 		sl_render_bloc_with_xpm(bkgd, tile_shadow, pos, false);
-	else if	(map[y - 1][x] == MAP_WALL && (curr_dir & CR_DOWN))
+	else if (map[y - 1][x] == MAP_WALL && (curr_dir & CR_DOWN))
 		sl_render_bloc_with_xpm(bkgd, tile_shadow, pos, false);
-	else	
+	else
 		sl_render_colored_bloc(bkgd, GREEN, pos);
 	if ((curr_dir & CR_DOWN) && map[y + 1][x] != MAP_WALL)
 	{

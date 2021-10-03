@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 05:00:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:41:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	sl_clear_sprites_last_positions(t_env *env)
 
 	bkgd = &env->canvas;
 	p1_pos = sl_assign_pos(env->p1.pos.x * BLOC_LEN, env->p1.pos.y * BLOC_LEN);
-	sl_render_green_tile_by_direction(env, env->p1.curr_dir, p1_pos); 
+	sl_render_green_tile_by_direction(env, env->p1.curr_dir, p1_pos);
 	ennemies = env->tex.ennemies;
 	i = 0;
-	while (i < ennemies.count) 
+	while (i < ennemies.count)
 	{
 		ennemy_pos.x = ennemies.sprites[i].pos.x * BLOC_LEN;
 		ennemy_pos.y = ennemies.sprites[i].pos.y * BLOC_LEN;
@@ -103,7 +103,6 @@ void	sl_put_rendered_img_on_canvas(t_env *env)
 
 int	sl_render(t_env *env)
 {
-
 	sl_clear_sprites_last_positions(env);
 	sl_draw_collectibles(env);
 	if (env->tex.bomb.collected - START_BOMB == env->tex.bomb.to_collect)

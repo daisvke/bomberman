@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 14:41:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/27 04:06:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:51:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ t_count	sl_init_counter(void)
 {
 	t_count	counter;
 
-    counter.player = 0;
+	counter.player = 0;
 	counter.collectible = 0;
-    counter.exit_pipe = 0;
+	counter.exit_pipe = 0;
 	return (counter);
 }
 

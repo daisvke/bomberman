@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:50:14 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/12 20:05:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:43:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-int		sl_render_buffer_with_colored_bloc(int **buffer, int color, t_coord pos)
+int	sl_render_buffer_with_colored_bloc(int **buffer, int color, t_coord pos)
 {
 	int	x;
 	int	y;
@@ -35,7 +35,7 @@ int		sl_render_buffer_with_colored_bloc(int **buffer, int color, t_coord pos)
 	return (0);
 }
 
-void	sl_render_buffer_bloc_with_xpm(int **buffer, t_img *xpm_img, t_coord pos)
+void	sl_render_buffer_bloc_with_xpm(int **buff, t_img *xpm_img, t_coord pos)
 {
 	int	x;
 	int	y;
@@ -52,7 +52,7 @@ void	sl_render_buffer_bloc_with_xpm(int **buffer, t_img *xpm_img, t_coord pos)
 		while (j < BLOC_LEN)
 		{
 			color = sl_get_color_from_img(xpm_img, j, i);
-			buffer[i + y][j + x] = color;
+			buff[i + y][j + x] = color;
 			++j;
 		}
 		++i;
@@ -61,7 +61,7 @@ void	sl_render_buffer_bloc_with_xpm(int **buffer, t_img *xpm_img, t_coord pos)
 
 void	sl_render_buffer_green_tile(t_env *env, t_coord pos)
 {
-	t_coord coord;
+	t_coord	coord;
 	t_img	*tile_shadow;
 	int		**buffer;
 	char	**map;
@@ -74,7 +74,7 @@ void	sl_render_buffer_green_tile(t_env *env, t_coord pos)
 		coord = sl_assign_pos(BLOC_LEN * pos.x, BLOC_LEN * pos.y);
 		sl_render_buffer_bloc_with_xpm(buffer, tile_shadow, coord);
 	}
-	else	
+	else
 	{
 		coord = sl_assign_pos(BLOC_LEN * pos.x, BLOC_LEN * pos.y);
 		sl_render_buffer_with_colored_bloc(buffer, GREEN, coord);

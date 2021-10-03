@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 20:03:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/12 20:03:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:44:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	sl_img_pixel_put(t_img *img, int x, int y, int color, bool mask)
 	}
 }
 
-int		sl_render_colored_bloc(t_img *img, int color, t_coord pos)
+int	sl_render_colored_bloc(t_img *img, int color, t_coord pos)
 {
 	int		x;
 	int		y;
@@ -105,7 +105,7 @@ void	sl_replace_with_green_tile(t_env *env, t_coord pos)
 			tile_shadow = &env->tex.tiles.tile_shadow;
 			sl_render_bloc_with_xpm(bkgd, tile_shadow, pos, false);
 		}
-		else	
+		else
 			sl_render_colored_bloc(bkgd, GREEN, pos);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:39:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 19:34:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 21:31:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_items	*sl_get_item_by_its_code(t_env *env, int code, int **collected, int i)
 {
-	t_items *item;
+	t_items	*item;
 
 	if (code == 'B')
 	{
@@ -40,7 +40,7 @@ void	sl_assign_values_by_collectible_type(t_env *env, t_coord pos, \
 	t_items	*item;
 	char	**map;
 	int		*collected;
-	
+
 	map = env->map;
 	collected = NULL;
 	item = sl_get_item_by_its_code(env, code, &collected, i);
@@ -63,17 +63,17 @@ void	sl_assign_collectible_type_randomly(t_env *env, t_coord pos, int *count)
 	map = env->map;
 	if (i == 0 || pos.x % 2 == 0)
 	{
-		sl_assign_values_by_collectible_type(env, pos, 'B', i, 8); 
+		sl_assign_values_by_collectible_type(env, pos, 'B', i, 8);
 		++i;
 	}
 	else if (pos.x % 3 == 0)
 	{
-		sl_assign_values_by_collectible_type(env, pos, 'F', j, 9); 
+		sl_assign_values_by_collectible_type(env, pos, 'F', j, 9);
 		++j;
 	}
-	else 
+	else
 	{
-		sl_assign_values_by_collectible_type(env, pos, 'S', k, 10); 
+		sl_assign_values_by_collectible_type(env, pos, 'S', k, 10);
 		++k;
 	}
 	*count += 1;

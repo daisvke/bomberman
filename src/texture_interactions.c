@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 14:03:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 04:39:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:32:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ void	sl_handle_textures_while_moving(t_env *env, int apply_to, t_coord delta)
 		sl_collect_speed(env, map, x, y);
 		if (env->tex.bomb.collected - START_BOMB == env->tex.bomb.to_collect)
 			if (map[y][x] == MAP_EXIT)
-				env->game_clear = true;	
+				env->game_clear = true;
 	}
 }

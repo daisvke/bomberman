@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/02 15:33:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:49:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	sl_load_bomb_explode(t_env *env)
 {
 	t_img	*img;
 
-	img = &env->tex.bomb.explode_states.ctr; 
+	img = &env->tex.bomb.explode_states.ctr;
 	sl_load_texture(env, img, "./img/bomb-explode-ctr.xpm");
 	img = &env->tex.bomb.explode_states.hrz.one;
 	sl_load_texture(env, img, "./img/bomb-explode-hrz.xpm");

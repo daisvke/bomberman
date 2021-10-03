@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 03:44:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:44:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sl_string_put(t_env *env, int x, int y, char *str)
 void	sl_put_message_at_start(t_env *env)
 {
 	static int	time;
-	
+
 	if (time <= CENTER_MESS_TIME)
 	{
 		sl_put_centered_message_to_window(env, "START !");

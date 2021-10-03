@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:32:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/06 22:41:37 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:46:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, \
 				sl_assign_sprites_position(env, i, pos, &counter->player);
 			if (i == EXIT)
 				sl_assign_sprites_position(env, i, pos, &counter->exit_pipe);
-            if (i == ENNEMY)
+			if (i == ENNEMY)
 				sl_read_ennemies_from_map(env, pos);
 			return ;
 		}

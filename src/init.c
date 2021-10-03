@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 14:16:58 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 03:28:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 21:25:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sl_init_buffer(t_env *env)
 	int	width;
 
 	height = env->height * BLOC_LEN;
-	width= env->width * BLOC_LEN;
+	width = env->width * BLOC_LEN;
 	env->buffer_bkgd = malloc(sizeof(int *) * height);
 	if (!env->buffer_bkgd)
 		sl_put_err_code_and_exit_game(env, 6);
@@ -34,6 +34,7 @@ void	sl_init_buffer(t_env *env)
 void	sl_init_env(t_env *env, char *stage_name)
 {
 	t_bombs	*bomb;
+	t_coord	init_pos;
 
 	bomb = &env->tex.bomb;
 	env->width = 0;
@@ -43,9 +44,10 @@ void	sl_init_env(t_env *env, char *stage_name)
 	sl_init_errors(env);
 	bomb->to_collect = 0;
 	bomb->collected = 1;
-	bomb->set_bombs_nbr = 0;	
+	bomb->set_bombs_nbr = 0;
 	bomb->explode_size = 2;
-	sl_init_set_bomb(&env->tex.bomb.set_bombs[0], false, 0, 0, 0);
+	init_pos = sl_assign_pos(0, 0);
+	sl_init_set_bomb(&env->tex.bomb.set_bombs[0], false, init_pos, 0);
 	env->tex.fire.to_collect = 0;
 	env->tex.speed.to_collect = 0;
 	env->tex.ennemies.count = 0;
@@ -61,7 +63,7 @@ void	sl_init_canvas(t_env *env, int width, int height)
 	int		*endian;
 
 	mlx_img = &env->canvas.mlx_img;
-	bpp =  &env->canvas.bpp;
+	bpp = &env->canvas.bpp;
 	line_len = &env->canvas.line_len;
 	endian = &env->canvas.endian;
 	env->canvas.mlx_img = mlx_new_image(env->mlx_ptr, width, height);

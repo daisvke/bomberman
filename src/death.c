@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 20:00:21 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 03:09:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:55:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	sl_kill_p1(t_env *env)
 	t_img		*death_state;
 	t_coord		pos;
 	static int	time;
-	
+
 	death_state = NULL;
 	if (time <= CENTER_MESS_TIME)
 	{
@@ -65,7 +65,7 @@ void	sl_kill_p1(t_env *env)
 		pos = sl_assign_pos(env->p1.sub_pos.x, env->p1.sub_pos.y);
 		sl_render_bloc_with_xpm(&env->canvas, death_state, pos, true);
 		mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, \
-			env->canvas.mlx_img, 0, 0);    
+			env->canvas.mlx_img, 0, 0);
 	}
 	++time;
 	sl_exit_when_game_over(env);

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 16:20:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:49:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	sl_handle_events(t_env *env)
 int	main(int argc, char *argv[])
 {
 	t_env	env;
-	
-	sl_check_inputs(&env,argc, argv[1]);
+
+	sl_check_inputs(&env, argc, argv[1]);
 	sl_init_all(&env, argv);
 	sl_handle_events(&env);
 	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);

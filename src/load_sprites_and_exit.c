@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 18:40:29 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/09 18:42:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:50:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	sl_load_ennemies_vertical(t_env *env)
 	sl_load_texture(env, img, "./img/ennemy-up-r.xpm");
 	img = &env->tex.ennemies.img.down.one;
 	sl_load_texture(env, img, "./img/ennemy-down-0.xpm");
-	img =  &env->tex.ennemies.img.down.two;
+	img = &env->tex.ennemies.img.down.two;
 	sl_load_texture(env, img, "./img/ennemy-down-l.xpm");
 	img = &env->tex.ennemies.img.down.three;
 	sl_load_texture(env, img, "./img/ennemy-down-r.xpm");

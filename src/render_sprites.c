@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:55:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/12 20:05:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:37:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	sl_render_p1(t_env *env)
 
 void	sl_render_bombs(t_env *env)
 {
-	int 	i;
-	
+	int	i;
+
 	i = 0;
 	if (env->tex.bomb.set_bombs_nbr > 0)
 	{
@@ -51,7 +51,7 @@ void	sl_render_ennemies(t_env *env)
 
 	ennemies = env->tex.ennemies;
 	i = 0;
-	while (i < ennemies.count) 
+	while (i < ennemies.count)
 	{
 		if (ennemies.sprites[i].alive == true)
 		{
@@ -71,11 +71,15 @@ void	sl_draw_collectibles_by_category(t_env *env, t_items *items, \
 {
 	t_coord	pos;
 	int		i;
+	int		x;
+	int		y;
 
 	i = 0;
 	while (i < max)
 	{
-		pos = sl_assign_pos(items[i].pos.x * BLOC_LEN, items[i].pos.y * BLOC_LEN);
+		x = items[i].pos.x * BLOC_LEN;
+		y = items[i].pos.y * BLOC_LEN;
+		pos = sl_assign_pos(x, y);
 		if (items[i].draw == true)
 			sl_render_bloc_with_xpm(&env->canvas, img, pos, true);
 		else

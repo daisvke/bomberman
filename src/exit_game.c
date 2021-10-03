@@ -6,19 +6,19 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/02 16:19:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:56:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-int    sl_exit_game(t_env *env)
+int	sl_exit_game(t_env *env)
 {
 	if (env->map)
 		sl_free_map(env, env->map);
 	if (env->buffer_bkgd)
 		sl_free_buffer(env->buffer_bkgd, env->height * BLOC_LEN);
-	if (env->canvas.mlx_img) 
+	if (env->canvas.mlx_img)
 		mlx_destroy_image(env->mlx_ptr, env->canvas.mlx_img);
 	if (env->win_ptr)
 		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
@@ -31,7 +31,7 @@ int    sl_exit_game(t_env *env)
 	exit(EXIT_SUCCESS);
 }
 
-void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, int i)
+void	sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, int i)
 {
 	char	*err_message;
 
@@ -43,7 +43,7 @@ void    sl_put_err_code_and_exit_if_map_is_incomplete(t_env *env, int i)
 	exit(EXIT_SUCCESS);
 }
 
-void    sl_put_err_code_and_exit_game(t_env *env, int err_code)
+void	sl_put_err_code_and_exit_game(t_env *env, int err_code)
 {
 	char	*err_message;
 

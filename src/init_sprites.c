@@ -6,16 +6,16 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 14:40:21 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 16:21:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 21:19:25 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-void	sl_init_set_bomb(t_items *bomb, bool draw, int x, int y, int size)
+void	sl_init_set_bomb(t_items *bomb, bool draw, t_coord pos, int size)
 {
 	bomb->draw = draw;
-	bomb->pos = sl_assign_pos(x, y);
+	bomb->pos = sl_assign_pos(pos.x, pos.y);
 	bomb->explode_size = size;
 	bomb->time1 = 0;
 	bomb->time2 = 0;

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 16:55:47 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 18:58:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:53:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, \
 
 	size = bomb->explode_size;
 	p1_x = env->p1.pos.x;
-	p1_y = env->p1.pos.y; 
+	p1_y = env->p1.pos.y;
 	sl_check_up_for_consequences(env, pos, size);
 	sl_check_bottom_for_consequences(env, pos, size);
 	sl_check_left_for_consequences(env, pos, size);

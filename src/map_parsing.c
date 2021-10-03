@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 04:49:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:48:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	sl_parse_map_with_gnl(t_env *env, int map_fd, t_count *counter)
 void	sl_parse_map(t_env *env, char *filename)
 {
 	int		map_fd;
-    t_count counter;
+	t_count	counter;
 
 	sl_get_window_dimensions(env, filename);
 	env->map = ft_malloc(env, env->height + 1, sizeof(*env->map));
@@ -102,5 +102,5 @@ void	sl_parse_map(t_env *env, char *filename)
 	counter = sl_init_counter();
 	sl_parse_map_with_gnl(env, map_fd, &counter);
 	ft_close(env, map_fd);
-    sl_check_counter(env, counter);
-} 
+	sl_check_counter(env, counter);
+}

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/15 19:05:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 21:25:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	sl_check_each_element(t_env *env, char **map, int x, int y)
 void	sl_explode_bomb(t_env *env, t_items *bomb, t_coord pos)
 {
 	t_coord	coord;
+	t_coord	init_pos;
 
 	if (bomb->time3 <= BOMB_EXPLODE_TIME)
 	{
@@ -74,21 +75,22 @@ void	sl_explode_bomb(t_env *env, t_items *bomb, t_coord pos)
 	else
 	{
 		sl_clear_segments_of_exploding_bomb(env, bomb, pos);
-		sl_init_set_bomb(bomb, false, 0, 0, 0);
+		init_pos = sl_assign_pos(0, 0);
+		sl_init_set_bomb(bomb, false, init_pos, 0);
 		--env->tex.bomb.set_bombs_nbr;
 	}
 }
 
-void    sl_set_bomb(t_env *env, t_items *bomb)
+void	sl_set_bomb(t_env *env, t_items *bomb)
 {
 	t_coord		pos;
 	t_states	set_bomb;		
 
 	set_bomb = env->tex.bomb.set_states;
 	pos = sl_assign_pos(bomb->pos.x * BLOC_LEN, bomb->pos.y * BLOC_LEN);
-    if (bomb->time1 <= BOMB_SET_TIME)
-    {
-        if (bomb->time1 % 320 == 0)
+	if (bomb->time1 <= BOMB_SET_TIME)
+	{
+		if (bomb->time1 % 320 == 0)
 			++bomb->time2;
 		if (bomb->time2 % 2 == 0)
 			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.one, pos, true);
@@ -97,8 +99,8 @@ void    sl_set_bomb(t_env *env, t_items *bomb)
 			sl_replace_with_green_tile(env, pos);
 			sl_render_bloc_with_xpm(&env->canvas, &set_bomb.three, pos, true);
 		}
-        ++bomb->time1;
-    }
+		++bomb->time1;
+	}
 	else
 		sl_explode_bomb(env, bomb, pos);
 }

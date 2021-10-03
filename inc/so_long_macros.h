@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inc/so_long_macros.h                                   :+:      :+:    :+:   */
+/*   so_long_macros.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:37:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 05:43:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:24:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_MACROS_H
 # define SO_LONG_MACROS_H
-
-/*
-** get_next_line
-*/
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
-# endif
-
-# define ERROR2 -2
-# define REACHED_EOF 0
-# define LINE_READ 1
 
 /*
 ** string colors

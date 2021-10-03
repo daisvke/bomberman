@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inc/so_long_structs.h                                  :+:      :+:    :+:   */
+/*   so_long_structs.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:40:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 05:43:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:22:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,10 @@ typedef struct s_bombs
 
 typedef struct s_ennemies
 {
-    t_img_patterns 	img;
+	t_img_patterns	img;
 	t_img			dead;
 	int				count;
-    t_sprite		sprites[ENNEMY_LIMIT];
+	t_sprite		sprites[ENNEMY_LIMIT];
 }					t_ennemies;
 
 typedef struct s_item
@@ -139,13 +139,13 @@ typedef struct s_tiles
 
 typedef struct s_textures
 {
-	t_img	    wall;
+	t_img		wall;
 	t_tiles		tiles;
-	t_bombs	    bomb;
+	t_bombs		bomb;
 	t_item		fire;
 	t_item		speed;
-	t_pipe	    exit_pipe;
-    t_ennemies  ennemies;
+	t_pipe		exit_pipe;
+	t_ennemies	ennemies;
 }				t_textures;
 
 typedef struct s_env
@@ -176,9 +176,9 @@ typedef struct s_square
 
 typedef struct s_count
 {
-    int player;
+	int	player;
 	int	collectible;
-    int exit_pipe;
+	int	exit_pipe;
 }		t_count;
 
 #endif
