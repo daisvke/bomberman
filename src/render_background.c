@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:37:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/16 04:28:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:18:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ void	sl_render_background(t_env *env)
 
 void	sl_put_buffer_bkgd_to_img(t_env *env)
 {
-	int	**buffer;
-	int	color;
-	int	i;
-	int	j;
+	int		**buffer;
+	int		color;
+	int		i;
+	int		j;
+	t_coord	pos;
 
 	buffer = env->buffer_bkgd;
 	i = 0;
@@ -68,7 +69,8 @@ void	sl_put_buffer_bkgd_to_img(t_env *env)
 		while (j < env->width * BLOC_LEN)
 		{
 			color = buffer[i][j];
-			sl_img_pixel_put(&env->canvas, j, i, color, false);
+			pos = sl_assign_pos(j, i);
+			sl_img_pixel_put(&env->canvas, pos, color, false);
 			++j;
 		}
 		++i;

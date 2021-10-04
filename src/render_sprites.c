@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:55:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:30:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:40:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	sl_render_ennemies(t_env *env)
 		if (ennemies.sprites[i].alive == true)
 		{
 			img = env->tex.ennemies.sprites[i].curr_state;
-			pos = sl_assign_pos(ennemies.sprites[i].sub_pos.x, \
-				ennemies.sprites[i].sub_pos.y);
+			pos = sl_assign_pos(\
+				ennemies.sprites[i].sub_pos.x, ennemies.sprites[i].sub_pos.y);
 			sl_render_bloc_with_xpm(&env->canvas, img, pos, true);
 		}
 		else
@@ -69,8 +69,8 @@ void	sl_render_ennemies(t_env *env)
 	}
 }
 
-void	sl_draw_collectibles_by_category(t_env *env, t_items *items, \
-	t_img *img, int max)
+void	sl_draw_collectibles_by_category(\
+	t_env *env, t_items *items, t_img *img, int max)
 {
 	t_coord	pos;
 	int		i;

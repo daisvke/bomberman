@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 20:03:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:44:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:24:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ int	sl_get_color_from_img(t_img *img, int x, int y)
 	return (*(int *)(img->addr + (y * img->line_len + x * (img->bpp / 8))));
 }
 
-void	sl_img_pixel_put(t_img *img, int x, int y, int color, bool mask)
+void	sl_img_pixel_put(t_img *img, t_coord pos, int color, bool mask)
 {
 	char	*pixel;
 	int		i;
+	int		x;
+	int		y;
 
+	x = pos.x;
+	y = pos.y;
 	i = img->bpp - 8;
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	if ((mask && color != GREEN) || !mask)
@@ -43,6 +47,7 @@ int	sl_render_colored_bloc(t_img *img, int color, t_coord pos)
 	int		y;
 	int		i;
 	int		j;
+	t_coord	coord;
 
 	x = pos.x;
 	y = pos.y;
@@ -52,7 +57,8 @@ int	sl_render_colored_bloc(t_img *img, int color, t_coord pos)
 		j = 0;
 		while (j < BLOC_LEN)
 		{
-			sl_img_pixel_put(img, j + x, i + y, color, false);
+			coord = sl_assign_pos(j + x, i + y);
+			sl_img_pixel_put(img, coord, color, false);
 			++j;
 		}
 		++i;
@@ -60,8 +66,8 @@ int	sl_render_colored_bloc(t_img *img, int color, t_coord pos)
 	return (0);
 }
 
-void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, t_coord pos, \
-	bool mask)
+void	sl_render_bloc_with_xpm(\
+	t_img *img, t_img *xpm_img, t_coord pos, bool mask)
 {
 	int	x;
 	int	y;
@@ -79,7 +85,7 @@ void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, t_coord pos, \
 		{
 			color = sl_get_color_from_img(xpm_img, j, i);
 			if (color >= 0)
-				sl_img_pixel_put(img, j + x, i + y, color, mask);
+				sl_img_pixel_put(img, sl_assign_pos(j + x, i + y), color, mask);
 			++j;
 		}
 		++i;

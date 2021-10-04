@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:20:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:44:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ bool	sl_found_obstacle(t_env *env, t_coord pos)
 	return (found_wall || found_bomb);
 }
 
-void	sl_animate_sprite(t_env *env, t_sprite_info *info, t_states *img, \
-	t_coord coord)
+void	sl_animate_sprite(\
+	t_env *env, t_sprite_info *info, t_states *img, t_coord coord)
 {
 	char	**map;
 	t_coord	pos;
 
 	map = env->map;
-	pos = sl_assign_pos(info->sprite->pos.x + coord.x, \
-		info->sprite->pos.y + coord.y);
+	pos = sl_assign_pos(\
+		info->sprite->pos.x + coord.x, info->sprite->pos.y + coord.y);
 	if (sl_found_obstacle(env, pos))
 		coord = sl_assign_pos(0, 0);
 	sl_handle_textures_while_moving(env, info->apply_to, coord);

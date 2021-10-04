@@ -4,7 +4,6 @@ C_FLAGS		=	-g -Wvla -Wall -Wextra -Werror $(MEM)
 MEM			=	-fsanitize=address
 
 LIB_FLAGS	=	-lX11 -lXext -lm -lmlx
-#LIB_FLAGS	=	-Lmlx_linux -L/usr/lib -Iminilibx-linux -lXext -lX11 -lm -lz
 MAKE_LIB	=	make -s -C
 MLX_DIR		=	minilibx-linux/
 MLX			=	minilibx-linux/libmlx_Linux.a

@@ -6,14 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:41:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:40:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:32:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-void	sl_render_green_tile_when_going_up(t_env *env, t_img *bkgd, \
-	int curr_dir, t_coord map_pos, t_coord pos)
+void	sl_render_green_tile_when_going_up(\
+	t_env *env, int curr_dir, t_coord map_pos, t_coord pos)
 {
 	char	**map;
 	t_coord	coord;
@@ -30,18 +30,18 @@ void	sl_render_green_tile_when_going_up(t_env *env, t_img *bkgd, \
 		{
 			coord = sl_assign_pos(pos.x, pos.y - BLOC_LEN);
 			tile_shadow = &env->tex.tile_shadow;
-			sl_render_bloc_with_xpm(bkgd, tile_shadow, coord, false);
+			sl_render_bloc_with_xpm(&env->canvas, tile_shadow, coord, false);
 		}
 		else
 		{
 			coord = sl_assign_pos(pos.x, pos.y - BLOC_LEN);
-			sl_render_colored_bloc(bkgd, GREEN, coord);
+			sl_render_colored_bloc(&env->canvas, GREEN, coord);
 		}
 	}
 }
 
-void	sl_render_green_tile_when_going_down(t_env *env, t_img *bkgd, \
-	int curr_dir, t_coord map_pos, t_coord pos)
+void	sl_render_green_tile_when_going_down(\
+	t_env *env, int curr_dir, t_coord map_pos, t_coord pos)
 {
 	char	**map;
 	t_img	*tile_shadow;
@@ -53,20 +53,20 @@ void	sl_render_green_tile_when_going_down(t_env *env, t_img *bkgd, \
 	map = env->map;
 	tile_shadow = &env->tex.tile_shadow;
 	if (map[y - 1][x] == MAP_WALL && !(curr_dir & CR_DOWN))
-		sl_render_bloc_with_xpm(bkgd, tile_shadow, pos, false);
+		sl_render_bloc_with_xpm(&env->canvas, tile_shadow, pos, false);
 	else if (map[y - 1][x] == MAP_WALL && (curr_dir & CR_DOWN))
-		sl_render_bloc_with_xpm(bkgd, tile_shadow, pos, false);
+		sl_render_bloc_with_xpm(&env->canvas, tile_shadow, pos, false);
 	else
-		sl_render_colored_bloc(bkgd, GREEN, pos);
+		sl_render_colored_bloc(&env->canvas, GREEN, pos);
 	if ((curr_dir & CR_DOWN) && map[y + 1][x] != MAP_WALL)
 	{
 		pos = sl_assign_pos(pos.x, pos.y + BLOC_LEN);
-		sl_render_colored_bloc(bkgd, GREEN, pos);
+		sl_render_colored_bloc(&env->canvas, GREEN, pos);
 	}
 }
 
-void	sl_render_green_tile_when_going_left(t_env *env, t_img *bkgd, \
-	int curr_dir, t_coord map_pos, t_coord pos)
+void	sl_render_green_tile_when_going_left(\
+	t_env *env, int curr_dir, t_coord map_pos, t_coord pos)
 {
 	char	**map;
 	t_coord	coord;
@@ -83,18 +83,18 @@ void	sl_render_green_tile_when_going_left(t_env *env, t_img *bkgd, \
 		{
 			tile_shadow = &env->tex.tile_shadow;
 			coord = sl_assign_pos(pos.x - BLOC_LEN, pos.y);
-			sl_render_bloc_with_xpm(bkgd, tile_shadow, coord, false);
+			sl_render_bloc_with_xpm(&env->canvas, tile_shadow, coord, false);
 		}
 		else
 		{
 			coord = sl_assign_pos(pos.x - BLOC_LEN, pos.y);
-			sl_render_colored_bloc(bkgd, GREEN, coord);
+			sl_render_colored_bloc(&env->canvas, GREEN, coord);
 		}
 	}
 }
 
-void	sl_render_green_tile_when_going_right(t_env *env, t_img *bkgd, \
-	int curr_dir, t_coord map_pos, t_coord pos)
+void	sl_render_green_tile_when_going_right(\
+	t_env *env, int curr_dir, t_coord map_pos, t_coord pos)
 {
 	char	**map;
 	t_coord	coord;
@@ -111,29 +111,27 @@ void	sl_render_green_tile_when_going_right(t_env *env, t_img *bkgd, \
 		{
 			tile_shadow = &env->tex.tile_shadow;
 			coord = sl_assign_pos(pos.x + BLOC_LEN, pos.y);
-			sl_render_bloc_with_xpm(bkgd, tile_shadow, coord, false);
+			sl_render_bloc_with_xpm(&env->canvas, tile_shadow, coord, false);
 		}
 		else
 		{
 			coord = sl_assign_pos(pos.x + BLOC_LEN, pos.y);
-			sl_render_colored_bloc(bkgd, GREEN, coord);
+			sl_render_colored_bloc(&env->canvas, GREEN, coord);
 		}
 	}
 }
 
 void	sl_render_green_tile_by_direction(t_env *env, int curr_dir, t_coord pos)
 {
-	t_img	*bkgd;
 	t_coord	map_pos;
 	int		x;
 	int		y;
 
-	bkgd = &env->canvas;
 	x = pos.x / BLOC_LEN;
 	y = pos.y / BLOC_LEN;
 	map_pos = sl_assign_pos(x, y);
-	sl_render_green_tile_when_going_up(env, bkgd, curr_dir, map_pos, pos);
-	sl_render_green_tile_when_going_down(env, bkgd, curr_dir, map_pos, pos);
-	sl_render_green_tile_when_going_left(env, bkgd, curr_dir, map_pos, pos);
-	sl_render_green_tile_when_going_right(env, bkgd, curr_dir, map_pos, pos);
+	sl_render_green_tile_when_going_up(env, curr_dir, map_pos, pos);
+	sl_render_green_tile_when_going_down(env, curr_dir, map_pos, pos);
+	sl_render_green_tile_when_going_left(env, curr_dir, map_pos, pos);
+	sl_render_green_tile_when_going_right(env, curr_dir, map_pos, pos);
 }

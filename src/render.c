@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:08:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:44:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	sl_reveal_exit(t_env *env)
 	sl_render_bloc_with_xpm(&env->canvas, curr_state, pos, true);
 }
 
-void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite_info *info, \
-	t_img_patterns *img)
+void	sl_read_direction_and_animate_sprite(\
+	t_env *env, t_sprite_info *info, t_img_patterns *img)
 {
 	t_coord	pos;
 	int		dir;
@@ -85,8 +85,8 @@ void	sl_clear_sprites_last_positions(t_env *env)
 	{
 		ennemy_pos.x = ennemies.sprites[i].pos.x * BLOC_LEN;
 		ennemy_pos.y = ennemies.sprites[i].pos.y * BLOC_LEN;
-		sl_render_green_tile_by_direction(env, \
-			ennemies.sprites[i].curr_dir, ennemy_pos);
+		sl_render_green_tile_by_direction(\
+			env, ennemies.sprites[i].curr_dir, ennemy_pos);
 		++i;
 	}
 }

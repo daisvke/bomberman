@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:19:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:38:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,14 @@ int		sl_handle_keyrelease(int keycode, t_env *env);
 /*
 ** parsing
 */
-void	sl_assign_collectible_type_randomly(t_env *env, t_coord pos, \
-	int *count);
+void	sl_assign_collectible_type_randomly(\
+	t_env *env, t_coord pos, int *count);
+t_info	sl_assign_info(char code, int i, int err);
 void	sl_check_counter(t_env *env, t_count counter);
 void	sl_check_errors_2(t_env *env, int res);
 void	sl_parse_map(t_env *data, char *filename);
-void	sl_populate_map_with_textures(t_env *env, char char_to_check, \
-	t_coord pos, t_count *counter);
+void	sl_populate_map_with_textures(\
+	t_env *env, char char_to_check, t_coord pos, t_count *counter);
 
 /*
 ** put to window
@@ -106,27 +107,27 @@ void	sl_put_stage_name(t_env *env);
 ** render
 */
 void	sl_draw_collectibles(t_env *env);
-void	sl_draw_collectibles_by_category(t_env *env, t_items *items, \
-	t_img *img, int max);
+void	sl_draw_collectibles_by_category(\
+	t_env *env, t_items *items, t_img *img, int max);
 int		sl_get_color_from_img(t_img *img, int x, int y);
-void	sl_img_pixel_put(t_img *img, int x, int y, int color, bool mask);
+void	sl_img_pixel_put(t_img *img, t_coord pos, int color, bool mask);
 void	sl_put_buffer_bkgd_to_img(t_env *env);
 int		sl_render(t_env *data);
 void	sl_render_background(t_env *data);
-void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, t_coord pos, \
-	bool mask);
+void	sl_render_bloc_with_xpm(\
+	t_img *img, t_img *xpm_img, t_coord pos, bool mask);
 void	sl_render_bombs(t_env *env);
-void	sl_render_buffer_bloc_with_xpm(int **buffer, t_img *xpm_img, \
-	t_coord pos);
+void	sl_render_buffer_bloc_with_xpm(\
+	int **buffer, t_img *xpm_img, t_coord pos);
 void	sl_render_buffer_green_tile(t_env *env, t_coord pos);
-int		sl_render_buffer_with_colored_bloc(int **buffer, int color, \
-	t_coord pos);
+int		sl_render_buffer_with_colored_bloc(\
+	int **buffer, int color, t_coord pos);
 int		sl_render_colored_bloc(t_img *img, int color, t_coord pos);
-void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite_info *info, \
-	t_img_patterns *img);
+void	sl_read_direction_and_animate_sprite(\
+	t_env *env, t_sprite_info *info, t_img_patterns *img);
 void	sl_render_ennemies(t_env *env);
-void	sl_render_green_tile_by_direction(t_env *env, int curr_dir, \
-	t_coord pos);
+void	sl_render_green_tile_by_direction(\
+	t_env *env, int curr_dir, t_coord pos);
 void	sl_render_p1(t_env *env);
 void	sl_replace_with_green_tile(t_env *env, t_coord pos);
 
@@ -134,14 +135,14 @@ void	sl_replace_with_green_tile(t_env *env, t_coord pos);
 ** texture interactions
 */
 void	sl_find_and_turn_off_item(t_items *items, int max, int x, int y);
-void	sl_handle_textures_while_moving(t_env *env, int apply_to, \
-	t_coord delta);
+void	sl_handle_textures_while_moving(\
+	t_env *env, int apply_to, t_coord delta);
 
 /*
 ** animate sprites
 */
-void	sl_animate_sprite(t_env *env, t_sprite_info *info, t_states *img, \
-	t_coord coord);
+void	sl_animate_sprite(\
+	t_env *env, t_sprite_info *info, t_states *img, t_coord coord);
 int		sl_is_collectible(char elem_to_check);
 void	sl_put_back_exit_on_map(t_env *env);
 
@@ -151,31 +152,31 @@ void	sl_put_back_exit_on_map(t_env *env);
 void	sl_assign_ennemy_curr_dir(t_sprite *sprite, int i);
 void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite);
 void	sl_get_max_len(t_sprite *sprite, int len_array[]);
-int		sl_keep_direction_if_no_wall(char **map, t_coord bomb, int curr_dir, \
-	t_coord pos);
+int		sl_keep_direction_if_no_wall(\
+	char **map, t_coord bomb, int curr_dir, t_coord pos);
 void	sl_read_and_animate_ennemies(t_env *env);
 
 /*
 ** update position
 */
-void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
-	t_sprite *sprite, int x, int y);
+void	sl_update_player_pos_on_map(\
+	t_env *env, t_sprite_info *info, int x, int y);
 void	sl_update_sub_pos(t_sprite *sprite, t_img *img, t_coord delta);
 void	sl_update_sub_pos_state_0(t_sprite *sprite, t_states *img, t_coord pos);
 void	sl_update_sub_pos_state_1(t_sprite *sprite, t_states *img, t_coord pos);
-void	sl_update_sub_pos_state_2(t_env *env, t_sprite_info *info, \
-	t_states *img, t_coord coord);
+void	sl_update_sub_pos_state_2(\
+	t_env *env, t_sprite_info *info, t_states *img, t_coord coord);
 
 /*
 ** bomb
 */
 void	sl_check_each_element(t_env *env, char **map, int x, int y);
-void	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, \
-	t_coord pos);
-void	sl_clear_segments_of_exploding_bomb(t_env *env, t_items *bomb, \
-	t_coord pos);
-void	sl_draw_segments_of_exploding_bomb(t_env *env, t_items *bomb, \
-	t_coord pos);
+void	sl_check_what_is_affected_by_the_explosion(\
+	t_env *env, t_items *bomb, t_coord pos);
+void	sl_clear_segments_of_exploding_bomb(\
+	t_env *env, t_items *bomb, t_coord pos);
+void	sl_draw_segments_of_exploding_bomb(\
+	t_env *env, t_items *bomb, t_coord pos);
 void	sl_set_bomb(t_env *env, t_items *bomb);
 
 /*

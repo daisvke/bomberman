@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:40:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 02:42:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:08:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,5 +180,12 @@ typedef struct s_sprite_info
 	t_sprite	*sprite;
 	int			apply_to;
 }				t_sprite_info;
+
+typedef struct s_info
+{
+	char	code;
+	int		i;
+	int		err;
+}			t_info;
 
 #endif

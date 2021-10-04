@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:23:20 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:34:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:40:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ bool	sl_no_wall(char **map, t_coord pos)
 	return (map[y][x] != MAP_WALL);
 }
 
-int	sl_keep_direction_if_no_wall(char **map, t_coord bomb, int curr_dir, \
-	t_coord pos)
+int	sl_keep_direction_if_no_wall(\
+	char **map, t_coord bomb, int curr_dir, t_coord pos)
 {
 	t_coord	coord;
 	int		dir;
@@ -89,7 +89,7 @@ void	sl_read_and_animate_ennemies(t_env *env)
 			sl_determine_ennemy_direction(env, &env->tex.ennemies.sprites[i]);
 			info.sprite = &env->tex.ennemies.sprites[i];
 			info.apply_to = ENNEMY;
-			sl_read_direction_and_animate_sprite( \
+			sl_read_direction_and_animate_sprite(\
 				env, &info, &env->tex.ennemies.img);
 		}
 		++i;
