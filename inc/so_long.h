@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 21:20:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:19:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ void	sl_draw_collectibles_by_category(t_env *env, t_items *items, \
 int		sl_get_color_from_img(t_img *img, int x, int y);
 void	sl_img_pixel_put(t_img *img, int x, int y, int color, bool mask);
 void	sl_put_buffer_bkgd_to_img(t_env *env);
-void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite *sprite, \
-	int apply_to, t_img_patterns *img);
 int		sl_render(t_env *data);
 void	sl_render_background(t_env *data);
 void	sl_render_bloc_with_xpm(t_img *img, t_img *xpm_img, t_coord pos, \
@@ -124,6 +122,8 @@ void	sl_render_buffer_green_tile(t_env *env, t_coord pos);
 int		sl_render_buffer_with_colored_bloc(int **buffer, int color, \
 	t_coord pos);
 int		sl_render_colored_bloc(t_img *img, int color, t_coord pos);
+void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite_info *info, \
+	t_img_patterns *img);
 void	sl_render_ennemies(t_env *env);
 void	sl_render_green_tile_by_direction(t_env *env, int curr_dir, \
 	t_coord pos);
@@ -140,8 +140,8 @@ void	sl_handle_textures_while_moving(t_env *env, int apply_to, \
 /*
 ** animate sprites
 */
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, \
-	t_states *img, t_coord coord);
+void	sl_animate_sprite(t_env *env, t_sprite_info *info, t_states *img, \
+	t_coord coord);
 int		sl_is_collectible(char elem_to_check);
 void	sl_put_back_exit_on_map(t_env *env);
 
@@ -163,7 +163,7 @@ void	sl_update_player_pos_on_map(t_env *env, int apply_to, \
 void	sl_update_sub_pos(t_sprite *sprite, t_img *img, t_coord delta);
 void	sl_update_sub_pos_state_0(t_sprite *sprite, t_states *img, t_coord pos);
 void	sl_update_sub_pos_state_1(t_sprite *sprite, t_states *img, t_coord pos);
-void	sl_update_sub_pos_state_2(t_env *env, t_sprite *sprite, int apply_to, \
+void	sl_update_sub_pos_state_2(t_env *env, t_sprite_info *info, \
 	t_states *img, t_coord coord);
 
 /*

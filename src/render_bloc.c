@@ -102,7 +102,7 @@ void	sl_replace_with_green_tile(t_env *env, t_coord pos)
 	{
 		if (map[y - 1][x] == MAP_WALL)
 		{
-			tile_shadow = &env->tex.tiles.tile_shadow;
+			tile_shadow = &env->tex.tile_shadow;
 			sl_render_bloc_with_xpm(bkgd, tile_shadow, pos, false);
 		}
 		else

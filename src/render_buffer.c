@@ -66,7 +66,7 @@ void	sl_render_buffer_green_tile(t_env *env, t_coord pos)
 	int		**buffer;
 	char	**map;
 
-	tile_shadow = &env->tex.tiles.tile_shadow;
+	tile_shadow = &env->tex.tile_shadow;
 	buffer = env->buffer_bkgd;
 	map = env->map;
 	if (map[pos.y - 1][pos.x] == MAP_WALL)

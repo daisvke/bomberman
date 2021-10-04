@@ -29,7 +29,7 @@ void	sl_render_green_tile_when_going_up(t_env *env, t_img *bkgd, \
 		if (map[y - 2][x] == MAP_WALL)
 		{
 			coord = sl_assign_pos(pos.x, pos.y - BLOC_LEN);
-			tile_shadow = &env->tex.tiles.tile_shadow;
+			tile_shadow = &env->tex.tile_shadow;
 			sl_render_bloc_with_xpm(bkgd, tile_shadow, coord, false);
 		}
 		else
@@ -51,7 +51,7 @@ void	sl_render_green_tile_when_going_down(t_env *env, t_img *bkgd, \
 	x = map_pos.x;
 	y = map_pos.y;
 	map = env->map;
-	tile_shadow = &env->tex.tiles.tile_shadow;
+	tile_shadow = &env->tex.tile_shadow;
 	if (map[y - 1][x] == MAP_WALL && !(curr_dir & CR_DOWN))
 		sl_render_bloc_with_xpm(bkgd, tile_shadow, pos, false);
 	else if (map[y - 1][x] == MAP_WALL && (curr_dir & CR_DOWN))
@@ -81,7 +81,7 @@ void	sl_render_green_tile_when_going_left(t_env *env, t_img *bkgd, \
 	{
 		if (map[y - 1][x - 1] == MAP_WALL)
 		{
-			tile_shadow = &env->tex.tiles.tile_shadow;
+			tile_shadow = &env->tex.tile_shadow;
 			coord = sl_assign_pos(pos.x - BLOC_LEN, pos.y);
 			sl_render_bloc_with_xpm(bkgd, tile_shadow, coord, false);
 		}
@@ -109,7 +109,7 @@ void	sl_render_green_tile_when_going_right(t_env *env, t_img *bkgd, \
 	{
 		if (map[y - 1][x + 1] == MAP_WALL)
 		{
-			tile_shadow = &env->tex.tiles.tile_shadow;
+			tile_shadow = &env->tex.tile_shadow;
 			coord = sl_assign_pos(pos.x + BLOC_LEN, pos.y);
 			sl_render_bloc_with_xpm(bkgd, tile_shadow, coord, false);
 		}

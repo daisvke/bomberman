@@ -74,7 +74,7 @@ void	sl_load_all_textures(t_env *env)
 
 	sl_load_texture(env, &env->tex.wall, "./img/grey-tile.xpm");
 	sl_load_items(env);
-	tile = &env->tex.tiles.tile_shadow;
+	tile = &env->tex.tile_shadow;
 	sl_load_texture(env, tile, "./img/green-tile-with-shadow.xpm");
 	sl_load_set_bomb(env);
 	sl_load_bomb_explode(env);

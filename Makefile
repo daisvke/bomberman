@@ -1,6 +1,6 @@
 NAME		=	so_long
 CC			=	clang $(C_FLAGS)
-C_FLAGS		=	-g -Wall -Wextra -Werror $(MEM)
+C_FLAGS		=	-g -Wvla -Wall -Wextra -Werror $(MEM)
 MEM			=	-fsanitize=address
 
 LIB_FLAGS	=	-lX11 -lXext -lm -lmlx

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 03:31:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:41:40 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:08:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,32 @@ void	sl_reveal_exit(t_env *env)
 	sl_render_bloc_with_xpm(&env->canvas, curr_state, pos, true);
 }
 
-void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite *sprite, \
-	int apply_to, t_img_patterns *img)
+void	sl_read_direction_and_animate_sprite(t_env *env, t_sprite_info *info, \
+	t_img_patterns *img)
 {
 	t_coord	pos;
 	int		dir;
 
-	dir = sprite->curr_dir;
+	dir = info->sprite->curr_dir;
 	if (dir & CR_UP)
 	{
 		pos = sl_assign_pos(0, UP);
-		sl_animate_sprite(env, sprite, apply_to, &img->up, pos);
+		sl_animate_sprite(env, info, &img->up, pos);
 	}
 	if (dir & CR_DOWN)
 	{
 		pos = sl_assign_pos(0, DOWN);
-		sl_animate_sprite(env, sprite, apply_to, &img->down, pos);
+		sl_animate_sprite(env, info, &img->down, pos);
 	}
 	if (dir & CR_LEFT)
 	{
 		pos = sl_assign_pos(LEFT, 0);
-		sl_animate_sprite(env, sprite, apply_to, &img->left, pos);
+		sl_animate_sprite(env, info, &img->left, pos);
 	}
 	if (dir & CR_RIGHT)
 	{
 		pos = sl_assign_pos(RIGHT, 0);
-		sl_animate_sprite(env, sprite, apply_to, &img->right, pos);
+		sl_animate_sprite(env, info, &img->right, pos);
 	}
 }
 

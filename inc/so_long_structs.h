@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:40:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:22:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 02:42:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,16 +131,10 @@ typedef struct s_item
 	t_items	items[ITEM_LIMIT];
 }			t_item;
 
-typedef struct s_tiles
-{
-	t_img	tile;
-	t_img	tile_shadow;
-}			t_tiles;
-
 typedef struct s_textures
 {
 	t_img		wall;
-	t_tiles		tiles;
+	t_img		tile_shadow;
 	t_bombs		bomb;
 	t_item		fire;
 	t_item		speed;
@@ -180,5 +174,11 @@ typedef struct s_count
 	int	collectible;
 	int	exit_pipe;
 }		t_count;
+
+typedef struct s_sprite_info
+{
+	t_sprite	*sprite;
+	int			apply_to;
+}				t_sprite_info;
 
 #endif

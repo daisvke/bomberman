@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:55:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:37:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:30:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	sl_render_p1(t_env *env)
 	t_img_patterns	p1_img;
 	t_img			*img;
 	t_coord			pos;
+	t_sprite_info	info;
 
 	p1_img = env->p1.img;
-	sl_read_direction_and_animate_sprite(env, &env->p1, PLAYER, &p1_img);
+	info.sprite = &env->p1;
+	info.apply_to = PLAYER;
+	sl_read_direction_and_animate_sprite(env, &info, &p1_img);
 	sl_read_and_animate_ennemies(env);
 	img = env->p1.curr_state;
 	pos = sl_assign_pos(env->p1.sub_pos.x, env->p1.sub_pos.y);

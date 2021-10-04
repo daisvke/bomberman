@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 05:23:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:52:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 03:20:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,30 +72,31 @@ bool	sl_found_obstacle(t_env *env, t_coord pos)
 	return (found_wall || found_bomb);
 }
 
-void	sl_animate_sprite(t_env *env, t_sprite *sprite, int apply_to, \
-	t_states *img, t_coord coord)
+void	sl_animate_sprite(t_env *env, t_sprite_info *info, t_states *img, \
+	t_coord coord)
 {
 	char	**map;
 	t_coord	pos;
 
 	map = env->map;
-	pos = sl_assign_pos(sprite->pos.x + coord.x, sprite->pos.y + coord.y);
+	pos = sl_assign_pos(info->sprite->pos.x + coord.x, \
+		info->sprite->pos.y + coord.y);
 	if (sl_found_obstacle(env, pos))
 		coord = sl_assign_pos(0, 0);
-	sl_handle_textures_while_moving(env, apply_to, coord);
-	if (sprite->time <= sprite->speed)
-		sl_update_sub_pos_state_0(sprite, img, coord);
-	if (sprite->time > sprite->speed)
-		sl_update_sub_pos_state_1(sprite, img, coord);
-	if (sprite->time == sprite->speed * 2)
+	sl_handle_textures_while_moving(env, info->apply_to, coord);
+	if (info->sprite->time <= info->sprite->speed)
+		sl_update_sub_pos_state_0(info->sprite, img, coord);
+	if (info->sprite->time > info->sprite->speed)
+		sl_update_sub_pos_state_1(info->sprite, img, coord);
+	if (info->sprite->time == info->sprite->speed * 2)
 	{
-		if (apply_to == PLAYER && (coord.x != 0 || coord.y != 0))
+		if (info->apply_to == PLAYER && (coord.x != 0 || coord.y != 0))
 			++env->p1.moves;
-		sl_update_sub_pos_state_2(env, sprite, apply_to, img, coord);
-		if (apply_to != ENNEMY)
-			sprite->curr_dir = 0;
-		sprite->time = 0;
+		sl_update_sub_pos_state_2(env, info, img, coord);
+		if (info->apply_to != ENNEMY)
+			info->sprite->curr_dir = 0;
+		info->sprite->time = 0;
 	}
 	else
-		++sprite->time;
+		++info->sprite->time;
 }
