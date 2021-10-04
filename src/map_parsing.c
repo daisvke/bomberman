@@ -32,7 +32,7 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	int		res;
 
 	line = NULL;
-	map_fd = ft_open(env, filename);
+	map_fd = sl_open(env, filename);
 	if (map_fd == ERROR)
 		env->errors[16] = true;
 	i = 0;
@@ -43,12 +43,12 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 		if (res <= 0)
 			break ;
 		env->width = sl_get_width(env, line);
-		ft_free(line);
+		sl_free(line);
 		++i;
 	}
 	env->height = i;
-	ft_close(env, map_fd);
-	line = ft_free(line);
+	sl_close(env, map_fd);
+	line = sl_free(line);
 	sl_check_errors_2(env, res);
 }
 
@@ -79,7 +79,7 @@ void	sl_parse_map_with_gnl(t_env *env, int map_fd, t_count *counter)
 		res = get_next_line(map_fd, &line);
 		if (res <= 0)
 			break ;
-		env->map[i] = malloc(sizeof(*env->map) * (ft_strlen(line) + 1));
+		env->map[i] = malloc(sizeof(*env->map) * (sl_strlen(line) + 1));
 		if (!env->map[i])
 			sl_put_err_code_and_exit_if_map_is_incomplete(env, i);
 		sl_read_line_and_populate_map(env, line, i, counter);
@@ -87,7 +87,7 @@ void	sl_parse_map_with_gnl(t_env *env, int map_fd, t_count *counter)
 		++i;
 	}
 	env->map[i] = NULL;
-	line = ft_free(line);
+	line = sl_free(line);
 	sl_check_errors_2(env, res);
 }
 
@@ -97,10 +97,10 @@ void	sl_parse_map(t_env *env, char *filename)
 	t_count	counter;
 
 	sl_get_window_dimensions(env, filename);
-	env->map = ft_malloc(env, env->height + 1, sizeof(*env->map));
-	map_fd = ft_open(env, filename);
+	env->map = sl_malloc(env, env->height + 1, sizeof(*env->map));
+	map_fd = sl_open(env, filename);
 	counter = sl_init_counter();
 	sl_parse_map_with_gnl(env, map_fd, &counter);
-	ft_close(env, map_fd);
+	sl_close(env, map_fd);
 	sl_check_counter(env, counter);
 }

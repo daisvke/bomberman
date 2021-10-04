@@ -12,7 +12,7 @@
 
 #include "../inc/so_long.h"
 
-int	ft_open(t_env *env, char *filename)
+int	sl_open(t_env *env, char *filename)
 {
 	int	fd;
 
@@ -22,20 +22,20 @@ int	ft_open(t_env *env, char *filename)
 	return (fd);
 }
 
-void	ft_close(t_env *env, int fd)
+void	sl_close(t_env *env, int fd)
 {
 	if (close(fd) == ERROR)
 		sl_put_err_code_and_exit_game(env, 22);
 }
 
-void	*ft_free(void *ptr)
+void	*sl_free(void *ptr)
 {
 	if (ptr)
 		free(ptr);
 	return (NULL);
 }
 
-void	*ft_malloc(t_env *env, size_t num, size_t size)
+void	*sl_malloc(t_env *env, size_t num, size_t size)
 {
 	void	*ptr;
 
@@ -45,7 +45,7 @@ void	*ft_malloc(t_env *env, size_t num, size_t size)
 	return (ptr);
 }
 
-int	ft_strlen(char *str)
+int	sl_strlen(char *str)
 {
 	int	i;
 

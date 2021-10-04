@@ -19,10 +19,10 @@ void	sl_free_buffer(int *buffer[], int height)
 	i = 0;
 	while (i < height)
 	{
-		ft_free(buffer[i]);
+		sl_free(buffer[i]);
 		++i;
 	}
-	buffer = ft_free(buffer);
+	buffer = sl_free(buffer);
 }
 
 void	sl_free_map(t_env *env, char *map[])
@@ -32,10 +32,10 @@ void	sl_free_map(t_env *env, char *map[])
 	i = 0;
 	while (i < env->height)
 	{
-		ft_free(map[i]);
+		sl_free(map[i]);
 		++i;
 	}
-	map = ft_free(map);
+	map = sl_free(map);
 }
 
 void	sl_free_map_when_not_complete(char *map[], int height)
@@ -45,8 +45,8 @@ void	sl_free_map_when_not_complete(char *map[], int height)
 	i = 0;
 	while (i < height)
 	{
-		ft_free(map[i]);
+		sl_free(map[i]);
 		++i;
 	}
-	map = ft_free(map);
+	map = sl_free(map);
 }

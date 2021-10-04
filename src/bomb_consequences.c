@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 16:55:47 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:53:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:49:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void	sl_check_right_for_consequences(t_env *env, t_coord pos, int size)
 	}
 }
 
-void	sl_check_what_is_affected_by_the_explosion(t_env *env, t_items *bomb, \
-	t_coord pos)
+void	sl_check_what_is_affected_by_the_explosion(\
+	t_env *env, t_items *bomb, t_coord pos)
 {
 	int	p1_x;
 	int	p1_y;

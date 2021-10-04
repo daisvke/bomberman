@@ -50,13 +50,13 @@ void	sl_put_collectible_count_to_window(t_env *env)
 
 	pos = sl_assign_pos(15, 0);
 	sl_render_bloc_with_xpm(&env->canvas, &env->p1.icon, pos, true);
-	count = ft_itoa(env, env->p1.moves);
+	count = sl_itoa(env, env->p1.moves);
 	sl_string_put(env, 45, 17, count);
 	free(count);
 	pos = sl_assign_pos(60, 0);
 	sl_render_bloc_with_xpm(&env->canvas, &env->icon_bomb, pos, true);
-	collected = ft_itoa(env, env->tex.bomb.collected - 1);
-	to_collect = ft_itoa(env, env->tex.bomb.to_collect);
+	collected = sl_itoa(env, env->tex.bomb.collected - 1);
+	to_collect = sl_itoa(env, env->tex.bomb.to_collect);
 	sl_string_put(env, 90, 17, collected);
 	free(collected);
 	sl_string_put(env, 100, 17, "/");
@@ -71,7 +71,7 @@ void	sl_put_centered_message_to_window(t_env *env, char *str)
 	int			width;
 	int			height;
 
-	str_len = ft_strlen(str) / 4;
+	str_len = sl_strlen(str) / 4;
 	width = (env->width - str_len) * BLOC_LEN / 2;
 	height = env->height * BLOC_LEN / 2;
 	mlx_set_font(env->mlx_ptr, env->win_ptr, "7x14");

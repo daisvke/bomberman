@@ -6,14 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 00:36:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/12 20:15:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:49:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-static void	sl_clear_upper_segment(t_env *env, t_items *bomb, char *map[], \
-	t_coord pos)
+static void	sl_clear_upper_segment(\
+	t_env *env, t_items *bomb, char *map[], t_coord pos)
 {
 	t_coord	coord;
 	int		x;
@@ -33,8 +33,8 @@ static void	sl_clear_upper_segment(t_env *env, t_items *bomb, char *map[], \
 	}
 }
 
-static void	sl_clear_lower_segment(t_env *env, t_items *bomb, char *map[], \
-	t_coord pos)
+static void	sl_clear_lower_segment(\
+	t_env *env, t_items *bomb, char *map[], t_coord pos)
 {
 	t_coord	coord;
 	int		x;
@@ -54,8 +54,8 @@ static void	sl_clear_lower_segment(t_env *env, t_items *bomb, char *map[], \
 	}
 }
 
-static void	sl_clear_left_segment(t_env *env, t_items *bomb, char *map[], \
-	t_coord pos)
+static void	sl_clear_left_segment(
+	t_env *env, t_items *bomb, char *map[], t_coord pos)
 {
 	t_coord	coord;
 	int		x;
@@ -75,8 +75,8 @@ static void	sl_clear_left_segment(t_env *env, t_items *bomb, char *map[], \
 	}
 }
 
-static void	sl_clear_right_segment(t_env *env, t_items *bomb, char *map[], \
-	t_coord pos)
+static void	sl_clear_right_segment(\
+	t_env *env, t_items *bomb, char *map[], t_coord pos)
 {
 	t_coord	coord;
 	int		x;
@@ -96,8 +96,8 @@ static void	sl_clear_right_segment(t_env *env, t_items *bomb, char *map[], \
 	}
 }
 
-void	sl_clear_segments_of_exploding_bomb(t_env *env, t_items *bomb, \
-	t_coord pos)
+void	sl_clear_segments_of_exploding_bomb(\
+	t_env *env, t_items *bomb, t_coord pos)
 {
 	char		**map;
 

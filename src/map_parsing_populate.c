@@ -6,14 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:32:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:46:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:53:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-void	sl_check_if_map_is_surrounded_by_walls(t_env *env, t_coord pos, \
-	int texture)
+void	sl_check_if_map_is_surrounded_by_walls(\
+	t_env *env, t_coord pos, int texture)
 {
 	int	x;
 	int	y;
@@ -59,8 +59,8 @@ void	sl_assign_sprites_position(t_env *env, int i, t_coord pos, int *count)
 	*count += 1;
 }
 
-void	sl_populate_map_with_textures(t_env *env, char char_to_check, \
-	t_coord pos, t_count *counter)
+void	sl_populate_map_with_textures(\
+	t_env *env, char char_to_check, t_coord pos, t_count *counter)
 {
 	int		i;
 
@@ -73,8 +73,8 @@ void	sl_populate_map_with_textures(t_env *env, char char_to_check, \
 			if (i != COLLECTIBLE)
 				env->map[pos.y][pos.x] = i + '0';
 			else
-				sl_assign_collectible_type_randomly(env, pos, \
-					&counter->collectible);
+				sl_assign_collectible_type_randomly(\
+					env, pos, &counter->collectible);
 			if (i == PLAYER)
 				sl_assign_sprites_position(env, i, pos, &counter->player);
 			if (i == EXIT)

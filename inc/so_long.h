@@ -36,19 +36,19 @@ void	sl_put_nbr_to_terminal(int nbr);
 /*
 ** system calls
 */
-void	ft_close(t_env *env, int fd);
-void	*ft_free(void *ptr);
-void	*ft_malloc(t_env *env, size_t num, size_t size);
-int		ft_open(t_env *env, char *filename);
+void	sl_close(t_env *env, int fd);
+void	*sl_free(void *ptr);
+void	*sl_malloc(t_env *env, size_t num, size_t size);
+int		sl_open(t_env *env, char *filename);
 
 /*
 ** utils
 */
 t_coord	sl_assign_pos(int x, int y);
-char	*ft_itoa(t_env *env, int n);
-char	*ft_strchr(const char *s, int c);
-int		ft_strcmp(char *s1, char *s2);
-int		ft_strlen(char *str);
+char	*sl_itoa(t_env *env, int n);
+char	*sl_strchr(const char *s, int c);
+int		sl_strcmp(char *s1, char *s2);
+int		sl_strlen(char *str);
 
 /*
 ** init

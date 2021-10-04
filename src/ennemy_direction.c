@@ -6,14 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 03:32:01 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/13 03:59:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:50:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-bool	sl_determine_ennemy_direction_up(t_env *env, t_sprite *sprite, \
-	t_coord pos, int len_array[])
+bool	sl_determine_ennemy_direction_up(\
+	t_env *env, t_sprite *sprite, t_coord pos, int len_array[])
 {
 	char	**map;
 
@@ -31,8 +31,8 @@ bool	sl_determine_ennemy_direction_up(t_env *env, t_sprite *sprite, \
 	return (0);
 }
 
-bool	sl_determine_ennemy_direction_down(t_env *env, t_sprite *sprite, \
-	t_coord pos, int len_array[])
+bool	sl_determine_ennemy_direction_down(\
+	t_env *env, t_sprite *sprite, t_coord pos, int len_array[])
 {
 	char	**map;
 
@@ -50,8 +50,8 @@ bool	sl_determine_ennemy_direction_down(t_env *env, t_sprite *sprite, \
 	return (0);
 }
 
-bool	sl_determine_ennemy_direction_left(t_env *env, t_sprite *sprite, \
-	t_coord pos, int len_array[])
+bool	sl_determine_ennemy_direction_left(\
+	t_env *env, t_sprite *sprite, t_coord pos, int len_array[])
 {
 	char	**map;
 
@@ -69,8 +69,8 @@ bool	sl_determine_ennemy_direction_left(t_env *env, t_sprite *sprite, \
 	return (0);
 }
 
-bool	sl_determine_ennemy_direction_right(t_env *env, t_sprite *sprite, \
-	t_coord pos, int len_array[])
+bool	sl_determine_ennemy_direction_right(\
+	t_env *env, t_sprite *sprite, t_coord pos, int len_array[])
 {
 	char	**map;
 

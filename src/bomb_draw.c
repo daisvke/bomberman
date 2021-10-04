@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 05:35:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:56:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 04:50:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ static void	sl_draw_right_segment(\
 	}
 }
 
-void	sl_draw_segments_of_exploding_bomb(t_env *env, t_items *bomb, \
-	t_coord pos)
+void	sl_draw_segments_of_exploding_bomb(\
+	t_env *env, t_items *bomb, t_coord pos)
 {
 	t_explode_states	bomb_states;
 

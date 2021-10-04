@@ -26,7 +26,7 @@ int	sl_exit_game(t_env *env)
 	{
 		mlx_loop_end(env->mlx_ptr);
 		mlx_destroy_display(env->mlx_ptr);
-		ft_free(env->mlx_ptr);
+		sl_free(env->mlx_ptr);
 	}
 	exit(EXIT_SUCCESS);
 }

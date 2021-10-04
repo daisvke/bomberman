@@ -23,7 +23,7 @@ void	sl_put_colored_str_to_terminal(char *str, char *color)
 
 void	sl_put_str_to_terminal(char *str)
 {
-	write(STDOUT_FILENO, str, ft_strlen(str));
+	write(STDOUT_FILENO, str, sl_strlen(str));
 }
 
 void	sl_put_nbr_to_terminal(int nbr)

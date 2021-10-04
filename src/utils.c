@@ -21,7 +21,7 @@ t_coord	sl_assign_pos(int x, int y)
 	return (pos);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int	sl_strcmp(char *s1, char *s2)
 {
 	int		i;
 
@@ -31,7 +31,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return ((unsigned)s1[i] - (unsigned)s2[i]);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*sl_strchr(const char *s, int c)
 {
 	while (*s)
 	{
@@ -44,7 +44,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-int	ft_nbrlen(long long int n)
+int	sl_nbrlen(long long int n)
 {
 	int	len;
 
@@ -54,7 +54,7 @@ int	ft_nbrlen(long long int n)
 	if (n < 0)
 	{
 		n = -n;
-		len = ft_nbrlen(n) + 1;
+		len = sl_nbrlen(n) + 1;
 	}
 	else
 	{
@@ -67,14 +67,14 @@ int	ft_nbrlen(long long int n)
 	return (len);
 }
 
-char	*ft_itoa(t_env *env, int n)
+char	*sl_itoa(t_env *env, int n)
 {
 	char	*res;
 	int		len;
 	long	nb;
 
 	nb = n;
-	len = ft_nbrlen(nb);
+	len = sl_nbrlen(nb);
 	res = malloc(sizeof(*res) * (len + 1));
 	if (!res)
 		sl_put_err_code_and_exit_game(env, 20);
