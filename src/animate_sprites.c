@@ -91,7 +91,7 @@ void	sl_animate_sprite(\
 	if (info->sprite->time == info->sprite->speed * 2)
 	{
 		if (info->apply_to == PLAYER && (coord.x != 0 || coord.y != 0))
-			++env->p1.moves;
+			++env->p1.steps;
 		sl_update_sub_pos_state_2(env, info, img, coord);
 		if (info->apply_to != ENNEMY)
 			info->sprite->curr_dir = 0;

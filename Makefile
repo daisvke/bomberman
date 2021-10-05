@@ -22,6 +22,7 @@ SRC_FILES	=	animate_sprites.c \
 				ennemy_direction.c \
 				ennemy_utils.c \
 				errors.c \
+				exit_img.c \
 				exit_game.c \
 				free.c \
 				get_next_line.c \

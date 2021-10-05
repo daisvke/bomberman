@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 05:15:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 16:53:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	sl_put_back_exit_on_map(t_env *env);
 void	sl_assign_ennemy_curr_dir(t_sprite *sprite, int i);
 void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite);
 void	sl_get_max_len(t_sprite *sprite, int len_array[]);
-int	sl_keep_direction_if_no_wall(\
+int		sl_keep_direction_if_no_obstacle(\
 	t_env *env, char **map, int curr_dir, t_coord pos);
 void	sl_read_and_animate_ennemies(t_env *env);
 
@@ -199,8 +199,9 @@ void	sl_free_map(t_env *env, char *map[]);
 void	sl_free_map_when_not_complete(char *map[], int height);
 
 /*
-** exit game
+** exit
 */
+void	sl_destroy_images(t_env *env);
 int		sl_exit_game(t_env *env);
 void	sl_exit_when_game_clear(t_env *env);
 void	sl_exit_when_game_over(t_env *env);

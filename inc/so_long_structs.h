@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:40:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 05:11:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:55:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_sprite
 	t_coord			sub_pos;
 	int				speed;
 	int				time;
-	int				moves;
+	int				steps;
 }					t_sprite;
 
 typedef struct s_explode_states
@@ -140,6 +140,12 @@ typedef struct s_textures
 	t_ennemies	ennemies;
 }				t_textures;
 
+typedef struct s_status
+{
+	t_img	p1;
+	t_img	bomb;
+}			t_status;
+
 typedef struct s_env
 {
 	void		*mlx_ptr;
@@ -151,8 +157,7 @@ typedef struct s_env
 	int			**buffer_bkgd;
 	t_textures	tex;
 	t_sprite	p1;
-	t_img		icon_p1;
-	t_img		icon_bomb;
+	t_status	icons;
 	bool		errors[ERR_MAX];
 	char		*stage_name;
 	bool		game_clear;

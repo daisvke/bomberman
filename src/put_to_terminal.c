@@ -50,6 +50,6 @@ void	sl_put_nbr_to_terminal(int nbr)
 void	sl_put_steps_on_terminal(t_env *env)
 {
 	sl_put_str_to_terminal("> Steps:\t\t");
-	sl_put_nbr_to_terminal(env->p1.moves);
+	sl_put_nbr_to_terminal(env->p1.steps);
 	sl_put_str_to_terminal("\n\n");
 }

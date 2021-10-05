@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:23:20 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 05:19:37 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:23:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	sl_no_wall(char **map, t_coord pos)
 	return (map[y][x] != MAP_WALL);
 }
 
-int	sl_keep_direction_if_no_wall(\
+int	sl_keep_direction_if_no_obstacle(\
 	t_env *env, char **map, int curr_dir, t_coord pos)
 {
 	t_coord	coord;

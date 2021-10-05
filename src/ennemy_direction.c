@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 03:32:01 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 05:15:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:23:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 
 	map = env->map;
 	pos = sl_assign_pos(sprite->pos.x, sprite->pos.y);
-	keep = sl_keep_direction_if_no_wall(env, map, sprite->curr_dir, pos);
+	keep = sl_keep_direction_if_no_obstacle(env, map, sprite->curr_dir, pos);
 	if (keep == true)
 		return ;
 	sprite->curr_dir = 0;

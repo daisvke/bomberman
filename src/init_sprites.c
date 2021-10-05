@@ -26,7 +26,7 @@ void	sl_init_sprite(t_sprite *sprite, int x, int y, int speed)
 {
 	sprite->alive = true;
 	sprite->time_death = 0;
-	sprite->moves = 0;
+	sprite->steps = 0;
 	sprite->curr_dir = 0;
 	sprite->curr_state = &sprite->img.down.one;
 	sprite->sub_pos = sl_assign_pos(0, 0);
