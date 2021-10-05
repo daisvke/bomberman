@@ -1,6 +1,7 @@
 NAME		=	so_long
 CC			=	clang $(C_FLAGS)
-C_FLAGS		=	-g -Wvla -Wall -Wextra -Werror $(MEM)
+C_FLAGS		=	-g -Wvla -Wall -Wextra -Werror $(INC)
+INC			=	-I inc
 MEM			=	-fsanitize=address
 
 LIB_FLAGS	=	-lX11 -lXext -lm -lmlx
@@ -70,8 +71,7 @@ $(NAME): mlx $(OBJ)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p obj/
-				@$(CC) -c $< -o $@ > /dev/null 2>&1
-
+				@$(CC) -c $< -o $@
 clean:
 				@make -s clean -C $(MLX_DIR)
 				@$(RM) $(OBJ_DIR)

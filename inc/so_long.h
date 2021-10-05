@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 04:38:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:15:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ void	sl_put_back_exit_on_map(t_env *env);
 void	sl_assign_ennemy_curr_dir(t_sprite *sprite, int i);
 void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite);
 void	sl_get_max_len(t_sprite *sprite, int len_array[]);
-int		sl_keep_direction_if_no_wall(\
-	char **map, t_coord bomb, int curr_dir, t_coord pos);
+int	sl_keep_direction_if_no_wall(\
+	t_env *env, char **map, int curr_dir, t_coord pos);
 void	sl_read_and_animate_ennemies(t_env *env);
 
 /*

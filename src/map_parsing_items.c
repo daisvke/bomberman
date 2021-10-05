@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 t_items	*sl_get_item_by_its_code(t_env *env, int code, int **collected, int i)
 {

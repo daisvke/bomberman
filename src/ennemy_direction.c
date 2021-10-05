@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 03:32:01 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 04:50:55 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:15:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 bool	sl_determine_ennemy_direction_up(\
 	t_env *env, t_sprite *sprite, t_coord pos, int len_array[])
@@ -92,14 +92,12 @@ void	sl_determine_ennemy_direction(t_env *env, t_sprite *sprite)
 {
 	char	**map;
 	t_coord	pos;
-	t_coord	bomb_pos;
 	int		len_array[4];
 	int		keep;
 
 	map = env->map;
 	pos = sl_assign_pos(sprite->pos.x, sprite->pos.y);
-	bomb_pos = env->tex.bomb.pos;
-	keep = sl_keep_direction_if_no_wall(map, bomb_pos, sprite->curr_dir, pos);
+	keep = sl_keep_direction_if_no_wall(env, map, sprite->curr_dir, pos);
 	if (keep == true)
 		return ;
 	sprite->curr_dir = 0;

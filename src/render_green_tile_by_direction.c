@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 void	sl_render_green_tile_when_going_up(\
 	t_env *env, int curr_dir, t_coord map_pos, t_coord pos)

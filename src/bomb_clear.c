@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 static void	sl_clear_upper_segment(\
 	t_env *env, t_items *bomb, char *map[], t_coord pos)

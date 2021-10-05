@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 20:03:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 04:24:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 04:45:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 int	sl_get_color_from_img(t_img *img, int x, int y)
 {
@@ -71,9 +71,9 @@ void	sl_render_bloc_with_xpm(\
 {
 	int	x;
 	int	y;
-	int	color;
 	int	i;
 	int	j;
+	int	color;
 
 	x = pos.x;
 	y = pos.y;

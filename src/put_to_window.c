@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:44:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 04:37:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 void	sl_string_put(t_env *env, int x, int y, char *str)
 {
@@ -49,7 +49,7 @@ void	sl_put_collectible_count_to_window(t_env *env)
 	t_coord	pos;
 
 	pos = sl_assign_pos(15, 0);
-	sl_render_bloc_with_xpm(&env->canvas, &env->p1.icon, pos, true);
+	sl_render_bloc_with_xpm(&env->canvas, &env->icon_p1, pos, true);
 	count = sl_itoa(env, env->p1.moves);
 	sl_string_put(env, 45, 17, count);
 	free(count);

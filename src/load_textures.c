@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:40:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:49:39 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 04:09:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 void	sl_load_texture(t_env *env, t_img *img, char *path_to_file)
 {
@@ -19,6 +19,10 @@ void	sl_load_texture(t_env *env, t_img *img, char *path_to_file)
 	int		w;
 	int		h;
 
+	mlx = NULL;
+	addr = NULL;
+	w = 0;
+	h = 0;
 	mlx = &img->mlx_img;
 	*mlx = mlx_xpm_file_to_image(env->mlx_ptr, path_to_file, &w, &h);
 	if (!img->mlx_img)
@@ -79,7 +83,7 @@ void	sl_load_all_textures(t_env *env)
 	sl_load_set_bomb(env);
 	sl_load_bomb_explode(env);
 	sl_load_white_bomber(env);
-	sl_load_texture(env, &env->p1.icon, "./img/display-white-icon.xpm");
+	sl_load_texture(env, &env->icon_p1, "./img/display-white-icon.xpm");
 	sl_load_texture(env, &env->icon_bomb, "./img/display-bomb.xpm");
 	sl_load_ennemies(env);
 	sl_load_exit(env);

@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:48:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 05:17:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 int	sl_get_width(t_env *env, char *line)
 {
@@ -32,6 +32,7 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	int		res;
 
 	line = NULL;
+	map_fd = 0;
 	map_fd = sl_open(env, filename);
 	if (map_fd == ERROR)
 		env->errors[16] = true;
@@ -74,6 +75,7 @@ void	sl_parse_map_with_gnl(t_env *env, int map_fd, t_count *counter)
 
 	i = 0;
 	res = 1;
+	line = NULL;
 	while (res > 0)
 	{
 		res = get_next_line(map_fd, &line);

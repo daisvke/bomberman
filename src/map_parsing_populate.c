@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 void	sl_check_if_map_is_surrounded_by_walls(\
 	t_env *env, t_coord pos, int texture)

@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 19:55:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:40:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:11:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 void	sl_render_p1(t_env *env)
 {
@@ -33,9 +33,9 @@ void	sl_render_bombs(t_env *env)
 {
 	int	i;
 
-	i = 0;
 	if (env->tex.bomb.set_bombs_nbr > 0)
 	{
+		i = 0;
 		while (i < env->tex.bomb.collected)
 		{
 			if (env->tex.bomb.set_bombs[i].draw == true)

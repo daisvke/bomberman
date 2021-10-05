@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:23:20 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 03:40:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:19:37 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "so_long.h"
 
 void	sl_assign_ennemy_curr_dir(t_sprite *sprite, int i)
 {
@@ -27,14 +27,27 @@ void	sl_assign_ennemy_curr_dir(t_sprite *sprite, int i)
 		*curr_dir |= CR_RIGHT;
 }
 
-bool	sl_no_bomb(t_coord bomb, t_coord pos)
+bool	sl_no_bomb(t_bombs *bombs, t_coord pos)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	int		i;
 
 	x = pos.x;
 	y = pos.y;
-	return (x != bomb.x && y != bomb.y);
+	if (bombs->set_bombs_nbr > 0)
+	{
+		i = 0;
+		while (i < bombs->collected)
+		{
+			if (bombs->set_bombs[i].draw == true)
+				if (x == bombs->set_bombs[i].pos.x)
+					if (y == bombs->set_bombs[i].pos.y)
+						return (false);
+			++i;
+		}
+	}
+	return (true);
 }
 
 bool	sl_no_wall(char **map, t_coord pos)
@@ -48,26 +61,28 @@ bool	sl_no_wall(char **map, t_coord pos)
 }
 
 int	sl_keep_direction_if_no_wall(\
-	char **map, t_coord bomb, int curr_dir, t_coord pos)
+	t_env *env, char **map, int curr_dir, t_coord pos)
 {
 	t_coord	coord;
 	int		dir;
+	t_bombs	*bombs;
 
+	bombs = &env->tex.bomb;
 	coord = sl_assign_pos(pos.x, pos.y - 1);
 	dir = curr_dir & CR_UP;
-	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bomb, coord))
+	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bombs, coord))
 		return (KEEP);
 	coord = sl_assign_pos(pos.x, pos.y + 1);
 	dir = curr_dir & CR_DOWN;
-	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bomb, coord))
+	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bombs, coord))
 		return (KEEP);
 	coord = sl_assign_pos(pos.x - 1, pos.y);
 	dir = curr_dir & CR_LEFT;
-	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bomb, coord))
+	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bombs, coord))
 		return (KEEP);
 	coord = sl_assign_pos(pos.x + 1, pos.y);
 	dir = curr_dir & CR_RIGHT;
-	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bomb, coord))
+	if (dir && sl_no_wall(map, coord) && sl_no_bomb(bombs, coord))
 		return (KEEP);
 	return (0);
 }

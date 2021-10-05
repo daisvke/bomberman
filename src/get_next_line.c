@@ -6,11 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/02 16:30:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/04 05:39:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/get_next_line.h"
+#include "get_next_line.h"
 
 size_t	gnl_get_char_index(char *str, char c, bool increment)
 {
@@ -60,6 +60,7 @@ int	gnl_get_line(char **data, int fd)
 	int			res;
 	char		*tmp;
 
+	res = 0;
 	while (gnl_get_char_index(*data, '\n', false) == NOT_FOUND)
 	{
 		res = read(fd, buffer, BUFFER_SIZE);

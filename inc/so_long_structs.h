@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:40:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 04:08:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 05:11:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct s_sprite
 	int				speed;
 	int				time;
 	int				moves;
-	t_img			icon;
 }					t_sprite;
 
 typedef struct s_explode_states
@@ -109,7 +108,6 @@ typedef struct s_bombs
 	t_items				item_bombs[ITEM_LIMIT];
 	int					set_bombs_nbr;
 	t_items				set_bombs[ITEM_LIMIT];
-	t_coord				pos;
 	t_states			set_states;
 	void				*curr_state;
 	t_explode_states	explode_states;
@@ -153,6 +151,7 @@ typedef struct s_env
 	int			**buffer_bkgd;
 	t_textures	tex;
 	t_sprite	p1;
+	t_img		icon_p1;
 	t_img		icon_bomb;
 	bool		errors[ERR_MAX];
 	char		*stage_name;
