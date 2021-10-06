@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 05:39:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 19:46:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,18 @@ int	gnl_run_and_return(char **data, char **line, int fd)
 int	get_next_line(int fd, char **line)
 {
 	static char	*data;
+	char		*data_cpy;
+	int			res;
 
 	if (BUFFER_SIZE <= 0 || !line)
 		return (ERROR);
-	return (gnl_run_and_return(&data, line, fd));
+	data_cpy = data;
+	res = gnl_run_and_return(&data_cpy, line, fd);
+	if (res == REACHED_EOF)
+	{
+		free(data_cpy);
+		data_cpy = NULL;
+	}
+	data = data_cpy;
+	return (res);
 }

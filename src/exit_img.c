@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:45:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 17:15:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 17:21:25 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ void	sl_destroy_images(t_env *env)
 	sl_destroy_img(env, &env->tex.ennemies.img.down.one.mlx_img);
 	sl_destroy_img(env, &env->tex.ennemies.img.down.two.mlx_img);
 	sl_destroy_img(env, &env->tex.ennemies.img.down.three.mlx_img);
+	sl_destroy_img(env, &env->tex.ennemies.img.left.one.mlx_img);
+	sl_destroy_img(env, &env->tex.ennemies.img.left.two.mlx_img);
+	sl_destroy_img(env, &env->tex.ennemies.img.left.three.mlx_img);
+	sl_destroy_img(env, &env->tex.ennemies.img.right.one.mlx_img);
+	sl_destroy_img(env, &env->tex.ennemies.img.right.two.mlx_img);
+	sl_destroy_img(env, &env->tex.ennemies.img.right.three.mlx_img);
+	sl_destroy_img(env, &env->tex.ennemies.dead.mlx_img);
 	
 	sl_destroy_img(env, &env->tex.exit_pipe.state0.mlx_img);
 	sl_destroy_img(env, &env->tex.exit_pipe.state1.mlx_img);
@@ -77,4 +84,5 @@ void	sl_destroy_images(t_env *env)
 	sl_destroy_img(env, &env->tex.wall.mlx_img);
 	sl_destroy_img(env, &env->tex.tile_shadow.mlx_img);
 	sl_destroy_img(env, &env->icons.p1.mlx_img);
+	sl_destroy_img(env, &env->icons.bomb.mlx_img);
 }

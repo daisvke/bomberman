@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:19:22 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 06:03:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/05 20:26:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	sl_put_collectible_count_to_window(t_env *env)
 	t_coord	pos;
 
 	pos = sl_assign_pos(15, 0);
-//	sl_render_bloc_with_xpm(&env->canvas, &env->icons.p1, pos, true);
+	sl_render_bloc_with_xpm(&env->canvas, &env->icons.p1, pos, true);
 	count = sl_itoa(env, env->p1.steps);
 	sl_string_put(env, 45, 17, count);
 	free(count);
