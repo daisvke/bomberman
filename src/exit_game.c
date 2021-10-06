@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 16:53:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:21:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	sl_put_err_code_and_exit_game(t_env *env, int err_code)
 	sl_put_nbr_to_terminal(err_code);
 	err_message = sl_get_err_message_from_err_code(err_code);
 	sl_put_colored_str_to_terminal(err_message, STR_RED);
+	if (err_code >= 3 && err_code <= 5)
+		exit(EXIT_SUCCESS);
 	sl_exit_game(env);
 }
 

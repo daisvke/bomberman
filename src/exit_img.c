@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:45:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 17:21:25 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:19:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	sl_destroy_img(t_env *env, void **mlx_img)
 {
+	//del ?
 	if (*mlx_img)
 		mlx_destroy_image(env->mlx_ptr, *mlx_img);
 }
