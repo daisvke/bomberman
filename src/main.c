@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:05:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 05:53:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 21:11:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sl_handle_events(t_env *env)
 
 int	main(int argc, char *argv[])
 {
-	t_env	env;
+	static t_env	env;
 
 	sl_check_inputs(&env, argc, argv[1]);
 	sl_init_all(&env, argv);

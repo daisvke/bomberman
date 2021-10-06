@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 05:35:13 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 20:58:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 21:14:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ int	sl_open(t_env *env, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == ERROR)
-	{
-		env->errors[19] =  true;
 		sl_put_err_code_and_exit_game(env, 19);
-	}
 	return (fd);
 }
 
