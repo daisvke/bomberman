@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:37:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:24:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:59:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define FILE_EXTENSION_LEN	3
 # define SAME				0
 
-# define ERR_MAX			23
+# define ERR_MAX			22
 
 # define BLOC_LEN			24
 # define MAP_ELEMS			"01CEPM"

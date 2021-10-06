@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 20:21:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:59:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,24 @@
 
 int	sl_exit_game(t_env *env)
 {
+	bool	*e;
+
+	e = env->errors;
 	if (env->map)
 		sl_free_map(env, env->map);
-	if (env->buffer_bkgd)
-		sl_free_buffer(env->buffer_bkgd, env->height * BLOC_LEN);
-	if (env->win_ptr)
-		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-	sl_destroy_images(env);
-	if (env->mlx_ptr)
+	if (!e[13] && !e[14] && !e[15] && !e[16] && !e[17] && !e[19])
 	{
-		mlx_loop_end(env->mlx_ptr);
-		mlx_destroy_display(env->mlx_ptr);
-		sl_free(env->mlx_ptr);
+		if (env->buffer_bkgd)
+			sl_free_buffer(env->buffer_bkgd, env->height * BLOC_LEN);
+		if (env->win_ptr)
+			mlx_destroy_window(env->mlx_ptr, env->win_ptr);
+		sl_destroy_images(env);
+		if (env->mlx_ptr)
+		{
+			mlx_loop_end(env->mlx_ptr);
+			mlx_destroy_display(env->mlx_ptr);
+			sl_free(env->mlx_ptr);
+		}
 	}
 	exit(EXIT_SUCCESS);
 }

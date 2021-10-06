@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 05:35:13 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:33:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:58:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,11 @@ int	sl_open(t_env *env, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == ERROR)
-		sl_put_err_code_and_exit_game(env, 21);
+	{
+		env->errors[19] =  true;
+		sl_put_err_code_and_exit_game(env, 19);
+	}
 	return (fd);
-}
-
-void	sl_close(t_env *env, int fd)
-{
-	if (close(fd) == ERROR)
-		sl_put_err_code_and_exit_game(env, 22);
-}
-
-void	*sl_free(void *ptr)
-{
-	if (ptr)
-		free(ptr);
-	return (NULL);
 }
 
 void	*sl_malloc(t_env *env, size_t num, size_t size)
@@ -43,6 +33,19 @@ void	*sl_malloc(t_env *env, size_t num, size_t size)
 	if (!ptr)
 		sl_put_err_code_and_exit_game(env, 20);
 	return (ptr);
+}
+
+void	sl_close(t_env *env, int fd)
+{
+	if (close(fd) == ERROR)
+		sl_put_err_code_and_exit_game(env, 21);
+}
+
+void	*sl_free(void *ptr)
+{
+	if (ptr)
+		free(ptr);
+	return (NULL);
 }
 
 int	sl_strlen(char *str)

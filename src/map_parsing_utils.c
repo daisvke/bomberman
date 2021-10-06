@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 22:38:44 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:46:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:57:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	sl_check_errors_2(t_env *env, int res)
 {
 	if (res == ERROR)
-		env->errors[18] = true;
+		env->errors[16] = true;
 	if (env->height < 2 || env->width < 2)
-		env->errors[19] = true;
+		env->errors[17] = true;
 }
 
 void	sl_check_counter(t_env *env, t_count counter)

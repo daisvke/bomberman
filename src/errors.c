@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 16:38:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 20:55:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:58:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ void	sl_fill_array_with_err_2(char **array)
 	array[13] = "map has to contain at least one collectible";
 	array[14] = "map has to contain one player";
 	array[15] = "map has to contain an exit";
-	array[16] = "map file failed to open";
-	array[17] = "map is not a rectangle";
-	array[18] = "function get_next_line failed";
-	array[19] = "map is too small";
+	array[16] = "function get_next_line failed";
+	array[17] = "map is too small";
+	array[18] = "map is not a rectangle";
+	array[19] = "failed to open file";
 	array[20] = "failed to allocate memory";
-	array[21] = "failed to open file";
-	array[22] = "failed to close file";
+	array[21] = "failed to close file";
 }
 
 char	**sl_get_array_of_error_messages(char *errors[])

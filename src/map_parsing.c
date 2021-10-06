@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 03:44:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 17:13:25 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 21:02:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	sl_get_width(t_env *env, char *line)
 	while (line[j])
 		++j;
 	if (env->width && j != env->width)
-		env->errors[17] = true;
+		env->errors[18] = true;
 	return (j);
 }
 
@@ -32,10 +32,7 @@ void	sl_get_window_dimensions(t_env *env, char *filename)
 	int		res;
 
 	line = NULL;
-	map_fd = 0;
 	map_fd = sl_open(env, filename);
-	if (map_fd == ERROR)
-		env->errors[16] = true;
 	i = 0;
 	res = 1;
 	while (res > 0)
