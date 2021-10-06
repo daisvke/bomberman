@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 02:51:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 21:15:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:50:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	sl_exit_game(t_env *env)
 		sl_free_buffer(env->buffer_bkgd, env->height * BLOC_LEN);
 	if (env->win_ptr)
 		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-	sl_destroy_images(env);
+	sl_destroy_all_images(env);
 	if (env->mlx_ptr)
 	{
 		mlx_loop_end(env->mlx_ptr);

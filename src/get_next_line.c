@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 19:46:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 22:54:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	get_next_line(int fd, char **line)
 		return (ERROR);
 	data_cpy = data;
 	res = gnl_run_and_return(&data_cpy, line, fd);
-	if (res == REACHED_EOF)
+	if (res == REACHED_EOF || res == ERROR)
 	{
 		free(data_cpy);
 		data_cpy = NULL;

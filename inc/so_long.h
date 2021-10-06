@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/05 16:53:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:49:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,13 @@ void	sl_free_map_when_not_complete(char *map[], int height);
 /*
 ** exit
 */
-void	sl_destroy_images(t_env *env);
+void	sl_destroy_all_images(t_env *env);
+void	sl_destroy_bomb(t_env *env);
+void	sl_destroy_collectibles(t_env *env);
+void	sl_destroy_ennemies(t_env *env);
+void	sl_destroy_exit(t_env *env);
+void	sl_destroy_img(t_env *env, void **mlx_img);
+void	sl_destroy_white_bomber(t_env *env);
 int		sl_exit_game(t_env *env);
 void	sl_exit_when_game_clear(t_env *env);
 void	sl_exit_when_game_over(t_env *env);
