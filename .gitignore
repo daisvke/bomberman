@@ -2,6 +2,7 @@
 .*.c.sw?
 .*.sw?
 .*.h.sw?
+.swp
 
 # Prerequisites
 *.d

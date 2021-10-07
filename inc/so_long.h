@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 20:19:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 23:49:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/07 01:56:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	sl_load_exit(t_env *env);
 void	sl_load_texture(t_env *env, t_img *img, char *path_to_file);
 void	sl_load_white_bomber(t_env *env);
 
-void	sl_handle_keypress_bb(int keycode, t_env *env);
 /*
 ** keypress
 */
@@ -186,17 +185,17 @@ void	sl_kill_ennemy(t_env *env, t_sprite *ennemy);
 void	sl_kill_p1(t_env *env);
 
 /*
-** errors
-*/
-char	*sl_get_err_message_from_err_code(int err_code);
-void	sl_print_err_message(int err_code);
-
-/*
 ** free
 */
 void	sl_free_buffer(int *buffer[], int height);
 void	sl_free_map(t_env *env, char *map[]);
 void	sl_free_map_when_not_complete(char *map[], int height);
+
+/*
+** errors
+*/
+char	*sl_get_err_message_from_err_code(int err_code);
+void	sl_print_err_message(int err_code);
 
 /*
 ** exit

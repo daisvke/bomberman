@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 20:21:03 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/03 21:25:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/07 01:52:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	sl_check_each_element(t_env *env, char **map, int x, int y)
 		env->p1.alive = false;
 	if (map[y][x] == MAP_ENNEMY)
 		sl_find_which_ennemy_is_dead(env, x, y);
+	collectible = sl_is_collectible(map[y][x]);
 	if (map[y][x] != MAP_WALL)
 		map[y][x] = MAP_FLOOR;
-	collectible = sl_is_collectible(map[y][x]);
 	if (collectible == 1)
 	{
 		sl_find_and_turn_off_item(bomb->item_bombs, bomb->to_collect, x, y);
