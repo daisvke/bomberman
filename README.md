@@ -8,8 +8,8 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 
 ## Commands
 * QWERTY<br />
-Up<tr />= W<br />
-Down<tr />= S<br />
+Up    = W<br />
+Down  = S<br />
 Left  = A<br />
 Right = D
 
