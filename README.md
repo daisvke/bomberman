@@ -6,9 +6,9 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 * At every move the current number of movements is displayed on the window.
 * Ennemy patrols cause the player to lose in case of contact.
 * Collectibles include :<br />
-<img src="/img/item-speed.xpm" width="100%" /> Speed = allows the player to move faster<br />
-<img src="/img/item-bomb.xpm" width="100%" />Bomb = allows the player to set an additional bomb on the field<br />
-<img src="/img/item-fire.xpm" width="100%" />Fire = increases the power of the bombs set by the player
+<img src="/img/item-speed.xpm" /> Speed = allows the player to move faster<br />
+<img src="/img/item-bomb.xpm"/>Bomb = allows the player to set an additional bomb on the field<br />
+<img src="/img/item-fire.xpm" />Fire = increases the power of the bombs set by the player
 
 ## Commands
 * QWERTY<br />
