@@ -7,13 +7,13 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 * Ennemy patrols cause the player to lose in case of contact.
 
 ## Commands
-* QWERTY
-Up    = W<br />
-Down  = S<br />
+* QWERTY<br />
+Up<tr />= W<br />
+Down<tr />= S<br />
 Left  = A<br />
 Right = D
 
-* AZERTY
+* AZERTY<br />
 Up    = Z<br />
 Down  = S<br />
 Left  = Q<br />
@@ -24,7 +24,7 @@ ESC
 
 ## Map
 * The program taked as a first argument a map description file with the .ber extension.
-* The map must be composed of only 5 possible characters:
+* The map must be composed of only 5 possible characters:<br />
 0 for an empty space<br />
 1 for a wall<br />
 C for a collectible<br />
