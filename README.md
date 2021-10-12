@@ -5,6 +5,10 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 * The player’s goal is to collect all the collectible bombs present on the map, then to escape from the revealed pipe with minimal movement.
 * At every move the current number of movements is displayed on the window.
 * Ennemy patrols cause the player to lose in case of contact.
+* Collectibles include :<br />
+Speed = allows the player to move faster<br />
+Bomb = allows the player to set an additional bomb on the field<br />
+Fire = increases the power of the bombs set by the player
 
 ## Commands
 * QWERTY<br />
@@ -24,12 +28,13 @@ ESC
 
 ## Map
 * The program taked as a first argument a map description file with the .ber extension.
-* The map must be composed of only 5 possible characters:<br />
+* The map must be composed of only 6 possible characters:<br />
 0 for an empty space<br />
 1 for a wall<br />
 C for a collectible<br />
 E for map exit<br />
 P for the player’s starting position
+M for an ennemy's starting position
 
 This is a simple valid map:
 ```
