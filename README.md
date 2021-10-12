@@ -33,7 +33,7 @@ ESC
 1 for a wall <img src="/screenshots/wall.png" /><br />
 C for a collectible<br />
 E for map exit <img src="/screenshots/exit.png" /><br />
-P for the player’s starting position<br />
+P for the player’s starting position img src="/screenshots/player.png" /><br />
 M for an ennemy's starting position <img src="/screenshots/ennemy.png" />
 
 This is a simple valid map:
