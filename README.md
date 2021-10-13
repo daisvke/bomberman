@@ -11,20 +11,21 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 <img src="/screenshots/item-fire.png" /> Fire = increases the power of the bombs set by the player
 
 ## Commands
-* QWERTY<br />
+* Move
+QWERTY<br />
 Up = W<br />
 Down = S<br />
 Left = A<br />
-Right = D
-
-* AZERTY<br />
+Right = D<br />
+<br />
+AZERTY<br />
 Up = Z<br />
 Down = S<br />
 Left = Q<br />
 Right = D<br />
-<br />
-Set bomb = B<br />
-Quit = ESC
+
+* Set bomb = B<br />
+* Quit = ESC
 
 ## Map
 * The program taked as a first argument a map description file with the .ber extension.
