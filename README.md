@@ -11,7 +11,7 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 <img src="/screenshots/item-fire.png" /> Fire = increases the power of the bombs set by the player
 
 ## Commands
-* Move
+* Move<br />
 QWERTY<br />
 Up = W<br />
 Down = S<br />
@@ -23,7 +23,6 @@ Up = Z<br />
 Down = S<br />
 Left = Q<br />
 Right = D<br />
-
 * Set bomb = B<br />
 * Quit = ESC
 
