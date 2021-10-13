@@ -21,10 +21,10 @@ Right = D
 Up = Z<br />
 Down = S<br />
 Left = Q<br />
-Right = D
-
-* Quit
-ESC
+Right = D<br />
+<br />
+Set bomb = B<br />
+Quit = ESC
 
 ## Map
 * The program taked as a first argument a map description file with the .ber extension.
