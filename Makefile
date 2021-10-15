@@ -4,7 +4,7 @@ C_FLAGS		=	-g -Wvla -Wall -Wextra -Werror $(INC)
 INC			=	-I inc
 MEM			=	-fsanitize=address
 
-LIB_FLAGS	=	-lX11 -lXext -lm -lmlx
+LIB_FLAGS	=	-lX11 -lXext -lm
 MAKE_LIB	=	make -s -C
 MLX_DIR		=	minilibx-linux/
 MLX			=	minilibx-linux/libmlx_Linux.a
@@ -73,7 +73,7 @@ $(NAME): mlx $(OBJ)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p obj/
-				@$(CC) -c $< -o $@
+				@$(CC) -c -Imlx $< -o $@
 clean:
 				@make -s clean -C $(MLX_DIR)
 				@$(RM) $(OBJ_DIR)
@@ -83,4 +83,4 @@ fclean: clean
 
 re: clean all
 
-.PHONY: all clean fclean re
+.PHONY: all mlx clean fclean re
