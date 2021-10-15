@@ -7,7 +7,7 @@ MEM			=	-fsanitize=address
 LIB_FLAGS	=	-lX11 -lXext -lm
 MAKE_LIB	=	make -s -C
 MLX_DIR		=	minilibx-linux/
-MLX			=	minilibx-linux/libmlx_Linux.a
+MLX			=	minilibx-linux/libmlx.a
 
 RM			=	rm -rf
 
