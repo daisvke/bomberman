@@ -73,7 +73,7 @@ $(NAME): mlx $(OBJ)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p obj/
-				@$(CC) -c -Imlx $< -o $@
+				@$(CC) -c -I$(MLX_DIR) $< -o $@
 clean:
 				@make -s clean -C $(MLX_DIR)
 				@$(RM) $(OBJ_DIR)
