@@ -1,7 +1,10 @@
 # so_long
 This project is a small 2D Bomberman game using minilibx, a graffic library used at 42. It uses textures, sprites and tiles.
 
+https://user-images.githubusercontent.com/65622360/137594197-e525784d-8baf-49d2-9584-9888fe649215.mov
+
 ## Description
+
 * The player’s goal is to collect all the collectible bombs present on the map, then to escape from the revealed pipe with minimal movement.
 * At every move the current number of movements is displayed on the window.
 * Ennemy patrols cause the player to lose in case of contact.
@@ -11,6 +14,12 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 <img src="/screenshots/item-fire.png" /> Fire = increases the power of the bombs set by the player
 
 ## Commands
+* Run<br />
+```
+make
+./so_long [map]       ex: ./so_long maps/map_large.ber
+```
+
 * QWERTY<br />
 Up = W<br />
 Down = S<br />
