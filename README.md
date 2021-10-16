@@ -14,6 +14,12 @@ https://user-images.githubusercontent.com/65622360/137594197-e525784d-8baf-49d2-
 <img src="/screenshots/item-fire.png" /> Fire = increases the power of the bombs set by the player
 
 ## Commands
+* Run<br />
+```
+make
+./so_long [map]       ex: ./so_long maps/map.ber
+```
+
 * QWERTY<br />
 Up = W<br />
 Down = S<br />
