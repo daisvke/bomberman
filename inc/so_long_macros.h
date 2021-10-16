@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:37:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/11 03:14:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/15 18:33:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define MAP_ELEMS			"01CEPM"
 # define MAP_COLLECTIBLES	"BFS"
 
-# define ENNEMY_LIMIT		30
-# define ITEM_LIMIT			30
+# define ENNEMY_LIMIT		20
+# define ITEM_LIMIT			50
 
 # define MAP_FLOOR			'0'
 # define MAP_WALL			'1'

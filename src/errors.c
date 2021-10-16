@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 16:38:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 20:58:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/10/16 22:43:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sl_fill_array_with_err_1(char **array)
 	array[0] = "failed to load texture";
 	array[1] = "mlx init failed";
 	array[2] = "failed to create new window";
-	array[3] = "not enough arguments";
+	array[3] = "\nUsage:\t\t./so_long [map]\nEx:\t\t./so_long maps/map_large.ber";
 	array[4] = "map's file has no extension";
 	array[5] = "map's file has the wrong extension (needs to be .ber)";
 	array[6] = "memory allocation for the buffer failed";
