@@ -81,6 +81,6 @@ clean:
 fclean: clean
 				$(RM) $(MLX) $(NAME)
 
-re: clean all
+re: fclean all
 
 .PHONY: all mlx clean fclean re
