@@ -1,8 +1,9 @@
 NAME		=	so_long
 CC			=	clang $(C_FLAGS)
-C_FLAGS		=	-g -Wvla -Wall -Wextra -Werror $(INC)
+C_FLAGS		=	-Wall -Wextra -Werror $(OPT) $(INC)
 INC			=	-I inc
-MEM			=	-fsanitize=address
+MEM			=	-g3 -fsanitize=address
+OPT			=	-O3
 
 LIB_FLAGS	=	-lX11 -lXext -lm
 MAKE_LIB	=	make -s -C

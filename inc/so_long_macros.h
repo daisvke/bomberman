@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 05:37:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/15 18:33:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/20 01:24:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@
 /*
 ** speeds
 */
-# define PLAYER_SPEED		170
-# define ENNEMY_SPEED		340
-# define BOMB_SET_TIME		2280
+# define PLAYER_SPEED		250
+# define ENNEMY_SPEED		500
+# define BOMB_SET_TIME		4280
 # define BOMB_EXPLODE_TIME	1000
-# define REVEAL_EXIT_SPEED	30
+# define REVEAL_EXIT_SPEED	400
 
 /*
 ** determine ennemy position
