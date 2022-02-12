@@ -6,7 +6,7 @@ https://user-images.githubusercontent.com/65622360/137594197-e525784d-8baf-49d2-
 ## Description
 
 * The player’s goal is to collect all the collectible bombs present on the map, then to escape from the revealed pipe with minimal movement.
-* At every move the current number of movements is displayed on the window.
+* At each move the current number of movements is updated on the window.
 * Ennemy patrols cause the player to lose in case of contact.
 * Collectibles include :<br />
 <img src="/screenshots/item-speed.png" /> Speed = allows the player to move faster<br />
