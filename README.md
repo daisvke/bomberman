@@ -35,7 +35,7 @@ Right = D<br />
 * Quit = ESC
 
 ## Map
-* The program taked as a first argument a map description file with the .ber extension.
+* The program takes as a first argument a map description file with the .ber extension.
 * The map can be composed of only 6 possible characters:<br />
 0 for an empty space <img src="/screenshots/empty-space.png" /><br />
 1 for a wall <img src="/screenshots/wall.png" /><br />
