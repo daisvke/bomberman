@@ -70,13 +70,11 @@ void	sl_read_direction_and_animate_sprite(\
 
 void	sl_clear_sprites_last_positions(t_env *env)
 {
-	t_img		*bkgd;
 	t_ennemies	ennemies;
 	t_coord		p1_pos;
 	t_coord		ennemy_pos;
 	int			i;
 
-	bkgd = &env->canvas;
 	p1_pos = sl_assign_pos(env->p1.pos.x * BLOC_LEN, env->p1.pos.y * BLOC_LEN);
 	sl_render_green_tile_by_direction(env, env->p1.curr_dir, p1_pos);
 	ennemies = env->tex.ennemies;

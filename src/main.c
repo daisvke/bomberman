@@ -32,15 +32,16 @@ void	sl_handle_events(t_env *env)
 	win = env->win_ptr;
 	mlx_hook(win, KeyPress, KeyPressMask, &sl_handle_keypress, env);
 	mlx_hook(win, ClientMessage, StructureNotifyMask, &sl_exit_game, env);
+	mlx_loop_hook(env->mlx_ptr, &sl_render, env);
+	mlx_loop(env->mlx_ptr);
 }
 
 int	main(int argc, char *argv[])
 {
-	static t_env	env;
+	t_env	env;
 
+	sl_memset(&env, 0, sizeof(t_env));
 	sl_check_inputs(&env, argc, argv[1]);
 	sl_init_all(&env, argv);
 	sl_handle_events(&env);
-	mlx_loop_hook(env.mlx_ptr, &sl_render, &env);
-	mlx_loop(env.mlx_ptr);
 }

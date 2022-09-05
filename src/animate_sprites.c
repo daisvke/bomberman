@@ -75,10 +75,8 @@ bool	sl_found_obstacle(t_env *env, t_coord pos)
 void	sl_animate_sprite(\
 	t_env *env, t_sprite_info *info, t_states *img, t_coord coord)
 {
-	char	**map;
 	t_coord	pos;
 
-	map = env->map;
 	pos = sl_assign_pos(\
 		info->sprite->pos.x + coord.x, info->sprite->pos.y + coord.y);
 	if (sl_found_obstacle(env, pos))

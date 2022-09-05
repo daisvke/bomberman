@@ -103,13 +103,9 @@ void	sl_check_right_for_consequences(t_env *env, t_coord pos, int size)
 void	sl_check_what_is_affected_by_the_explosion(\
 	t_env *env, t_items *bomb, t_coord pos)
 {
-	int	p1_x;
-	int	p1_y;
 	int	size;
 
 	size = bomb->explode_size;
-	p1_x = env->p1.pos.x;
-	p1_y = env->p1.pos.y;
 	sl_check_up_for_consequences(env, pos, size);
 	sl_check_bottom_for_consequences(env, pos, size);
 	sl_check_left_for_consequences(env, pos, size);

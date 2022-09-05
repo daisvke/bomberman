@@ -3,7 +3,7 @@ CC			=	clang $(C_FLAGS)
 C_FLAGS		=	-Wall -Wextra -Werror $(OPT) $(INC)
 INC			=	-I inc
 MEM			=	-g3 -fsanitize=address
-OPT			=	-O3
+OPT			=	-O2
 
 LIB_FLAGS	=	-lX11 -lXext -lm
 MAKE_LIB	=	make -s -C
@@ -47,7 +47,8 @@ SRC_FILES	=	animate_sprites.c \
 				render_buffer.c \
 				render_green_tile_by_direction.c \
 				render_sprites.c \
-				system_calls.c \
+				system_calls_1.c \
+				system_calls_2.c \
 				texture_interactions.c \
 				update_position.c \
 				utils.c

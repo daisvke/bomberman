@@ -39,16 +39,17 @@ void	sl_put_nbr_to_terminal(int nbr);
 void	sl_close(t_env *env, int fd);
 void	*sl_free(void *ptr);
 void	*sl_malloc(t_env *env, size_t num, size_t size);
+void	*sl_memset(void *s, int c, size_t n);
 int		sl_open(t_env *env, char *filename);
+char	*sl_strchr(const char *s, int c);
+int		sl_strcmp(char *s1, char *s2);
+int		sl_strlen(char *str);
 
 /*
 ** utils
 */
 t_coord	sl_assign_pos(int x, int y);
 char	*sl_itoa(t_env *env, int n);
-char	*sl_strchr(const char *s, int c);
-int		sl_strcmp(char *s1, char *s2);
-int		sl_strlen(char *str);
 
 /*
 ** init

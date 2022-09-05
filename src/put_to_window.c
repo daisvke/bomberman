@@ -31,10 +31,8 @@ void	sl_put_message_at_start(t_env *env)
 void	sl_put_stage_name(t_env *env)
 {
 	char	*str;
-	int		width;
 	int		height;
 
-	width = env->width * BLOC_LEN;
 	height = env->height * BLOC_LEN;
 	mlx_set_font(env->mlx_ptr, env->win_ptr, "7x14");
 	str = env->stage_name;
