@@ -53,7 +53,7 @@ This is a simple valid map:
 1111111111111
 ```
 
-* The map must be closed/surrounded by walls, if not the program must returns an error.
+* The map must be closed/surrounded by walls.
 * It must have at least one exit, one collectible, and one starting position.
 * It must be rectangular.
 
