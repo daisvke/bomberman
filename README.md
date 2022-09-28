@@ -4,7 +4,6 @@ This project is a small 2D Bomberman game using minilibx, a graffic library used
 https://user-images.githubusercontent.com/65622360/137594197-e525784d-8baf-49d2-9584-9888fe649215.mov
 
 ## Description
-
 * The player’s goal is to collect all the collectible bombs present on the map, then to escape from the revealed pipe with minimal movement.
 * At each move the current number of movements is updated on the window.
 * Ennemy patrols cause the player to lose in case of contact.
