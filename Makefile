@@ -1,4 +1,4 @@
-NAME		=	so_long
+NAME		=	bomberman
 CC			=	clang $(C_FLAGS)
 C_FLAGS		=	-Wall -Wextra -Werror $(OPT) $(INC)
 INC			=	-I inc
