@@ -3,7 +3,7 @@ CC			=	clang $(C_FLAGS)
 C_FLAGS		=	-Wall -Wextra -Werror $(OPT) $(INC)
 INC			=	-I inc
 MEM			=	-g3 -fsanitize=address
-OPT			=	-O2
+OPT			=	-O3
 
 LIB_FLAGS	=	-lX11 -lXext -lm
 MAKE_LIB	=	make -s -C
