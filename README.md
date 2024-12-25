@@ -16,7 +16,7 @@ https://user-images.githubusercontent.com/65622360/137594197-e525784d-8baf-49d2-
 * Run<br />
 ```
 make
-./so_long [map]       ex: ./so_long maps/map_large.ber
+./bomberman [map]       ex: ./bomberman maps/map_large.ber
 ```
 
 * QWERTY<br />
