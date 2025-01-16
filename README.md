@@ -32,21 +32,14 @@ make
 
 ### Controls
 
-#### QWERTY Keyboards:
-- **Up**: W  
-- **Down**: S  
-- **Left**: A  
-- **Right**: D  
-
-#### AZERTY Keyboards:
-- **Up**: Z  
-- **Down**: S  
-- **Left**: Q  
-- **Right**: D  
-
-#### Additional Commands:
-- **Set Bomb**: B  
-- **Quit Game**: ESC  
+| Key (QWERTY) | Key (AZERTY) | Action       |
+|--------------|--------------|--------------|
+| `W`          | `Z`          | Move Up      |
+| `S`          | `S`          | Move Down    |
+| `A`          | `Q`          | Move Left    |
+| `D`          | `D`          | Move Right   |
+| `B`          | `B`          | Set Bomb     |
+| `ESC`        | `ESC`        | Quit Game    |
 
 ---
 
