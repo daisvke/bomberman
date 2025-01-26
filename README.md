@@ -16,9 +16,9 @@ In this game, the player’s goal is to:
 - The **current movement count** updates dynamically on the game window.
 - **Enemy patrols**: Coming into contact with an enemy results in game over.
 - **Collectibles** include:
-  - <img src="/screenshots/item-speed.png" /> **Speed**: Increases the player’s movement speed.
-  - <img src="/screenshots/item-bomb.png" /> **Bomb**: Allows the player to place an additional bomb.
-  - <img src="/screenshots/item-fire.png" /> **Fire**: Boosts the power of the player’s bombs.
+  - <img src="screenshots/item-speed.png" /> **Speed**: Increases the player’s movement speed.
+  - <img src="screenshots/item-bomb.png" /> **Bomb**: Allows the player to place an additional bomb.
+  - <img src="screenshots/item-fire.png" /> **Fire**: Boosts the power of the player’s bombs.
 
 ---
 
@@ -49,12 +49,12 @@ The game requires a valid **.ber** map file as input. The map consists of the fo
 
 | Character | Meaning                   | Icon                           |
 |-----------|---------------------------|---------------------------------|
-| `0`       | Empty space               | <img src="/screenshots/empty-space.png" /> |
-| `1`       | Wall                      | <img src="/screenshots/wall.png" />        |
-| `C`       | Collectibles              |                                 |
-| `E`       | Map exit                  | <img src="/screenshots/exit.png" />        |
-| `P`       | Player's starting position| <img src="/screenshots/player.png" />      |
-| `M`       | Enemy's starting position | <img src="/screenshots/ennemy.png" />      |
+| `0`       | Empty space               | <img src="screenshots/empty-space.png" /> |
+| `1`       | Wall                      | <img src="screenshots/wall.png" />        |
+| `C`       | Collectibles              | <img src="screenshots/item-speed.png" /> <img src="screenshots/item-bomb.png" /> <img src="screenshots/item-fire.png" />  |
+| `E`       | Map exit                  | <img src="screenshots/exit.png" />        |
+| `P`       | Player's starting position| <img src="screenshots/player.png" />      |
+| `M`       | Enemy's starting position | <img src="screenshots/ennemy.png" />      |
 
 ### Example of a Valid Map:
 ```plaintext
@@ -78,9 +78,9 @@ The game requires a valid **.ber** map file as input. The map consists of the fo
 ## Screenshots
 
 <p align="center">
-  <img src="/screenshots/screen_1.png" width="50%" />
+  <img src="screenshots/screen_1.png" width="50%" />
 </p>
 
 <p align="center">
-  <img src="/screenshots/screen_2.png" width="50%" />
+  <img src="screenshots/screen_2.png" width="50%" />
 </p>
